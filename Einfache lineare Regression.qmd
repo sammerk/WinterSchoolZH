@@ -667,9 +667,9 @@ Jedes Modell einer einfachen linearen Regression ist durch die Annahme der Linea
                 
                 const plotCoords = canvasToPlot(canvasX, canvasY);
                 
-                // Snap to 0.2 grid
-                plotCoords.x = Math.round(plotCoords.x / 0.2) * 0.2;
-                plotCoords.y = Math.round(plotCoords.y / 0.2) * 0.2;
+                // Snap to 0.5 grid
+                plotCoords.x = Math.round(plotCoords.x * 2) / 2;
+                plotCoords.y = Math.round(plotCoords.y * 2) / 2;
                 
                 points[draggedPoint] = plotCoords;
                 draw();
@@ -717,9 +717,9 @@ Jedes Modell einer einfachen linearen Regression ist durch die Annahme der Linea
                 
                 const plotCoords = canvasToPlot(canvasX, canvasY);
                 
-                // Snap to 0.2 grid
-                plotCoords.x = Math.round(plotCoords.x / 0.2) * 0.2;
-                plotCoords.y = Math.round(plotCoords.y / 0.2) * 0.2;
+                // Snap to 0.5 grid
+                plotCoords.x = Math.round(plotCoords.x * 2) / 2;
+                plotCoords.y = Math.round(plotCoords.y * 2) / 2;
                 
                 points[draggedPoint] = plotCoords;
                 draw();
@@ -757,6 +757,10 @@ Jedes Modell einer einfachen linearen Regression ist durch die Annahme der Linea
     x = Math.max(xMin, Math.min(xMax, x));
     y = Math.max(yMin, Math.min(yMax, y));
     
+    // Round to 0.5 increments (0, 0.5, 1, 1.5, 2, etc.)
+    x = Math.round(x * 2) / 2;
+    y = Math.round(y * 2) / 2;
+    
     points.push({ x, y });
     draw();
 }
@@ -774,6 +778,10 @@ function addMultiplePoints() {
         // Clip to canvas bounds
         x = Math.max(xMin, Math.min(xMax, x));
         y = Math.max(yMin, Math.min(yMax, y));
+        
+        // Round to 0.5 increments (0, 0.5, 1, 1.5, 2, etc.)
+        x = Math.round(x * 2) / 2;
+        y = Math.round(y * 2) / 2;
         
         points.push({ x, y });
     }

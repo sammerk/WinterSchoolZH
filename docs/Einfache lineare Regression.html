@@ -958,9 +958,9 @@ Abbildung&nbsp;2: Regression mit unterschiedlichen Verteilungen in <span class="
                 
                 const plotCoords = canvasToPlot(canvasX, canvasY);
                 
-                // Snap to 0.2 grid
-                plotCoords.x = Math.round(plotCoords.x / 0.2) * 0.2;
-                plotCoords.y = Math.round(plotCoords.y / 0.2) * 0.2;
+                // Snap to 0.5 grid
+                plotCoords.x = Math.round(plotCoords.x * 2) / 2;
+                plotCoords.y = Math.round(plotCoords.y * 2) / 2;
                 
                 points[draggedPoint] = plotCoords;
                 draw();
@@ -1008,9 +1008,9 @@ Abbildung&nbsp;2: Regression mit unterschiedlichen Verteilungen in <span class="
                 
                 const plotCoords = canvasToPlot(canvasX, canvasY);
                 
-                // Snap to 0.2 grid
-                plotCoords.x = Math.round(plotCoords.x / 0.2) * 0.2;
-                plotCoords.y = Math.round(plotCoords.y / 0.2) * 0.2;
+                // Snap to 0.5 grid
+                plotCoords.x = Math.round(plotCoords.x * 2) / 2;
+                plotCoords.y = Math.round(plotCoords.y * 2) / 2;
                 
                 points[draggedPoint] = plotCoords;
                 draw();
@@ -1048,6 +1048,10 @@ Abbildung&nbsp;2: Regression mit unterschiedlichen Verteilungen in <span class="
     x = Math.max(xMin, Math.min(xMax, x));
     y = Math.max(yMin, Math.min(yMax, y));
     
+    // Round to 0.5 increments (0, 0.5, 1, 1.5, 2, etc.)
+    x = Math.round(x * 2) / 2;
+    y = Math.round(y * 2) / 2;
+    
     points.push({ x, y });
     draw();
 }
@@ -1065,6 +1069,10 @@ function addMultiplePoints() {
         // Clip to canvas bounds
         x = Math.max(xMin, Math.min(xMax, x));
         y = Math.max(yMin, Math.min(yMax, y));
+        
+        // Round to 0.5 increments (0, 0.5, 1, 1.5, 2, etc.)
+        x = Math.round(x * 2) / 2;
+        y = Math.round(y * 2) / 2;
         
         points.push({ x, y });
     }
@@ -1112,9 +1120,9 @@ function addMultiplePoints() {
 <div class="webex-question">
 <section id="übung" class="level3 unnumbered h3short webex-check webex-box">
 <h3 class="unnumbered h3short anchored" data-anchor-id="übung">Übung <iconify-icon role="img" inline="" icon="fa7-solid:person-digging" aria-label="Icon person-digging from fa7-solid Iconify.design set." title="Icon person-digging from fa7-solid Iconify.design set."></iconify-icon></h3>
-<p>Erzeugen Sie in der interaktiven Visualisierung genau vier Punkte und zwar (-5;2), (-5;4), (0;2), (0;4).</p>
+<p>Erzeugen Sie in der interaktiven Visualisierung genau vier Punkte und zwar (-4;0), (-4;1), (2;0), (2;1).</p>
 <ul>
-<li>Das Intercept <span class="math inline">\(b_0\)</span> der dadurch entstehenden Regressionsgerade beträgt dann <input class="webex-solveme nospaces" id="webex-0a1cce545fde6d7225ef5be12b6681be" data-tol="0.01" size="20" data-answer="a0MCQT4=">.</li>
+<li>Das Intercept <span class="math inline">\(b_0\)</span> der dadurch entstehenden Regressionsgerade beträgt dann <input class="webex-solveme nospaces" id="webex-e0fba42e4c99b0133d1a65f6c6c826c3" data-tol="0.01" size="20" data-answer="PhJWTFQWbw==">.</li>
 <li>Warum zeigt diesen Beispiel, dass das ebenfalls naheliegende Optimierungkriterium der Summe der kleinsten Residualbeträge <span class="math inline">\(\sum_{i=1}^{N} \left| \varepsilon_i \right|\)</span> problematisch wäre?</li>
 </ul>
 </section>
@@ -1126,9 +1134,9 @@ function addMultiplePoints() {
 <div class="webex-question">
 <section id="übung-1" class="level3 unnumbered h3short webex-check webex-box">
 <h3 class="unnumbered h3short anchored" data-anchor-id="übung-1">Übung <iconify-icon role="img" inline="" icon="fa7-solid:person-digging" aria-label="Icon person-digging from fa7-solid Iconify.design set." title="Icon person-digging from fa7-solid Iconify.design set."></iconify-icon></h3>
-<p>Erzeugen Sie in der interaktiven Visualisierung genau vier Punkte und zwar (-2;-2), (-2;-1), (1;-2), (1;-1).</p>
+<p>Erzeugen Sie in der interaktiven Visualisierung genau vier Punkte und zwar (-3;-1), (-3;2), (-2;-1), (-2;2).</p>
 <ul>
-<li>Das Intercept <span class="math inline">\(b_0\)</span> der dadurch entstehenden Regressionsgerade beträgt dann <input class="webex-solveme nospaces" id="webex-10cbe33da8c44f798b35b1ccd75f2e16" data-tol="0.01" size="20" data-answer="ahJOU0sGETk=">.</li>
+<li>Das Intercept <span class="math inline">\(b_0\)</span> der dadurch entstehenden Regressionsgerade beträgt dann <input class="webex-solveme nospaces" id="webex-f08299c9ee51024e4df962f62f6fc73f" data-tol="0.01" size="20" data-answer="PRIIHAwbPg==">.</li>
 <li>Warum zeigt diesen Beispiel, dass das ebenfalls naheliegende Optimierungkriterium der Summe der kleinsten Residualbeträge <span class="math inline">\(\sum_{i=1}^{N} \left| \varepsilon_i \right|\)</span> problematisch wäre?</li>
 </ul>
 </section>
@@ -1140,9 +1148,9 @@ function addMultiplePoints() {
 <div class="webex-question">
 <section id="übung-2" class="level3 unnumbered h3short webex-check webex-box">
 <h3 class="unnumbered h3short anchored" data-anchor-id="übung-2">Übung <iconify-icon role="img" inline="" icon="fa7-solid:person-digging" aria-label="Icon person-digging from fa7-solid Iconify.design set." title="Icon person-digging from fa7-solid Iconify.design set."></iconify-icon></h3>
-<p>Erzeugen Sie in der interaktiven Visualisierung genau vier Punkte und zwar (-1;-5), (-1;3), (5;-5), (5;3).</p>
+<p>Erzeugen Sie in der interaktiven Visualisierung genau vier Punkte und zwar (2;0), (2;2), (4;0), (4;2).</p>
 <ul>
-<li>Das Intercept <span class="math inline">\(b_0\)</span> der dadurch entstehenden Regressionsgerade beträgt dann <input class="webex-solveme nospaces" id="webex-a09e5c2c34c92c1959e36af324b74abc" data-tol="0.01" size="20" data-answer="OhIUVBc+">.</li>
+<li>Das Intercept <span class="math inline">\(b_0\)</span> der dadurch entstehenden Regressionsgerade beträgt dann <input class="webex-solveme nospaces" id="webex-ca872fbc2334819716dd06d18d851ead" data-tol="0.01" size="20" data-answer="OEMJFW8=">.</li>
 <li>Warum zeigt diesen Beispiel, dass das ebenfalls naheliegende Optimierungkriterium der Summe der kleinsten Residualbeträge <span class="math inline">\(\sum_{i=1}^{N} \left| \varepsilon_i \right|\)</span> problematisch wäre?</li>
 </ul>
 </section>
@@ -1261,8 +1269,8 @@ Warnung
 <section id="übung-3" class="level3 h3short unnumbered webex-check webex-box">
 <h3 class="h3short unnumbered anchored" data-anchor-id="übung-3">Übung <iconify-icon role="img" inline="" icon="fa7-solid:person-digging" aria-label="Icon person-digging from fa7-solid Iconify.design set." title="Icon person-digging from fa7-solid Iconify.design set."></iconify-icon></h3>
 <p>Welche Aussagen treffen auf obige Abbildung zu?</p>
-<div id="webex-9338388fc5291cb789f2eb2884848b25" class="webex-checkboxgroup" data-answer="YgIfCR8IFFZPBB4IbA==">
-<label><input type="checkbox" autocomplete="off" name="9338388fc5291cb789f2eb2884848b25"><span>Für den Slope der Regressionsgerade ist negativ.</span></label><label><input type="checkbox" autocomplete="off" name="9338388fc5291cb789f2eb2884848b25"><span>Für den Intercept der Regressionsgerade gilt <span class="math inline">\(b_0 \approx 640\)</span>.</span></label><label><input type="checkbox" autocomplete="off" name="9338388fc5291cb789f2eb2884848b25"><span>Die unabhängige Variable ist die Mathematikleistung.</span></label><label><input type="checkbox" autocomplete="off" name="9338388fc5291cb789f2eb2884848b25"><span>Der Prädiktor ist die Klassengröße.</span></label><label><input type="checkbox" autocomplete="off" name="9338388fc5291cb789f2eb2884848b25"><span><code>CLASS SIZE GRADE 3</code> ist bimodal verteilt.</span></label><label><input type="checkbox" autocomplete="off" name="9338388fc5291cb789f2eb2884848b25"><span>Das Outcome ist ungefähr normalverteilt.</span></label>
+<div id="webex-1def2747605abfd537e9c2542e0b471e" class="webex-checkboxgroup" data-answer="alVJVx4HGAcaARlQPw==">
+<label><input type="checkbox" autocomplete="off" name="1def2747605abfd537e9c2542e0b471e"><span>Für den Slope der Regressionsgerade ist negativ.</span></label><label><input type="checkbox" autocomplete="off" name="1def2747605abfd537e9c2542e0b471e"><span>Für den Intercept der Regressionsgerade gilt <span class="math inline">\(b_0 \approx 640\)</span>.</span></label><label><input type="checkbox" autocomplete="off" name="1def2747605abfd537e9c2542e0b471e"><span>Die unabhängige Variable ist die Mathematikleistung.</span></label><label><input type="checkbox" autocomplete="off" name="1def2747605abfd537e9c2542e0b471e"><span>Der Prädiktor ist die Klassengröße.</span></label><label><input type="checkbox" autocomplete="off" name="1def2747605abfd537e9c2542e0b471e"><span><code>CLASS SIZE GRADE 3</code> ist bimodal verteilt.</span></label><label><input type="checkbox" autocomplete="off" name="1def2747605abfd537e9c2542e0b471e"><span>Das Outcome ist ungefähr normalverteilt.</span></label>
 </div>
 </section>
 <div class="webex-solution">
@@ -1273,8 +1281,8 @@ Warnung
 <section id="übung-4" class="level3 h3short unnumbered webex-check webex-box">
 <h3 class="h3short unnumbered anchored" data-anchor-id="übung-4">Übung <iconify-icon role="img" inline="" icon="fa7-solid:person-digging" aria-label="Icon person-digging from fa7-solid Iconify.design set." title="Icon person-digging from fa7-solid Iconify.design set."></iconify-icon></h3>
 <p>Welche Aussagen treffen auf obige Abbildung zu?</p>
-<div id="webex-300a7a3f379a69ce60dfc6b6ed122cae" class="webex-checkboxgroup" data-answer="aAEcUBtRH1YfBhVQaw==">
-<label><input type="checkbox" autocomplete="off" name="300a7a3f379a69ce60dfc6b6ed122cae"><span>Für den Slope der Regressionsgerade ist negativ.</span></label><label><input type="checkbox" autocomplete="off" name="300a7a3f379a69ce60dfc6b6ed122cae"><span>Für den Intercept der Regressionsgerade gilt <span class="math inline">\(b_0 \approx 640\)</span>.</span></label><label><input type="checkbox" autocomplete="off" name="300a7a3f379a69ce60dfc6b6ed122cae"><span>Die unabhängige Variable ist die Mathematikleistung.</span></label><label><input type="checkbox" autocomplete="off" name="300a7a3f379a69ce60dfc6b6ed122cae"><span>Der Prädiktor ist die Klassengröße.</span></label><label><input type="checkbox" autocomplete="off" name="300a7a3f379a69ce60dfc6b6ed122cae"><span><code>CLASS SIZE GRADE 3</code> ist bimodal verteilt.</span></label><label><input type="checkbox" autocomplete="off" name="300a7a3f379a69ce60dfc6b6ed122cae"><span>Das Outcome ist ungefähr normalverteilt.</span></label>
+<div id="webex-8f729c1e65073b0a88f91f6e203615f0" class="webex-checkboxgroup" data-answer="Y1cbAxVTHVUaBBwGbg==">
+<label><input type="checkbox" autocomplete="off" name="8f729c1e65073b0a88f91f6e203615f0"><span>Für den Slope der Regressionsgerade ist negativ.</span></label><label><input type="checkbox" autocomplete="off" name="8f729c1e65073b0a88f91f6e203615f0"><span>Für den Intercept der Regressionsgerade gilt <span class="math inline">\(b_0 \approx 640\)</span>.</span></label><label><input type="checkbox" autocomplete="off" name="8f729c1e65073b0a88f91f6e203615f0"><span>Die unabhängige Variable ist die Mathematikleistung.</span></label><label><input type="checkbox" autocomplete="off" name="8f729c1e65073b0a88f91f6e203615f0"><span>Der Prädiktor ist die Klassengröße.</span></label><label><input type="checkbox" autocomplete="off" name="8f729c1e65073b0a88f91f6e203615f0"><span><code>CLASS SIZE GRADE 3</code> ist bimodal verteilt.</span></label><label><input type="checkbox" autocomplete="off" name="8f729c1e65073b0a88f91f6e203615f0"><span>Das Outcome ist ungefähr normalverteilt.</span></label>
 </div>
 </section>
 <div class="webex-solution">
@@ -1285,8 +1293,8 @@ Warnung
 <section id="übung-5" class="level3 h3short unnumbered webex-check webex-box">
 <h3 class="h3short unnumbered anchored" data-anchor-id="übung-5">Übung <iconify-icon role="img" inline="" icon="fa7-solid:person-digging" aria-label="Icon person-digging from fa7-solid Iconify.design set." title="Icon person-digging from fa7-solid Iconify.design set."></iconify-icon></h3>
 <p>Welche Aussagen treffen auf obige Abbildung zu?</p>
-<div id="webex-b706279e3e4b5d7159f91f9b153ab112" class="webex-checkboxgroup" data-answer="OQYcBx4HFVUfVBhTaA==">
-<label><input type="checkbox" autocomplete="off" name="b706279e3e4b5d7159f91f9b153ab112"><span>Für den Slope der Regressionsgerade ist negativ.</span></label><label><input type="checkbox" autocomplete="off" name="b706279e3e4b5d7159f91f9b153ab112"><span>Für den Intercept der Regressionsgerade gilt <span class="math inline">\(b_0 \approx 640\)</span>.</span></label><label><input type="checkbox" autocomplete="off" name="b706279e3e4b5d7159f91f9b153ab112"><span>Die unabhängige Variable ist die Mathematikleistung.</span></label><label><input type="checkbox" autocomplete="off" name="b706279e3e4b5d7159f91f9b153ab112"><span>Der Prädiktor ist die Klassengröße.</span></label><label><input type="checkbox" autocomplete="off" name="b706279e3e4b5d7159f91f9b153ab112"><span><code>CLASS SIZE GRADE 3</code> ist bimodal verteilt.</span></label><label><input type="checkbox" autocomplete="off" name="b706279e3e4b5d7159f91f9b153ab112"><span>Das Outcome ist ungefähr normalverteilt.</span></label>
+<div id="webex-1316d2c63baa1f50c71fc9ec2367a7da" class="webex-checkboxgroup" data-answer="agIdB0gCTwYfU01QbA==">
+<label><input type="checkbox" autocomplete="off" name="1316d2c63baa1f50c71fc9ec2367a7da"><span>Für den Slope der Regressionsgerade ist negativ.</span></label><label><input type="checkbox" autocomplete="off" name="1316d2c63baa1f50c71fc9ec2367a7da"><span>Für den Intercept der Regressionsgerade gilt <span class="math inline">\(b_0 \approx 640\)</span>.</span></label><label><input type="checkbox" autocomplete="off" name="1316d2c63baa1f50c71fc9ec2367a7da"><span>Die unabhängige Variable ist die Mathematikleistung.</span></label><label><input type="checkbox" autocomplete="off" name="1316d2c63baa1f50c71fc9ec2367a7da"><span>Der Prädiktor ist die Klassengröße.</span></label><label><input type="checkbox" autocomplete="off" name="1316d2c63baa1f50c71fc9ec2367a7da"><span><code>CLASS SIZE GRADE 3</code> ist bimodal verteilt.</span></label><label><input type="checkbox" autocomplete="off" name="1316d2c63baa1f50c71fc9ec2367a7da"><span>Das Outcome ist ungefähr normalverteilt.</span></label>
 </div>
 </section>
 <div class="webex-solution">
@@ -1297,8 +1305,8 @@ Warnung
 <section id="übung-6" class="level3 h3short unnumbered webex-check webex-box">
 <h3 class="h3short unnumbered anchored" data-anchor-id="übung-6">Übung <iconify-icon role="img" inline="" icon="fa7-solid:person-digging" aria-label="Icon person-digging from fa7-solid Iconify.design set." title="Icon person-digging from fa7-solid Iconify.design set."></iconify-icon></h3>
 <p>Welche Aussagen treffen auf obige Abbildung zu?</p>
-<div id="webex-b5230fdabb6ed98c2a07e0aed7f5d604" class="webex-checkboxgroup" data-answer="OQQeAhxWSFFOUxpUOQ==">
-<label><input type="checkbox" autocomplete="off" name="b5230fdabb6ed98c2a07e0aed7f5d604"><span>Für den Slope der Regressionsgerade ist negativ.</span></label><label><input type="checkbox" autocomplete="off" name="b5230fdabb6ed98c2a07e0aed7f5d604"><span>Für den Intercept der Regressionsgerade gilt <span class="math inline">\(b_0 \approx 640\)</span>.</span></label><label><input type="checkbox" autocomplete="off" name="b5230fdabb6ed98c2a07e0aed7f5d604"><span>Die unabhängige Variable ist die Mathematikleistung.</span></label><label><input type="checkbox" autocomplete="off" name="b5230fdabb6ed98c2a07e0aed7f5d604"><span>Der Prädiktor ist die Klassengröße.</span></label><label><input type="checkbox" autocomplete="off" name="b5230fdabb6ed98c2a07e0aed7f5d604"><span><code>CLASS SIZE GRADE 3</code> ist bimodal verteilt.</span></label><label><input type="checkbox" autocomplete="off" name="b5230fdabb6ed98c2a07e0aed7f5d604"><span>Das Outcome ist ungefähr normalverteilt.</span></label>
+<div id="webex-73bb6515cd979504283f0dddb6837e4a" class="webex-checkboxgroup" data-answer="bAJOUxoFHQVPVRUGZA==">
+<label><input type="checkbox" autocomplete="off" name="73bb6515cd979504283f0dddb6837e4a"><span>Für den Slope der Regressionsgerade ist negativ.</span></label><label><input type="checkbox" autocomplete="off" name="73bb6515cd979504283f0dddb6837e4a"><span>Für den Intercept der Regressionsgerade gilt <span class="math inline">\(b_0 \approx 640\)</span>.</span></label><label><input type="checkbox" autocomplete="off" name="73bb6515cd979504283f0dddb6837e4a"><span>Die unabhängige Variable ist die Mathematikleistung.</span></label><label><input type="checkbox" autocomplete="off" name="73bb6515cd979504283f0dddb6837e4a"><span>Der Prädiktor ist die Klassengröße.</span></label><label><input type="checkbox" autocomplete="off" name="73bb6515cd979504283f0dddb6837e4a"><span><code>CLASS SIZE GRADE 3</code> ist bimodal verteilt.</span></label><label><input type="checkbox" autocomplete="off" name="73bb6515cd979504283f0dddb6837e4a"><span>Das Outcome ist ungefähr normalverteilt.</span></label>
 </div>
 </section>
 <div class="webex-solution">
@@ -1309,8 +1317,8 @@ Warnung
 <section id="übung-7" class="level3 h3short unnumbered webex-check webex-box">
 <h3 class="h3short unnumbered anchored" data-anchor-id="übung-7">Übung <iconify-icon role="img" inline="" icon="fa7-solid:person-digging" aria-label="Icon person-digging from fa7-solid Iconify.design set." title="Icon person-digging from fa7-solid Iconify.design set."></iconify-icon></h3>
 <p>Welche Aussagen treffen auf obige Abbildung zu?</p>
-<div id="webex-1eadb6269c57b11ef7cae52c7d6463e5" class="webex-checkboxgroup" data-answer="alRNVU4GHgYVUhkGPw==">
-<label><input type="checkbox" autocomplete="off" name="1eadb6269c57b11ef7cae52c7d6463e5"><span>Für den Slope der Regressionsgerade ist negativ.</span></label><label><input type="checkbox" autocomplete="off" name="1eadb6269c57b11ef7cae52c7d6463e5"><span>Für den Intercept der Regressionsgerade gilt <span class="math inline">\(b_0 \approx 640\)</span>.</span></label><label><input type="checkbox" autocomplete="off" name="1eadb6269c57b11ef7cae52c7d6463e5"><span>Die unabhängige Variable ist die Mathematikleistung.</span></label><label><input type="checkbox" autocomplete="off" name="1eadb6269c57b11ef7cae52c7d6463e5"><span>Der Prädiktor ist die Klassengröße.</span></label><label><input type="checkbox" autocomplete="off" name="1eadb6269c57b11ef7cae52c7d6463e5"><span><code>CLASS SIZE GRADE 3</code> ist bimodal verteilt.</span></label><label><input type="checkbox" autocomplete="off" name="1eadb6269c57b11ef7cae52c7d6463e5"><span>Das Outcome ist ungefähr normalverteilt.</span></label>
+<div id="webex-116cd95035109999a6ddf68fb50ffa33" class="webex-checkboxgroup" data-answer="agAaUkgJGQAfBB0BZA==">
+<label><input type="checkbox" autocomplete="off" name="116cd95035109999a6ddf68fb50ffa33"><span>Für den Slope der Regressionsgerade ist negativ.</span></label><label><input type="checkbox" autocomplete="off" name="116cd95035109999a6ddf68fb50ffa33"><span>Für den Intercept der Regressionsgerade gilt <span class="math inline">\(b_0 \approx 640\)</span>.</span></label><label><input type="checkbox" autocomplete="off" name="116cd95035109999a6ddf68fb50ffa33"><span>Die unabhängige Variable ist die Mathematikleistung.</span></label><label><input type="checkbox" autocomplete="off" name="116cd95035109999a6ddf68fb50ffa33"><span>Der Prädiktor ist die Klassengröße.</span></label><label><input type="checkbox" autocomplete="off" name="116cd95035109999a6ddf68fb50ffa33"><span><code>CLASS SIZE GRADE 3</code> ist bimodal verteilt.</span></label><label><input type="checkbox" autocomplete="off" name="116cd95035109999a6ddf68fb50ffa33"><span>Das Outcome ist ungefähr normalverteilt.</span></label>
 </div>
 </section>
 <div class="webex-solution">
@@ -1321,8 +1329,8 @@ Warnung
 <section id="übung-8" class="level3 h3short unnumbered webex-check webex-box">
 <h3 class="h3short unnumbered anchored" data-anchor-id="übung-8">Übung <iconify-icon role="img" inline="" icon="fa7-solid:person-digging" aria-label="Icon person-digging from fa7-solid Iconify.design set." title="Icon person-digging from fa7-solid Iconify.design set."></iconify-icon></h3>
 <p>Welche Aussagen treffen auf obige Abbildung zu?</p>
-<div id="webex-c997d889080daa7bead3b2c7d749fdd0" class="webex-checkboxgroup" data-answer="OAgVBkgIFAkcCRxVPA==">
-<label><input type="checkbox" autocomplete="off" name="c997d889080daa7bead3b2c7d749fdd0"><span>Für den Slope der Regressionsgerade ist negativ.</span></label><label><input type="checkbox" autocomplete="off" name="c997d889080daa7bead3b2c7d749fdd0"><span>Für den Intercept der Regressionsgerade gilt <span class="math inline">\(b_0 \approx 640\)</span>.</span></label><label><input type="checkbox" autocomplete="off" name="c997d889080daa7bead3b2c7d749fdd0"><span>Die unabhängige Variable ist die Mathematikleistung.</span></label><label><input type="checkbox" autocomplete="off" name="c997d889080daa7bead3b2c7d749fdd0"><span>Der Prädiktor ist die Klassengröße.</span></label><label><input type="checkbox" autocomplete="off" name="c997d889080daa7bead3b2c7d749fdd0"><span><code>CLASS SIZE GRADE 3</code> ist bimodal verteilt.</span></label><label><input type="checkbox" autocomplete="off" name="c997d889080daa7bead3b2c7d749fdd0"><span>Das Outcome ist ungefähr normalverteilt.</span></label>
+<div id="webex-6f109eb28ca918cc0894b7b28967857b" class="webex-checkboxgroup" data-answer="bVcdARVVTgIUUk0IbA==">
+<label><input type="checkbox" autocomplete="off" name="6f109eb28ca918cc0894b7b28967857b"><span>Für den Slope der Regressionsgerade ist negativ.</span></label><label><input type="checkbox" autocomplete="off" name="6f109eb28ca918cc0894b7b28967857b"><span>Für den Intercept der Regressionsgerade gilt <span class="math inline">\(b_0 \approx 640\)</span>.</span></label><label><input type="checkbox" autocomplete="off" name="6f109eb28ca918cc0894b7b28967857b"><span>Die unabhängige Variable ist die Mathematikleistung.</span></label><label><input type="checkbox" autocomplete="off" name="6f109eb28ca918cc0894b7b28967857b"><span>Der Prädiktor ist die Klassengröße.</span></label><label><input type="checkbox" autocomplete="off" name="6f109eb28ca918cc0894b7b28967857b"><span><code>CLASS SIZE GRADE 3</code> ist bimodal verteilt.</span></label><label><input type="checkbox" autocomplete="off" name="6f109eb28ca918cc0894b7b28967857b"><span>Das Outcome ist ungefähr normalverteilt.</span></label>
 </div>
 </section>
 <div class="webex-solution">
@@ -1333,8 +1341,8 @@ Warnung
 <section id="übung-9" class="level3 h3short unnumbered webex-check webex-box">
 <h3 class="h3short unnumbered anchored" data-anchor-id="übung-9">Übung <iconify-icon role="img" inline="" icon="fa7-solid:person-digging" aria-label="Icon person-digging from fa7-solid Iconify.design set." title="Icon person-digging from fa7-solid Iconify.design set."></iconify-icon></h3>
 <p>Welche Aussagen treffen auf obige Abbildung zu?</p>
-<div id="webex-ef128e6af0f940999f6e503a819f33c4" class="webex-checkboxgroup" data-answer="PlcdAxRVGlFKAUoIaQ==">
-<label><input type="checkbox" autocomplete="off" name="ef128e6af0f940999f6e503a819f33c4"><span>Für den Slope der Regressionsgerade ist negativ.</span></label><label><input type="checkbox" autocomplete="off" name="ef128e6af0f940999f6e503a819f33c4"><span>Für den Intercept der Regressionsgerade gilt <span class="math inline">\(b_0 \approx 640\)</span>.</span></label><label><input type="checkbox" autocomplete="off" name="ef128e6af0f940999f6e503a819f33c4"><span>Die unabhängige Variable ist die Mathematikleistung.</span></label><label><input type="checkbox" autocomplete="off" name="ef128e6af0f940999f6e503a819f33c4"><span>Der Prädiktor ist die Klassengröße.</span></label><label><input type="checkbox" autocomplete="off" name="ef128e6af0f940999f6e503a819f33c4"><span><code>CLASS SIZE GRADE 3</code> ist bimodal verteilt.</span></label><label><input type="checkbox" autocomplete="off" name="ef128e6af0f940999f6e503a819f33c4"><span>Das Outcome ist ungefähr normalverteilt.</span></label>
+<div id="webex-39845be03e7e32a1b16914e169a5105c" class="webex-checkboxgroup" data-answer="aAgUBRlSSQAfVBtUbg==">
+<label><input type="checkbox" autocomplete="off" name="39845be03e7e32a1b16914e169a5105c"><span>Für den Slope der Regressionsgerade ist negativ.</span></label><label><input type="checkbox" autocomplete="off" name="39845be03e7e32a1b16914e169a5105c"><span>Für den Intercept der Regressionsgerade gilt <span class="math inline">\(b_0 \approx 640\)</span>.</span></label><label><input type="checkbox" autocomplete="off" name="39845be03e7e32a1b16914e169a5105c"><span>Die unabhängige Variable ist die Mathematikleistung.</span></label><label><input type="checkbox" autocomplete="off" name="39845be03e7e32a1b16914e169a5105c"><span>Der Prädiktor ist die Klassengröße.</span></label><label><input type="checkbox" autocomplete="off" name="39845be03e7e32a1b16914e169a5105c"><span><code>CLASS SIZE GRADE 3</code> ist bimodal verteilt.</span></label><label><input type="checkbox" autocomplete="off" name="39845be03e7e32a1b16914e169a5105c"><span>Das Outcome ist ungefähr normalverteilt.</span></label>
 </div>
 </section>
 <div class="webex-solution">
@@ -1345,8 +1353,8 @@ Warnung
 <section id="übung-10" class="level3 h3short unnumbered webex-check webex-box">
 <h3 class="h3short unnumbered anchored" data-anchor-id="übung-10">Übung <iconify-icon role="img" inline="" icon="fa7-solid:person-digging" aria-label="Icon person-digging from fa7-solid Iconify.design set." title="Icon person-digging from fa7-solid Iconify.design set."></iconify-icon></h3>
 <p>Welche Aussagen treffen auf obige Abbildung zu?</p>
-<div id="webex-c5bb39eebf4914c99ad3f534eada19e6" class="webex-checkboxgroup" data-answer="OAROUx8JSVVOVxgIbA==">
-<label><input type="checkbox" autocomplete="off" name="c5bb39eebf4914c99ad3f534eada19e6"><span>Für den Slope der Regressionsgerade ist negativ.</span></label><label><input type="checkbox" autocomplete="off" name="c5bb39eebf4914c99ad3f534eada19e6"><span>Für den Intercept der Regressionsgerade gilt <span class="math inline">\(b_0 \approx 640\)</span>.</span></label><label><input type="checkbox" autocomplete="off" name="c5bb39eebf4914c99ad3f534eada19e6"><span>Die unabhängige Variable ist die Mathematikleistung.</span></label><label><input type="checkbox" autocomplete="off" name="c5bb39eebf4914c99ad3f534eada19e6"><span>Der Prädiktor ist die Klassengröße.</span></label><label><input type="checkbox" autocomplete="off" name="c5bb39eebf4914c99ad3f534eada19e6"><span><code>CLASS SIZE GRADE 3</code> ist bimodal verteilt.</span></label><label><input type="checkbox" autocomplete="off" name="c5bb39eebf4914c99ad3f534eada19e6"><span>Das Outcome ist ungefähr normalverteilt.</span></label>
+<div id="webex-b54470df353e340e1b7bd7c1d3ae31f9" class="webex-checkboxgroup" data-answer="OQQYBRsASFYfBB9Ubg==">
+<label><input type="checkbox" autocomplete="off" name="b54470df353e340e1b7bd7c1d3ae31f9"><span>Für den Slope der Regressionsgerade ist negativ.</span></label><label><input type="checkbox" autocomplete="off" name="b54470df353e340e1b7bd7c1d3ae31f9"><span>Für den Intercept der Regressionsgerade gilt <span class="math inline">\(b_0 \approx 640\)</span>.</span></label><label><input type="checkbox" autocomplete="off" name="b54470df353e340e1b7bd7c1d3ae31f9"><span>Die unabhängige Variable ist die Mathematikleistung.</span></label><label><input type="checkbox" autocomplete="off" name="b54470df353e340e1b7bd7c1d3ae31f9"><span>Der Prädiktor ist die Klassengröße.</span></label><label><input type="checkbox" autocomplete="off" name="b54470df353e340e1b7bd7c1d3ae31f9"><span><code>CLASS SIZE GRADE 3</code> ist bimodal verteilt.</span></label><label><input type="checkbox" autocomplete="off" name="b54470df353e340e1b7bd7c1d3ae31f9"><span>Das Outcome ist ungefähr normalverteilt.</span></label>
 </div>
 </section>
 <div class="webex-solution">
@@ -1357,8 +1365,8 @@ Warnung
 <section id="übung-11" class="level3 h3short unnumbered webex-check webex-box">
 <h3 class="h3short unnumbered anchored" data-anchor-id="übung-11">Übung <iconify-icon role="img" inline="" icon="fa7-solid:person-digging" aria-label="Icon person-digging from fa7-solid Iconify.design set." title="Icon person-digging from fa7-solid Iconify.design set."></iconify-icon></h3>
 <p>Welche Aussagen treffen auf obige Abbildung zu?</p>
-<div id="webex-62c97c581bd0eeb348d7d0746a87ad3d" class="webex-checkboxgroup" data-answer="bQNPCBtTGQgdU0gBOA==">
-<label><input type="checkbox" autocomplete="off" name="62c97c581bd0eeb348d7d0746a87ad3d"><span>Für den Slope der Regressionsgerade ist negativ.</span></label><label><input type="checkbox" autocomplete="off" name="62c97c581bd0eeb348d7d0746a87ad3d"><span>Für den Intercept der Regressionsgerade gilt <span class="math inline">\(b_0 \approx 640\)</span>.</span></label><label><input type="checkbox" autocomplete="off" name="62c97c581bd0eeb348d7d0746a87ad3d"><span>Die unabhängige Variable ist die Mathematikleistung.</span></label><label><input type="checkbox" autocomplete="off" name="62c97c581bd0eeb348d7d0746a87ad3d"><span>Der Prädiktor ist die Klassengröße.</span></label><label><input type="checkbox" autocomplete="off" name="62c97c581bd0eeb348d7d0746a87ad3d"><span><code>CLASS SIZE GRADE 3</code> ist bimodal verteilt.</span></label><label><input type="checkbox" autocomplete="off" name="62c97c581bd0eeb348d7d0746a87ad3d"><span>Das Outcome ist ungefähr normalverteilt.</span></label>
+<div id="webex-aebd0abbe86fdaec1482ded9f3c4899c" class="webex-checkboxgroup" data-answer="OlROVRxRTlJJCRpXOQ==">
+<label><input type="checkbox" autocomplete="off" name="aebd0abbe86fdaec1482ded9f3c4899c"><span>Für den Slope der Regressionsgerade ist negativ.</span></label><label><input type="checkbox" autocomplete="off" name="aebd0abbe86fdaec1482ded9f3c4899c"><span>Für den Intercept der Regressionsgerade gilt <span class="math inline">\(b_0 \approx 640\)</span>.</span></label><label><input type="checkbox" autocomplete="off" name="aebd0abbe86fdaec1482ded9f3c4899c"><span>Die unabhängige Variable ist die Mathematikleistung.</span></label><label><input type="checkbox" autocomplete="off" name="aebd0abbe86fdaec1482ded9f3c4899c"><span>Der Prädiktor ist die Klassengröße.</span></label><label><input type="checkbox" autocomplete="off" name="aebd0abbe86fdaec1482ded9f3c4899c"><span><code>CLASS SIZE GRADE 3</code> ist bimodal verteilt.</span></label><label><input type="checkbox" autocomplete="off" name="aebd0abbe86fdaec1482ded9f3c4899c"><span>Das Outcome ist ungefähr normalverteilt.</span></label>
 </div>
 </section>
 <div class="webex-solution">
@@ -1369,8 +1377,8 @@ Warnung
 <section id="übung-12" class="level3 h3short unnumbered webex-check webex-box">
 <h3 class="h3short unnumbered anchored" data-anchor-id="übung-12">Übung <iconify-icon role="img" inline="" icon="fa7-solid:person-digging" aria-label="Icon person-digging from fa7-solid Iconify.design set." title="Icon person-digging from fa7-solid Iconify.design set."></iconify-icon></h3>
 <p>Welche Aussagen treffen auf obige Abbildung zu?</p>
-<div id="webex-c54d51c1c125686a7d647442d0240357" class="webex-checkboxgroup" data-answer="OAQYVRkBTwFPAB4Eaw==">
-<label><input type="checkbox" autocomplete="off" name="c54d51c1c125686a7d647442d0240357"><span>Für den Slope der Regressionsgerade ist negativ.</span></label><label><input type="checkbox" autocomplete="off" name="c54d51c1c125686a7d647442d0240357"><span>Für den Intercept der Regressionsgerade gilt <span class="math inline">\(b_0 \approx 640\)</span>.</span></label><label><input type="checkbox" autocomplete="off" name="c54d51c1c125686a7d647442d0240357"><span>Die unabhängige Variable ist die Mathematikleistung.</span></label><label><input type="checkbox" autocomplete="off" name="c54d51c1c125686a7d647442d0240357"><span>Der Prädiktor ist die Klassengröße.</span></label><label><input type="checkbox" autocomplete="off" name="c54d51c1c125686a7d647442d0240357"><span><code>CLASS SIZE GRADE 3</code> ist bimodal verteilt.</span></label><label><input type="checkbox" autocomplete="off" name="c54d51c1c125686a7d647442d0240357"><span>Das Outcome ist ungefähr normalverteilt.</span></label>
+<div id="webex-1962a396912c499c72fd6103ca73c4e6" class="webex-checkboxgroup" data-answer="aggaA00DFQYVAB5SaQ==">
+<label><input type="checkbox" autocomplete="off" name="1962a396912c499c72fd6103ca73c4e6"><span>Für den Slope der Regressionsgerade ist negativ.</span></label><label><input type="checkbox" autocomplete="off" name="1962a396912c499c72fd6103ca73c4e6"><span>Für den Intercept der Regressionsgerade gilt <span class="math inline">\(b_0 \approx 640\)</span>.</span></label><label><input type="checkbox" autocomplete="off" name="1962a396912c499c72fd6103ca73c4e6"><span>Die unabhängige Variable ist die Mathematikleistung.</span></label><label><input type="checkbox" autocomplete="off" name="1962a396912c499c72fd6103ca73c4e6"><span>Der Prädiktor ist die Klassengröße.</span></label><label><input type="checkbox" autocomplete="off" name="1962a396912c499c72fd6103ca73c4e6"><span><code>CLASS SIZE GRADE 3</code> ist bimodal verteilt.</span></label><label><input type="checkbox" autocomplete="off" name="1962a396912c499c72fd6103ca73c4e6"><span>Das Outcome ist ungefähr normalverteilt.</span></label>
 </div>
 </section>
 <div class="webex-solution">
@@ -1381,8 +1389,8 @@ Warnung
 <section id="übung-13" class="level3 h3short unnumbered webex-check webex-box">
 <h3 class="h3short unnumbered anchored" data-anchor-id="übung-13">Übung <iconify-icon role="img" inline="" icon="fa7-solid:person-digging" aria-label="Icon person-digging from fa7-solid Iconify.design set." title="Icon person-digging from fa7-solid Iconify.design set."></iconify-icon></h3>
 <p>Welche Aussagen treffen auf obige Abbildung zu?</p>
-<div id="webex-dbccc7d97a5ed6e103d1c4734709f5f0" class="webex-checkboxgroup" data-answer="P1NPUk8HSAkbUBlUOQ==">
-<label><input type="checkbox" autocomplete="off" name="dbccc7d97a5ed6e103d1c4734709f5f0"><span>Für den Slope der Regressionsgerade ist negativ.</span></label><label><input type="checkbox" autocomplete="off" name="dbccc7d97a5ed6e103d1c4734709f5f0"><span>Für den Intercept der Regressionsgerade gilt <span class="math inline">\(b_0 \approx 640\)</span>.</span></label><label><input type="checkbox" autocomplete="off" name="dbccc7d97a5ed6e103d1c4734709f5f0"><span>Die unabhängige Variable ist die Mathematikleistung.</span></label><label><input type="checkbox" autocomplete="off" name="dbccc7d97a5ed6e103d1c4734709f5f0"><span>Der Prädiktor ist die Klassengröße.</span></label><label><input type="checkbox" autocomplete="off" name="dbccc7d97a5ed6e103d1c4734709f5f0"><span><code>CLASS SIZE GRADE 3</code> ist bimodal verteilt.</span></label><label><input type="checkbox" autocomplete="off" name="dbccc7d97a5ed6e103d1c4734709f5f0"><span>Das Outcome ist ungefähr normalverteilt.</span></label>
+<div id="webex-0c37230763f8b7834965c76f690aa0e4" class="webex-checkboxgroup" data-answer="a1IfBh4DHAcaAkoJPw==">
+<label><input type="checkbox" autocomplete="off" name="0c37230763f8b7834965c76f690aa0e4"><span>Für den Slope der Regressionsgerade ist negativ.</span></label><label><input type="checkbox" autocomplete="off" name="0c37230763f8b7834965c76f690aa0e4"><span>Für den Intercept der Regressionsgerade gilt <span class="math inline">\(b_0 \approx 640\)</span>.</span></label><label><input type="checkbox" autocomplete="off" name="0c37230763f8b7834965c76f690aa0e4"><span>Die unabhängige Variable ist die Mathematikleistung.</span></label><label><input type="checkbox" autocomplete="off" name="0c37230763f8b7834965c76f690aa0e4"><span>Der Prädiktor ist die Klassengröße.</span></label><label><input type="checkbox" autocomplete="off" name="0c37230763f8b7834965c76f690aa0e4"><span><code>CLASS SIZE GRADE 3</code> ist bimodal verteilt.</span></label><label><input type="checkbox" autocomplete="off" name="0c37230763f8b7834965c76f690aa0e4"><span>Das Outcome ist ungefähr normalverteilt.</span></label>
 </div>
 </section>
 <div class="webex-solution">
@@ -1393,8 +1401,8 @@ Warnung
 <section id="übung-14" class="level3 h3short unnumbered webex-check webex-box">
 <h3 class="h3short unnumbered anchored" data-anchor-id="übung-14">Übung <iconify-icon role="img" inline="" icon="fa7-solid:person-digging" aria-label="Icon person-digging from fa7-solid Iconify.design set." title="Icon person-digging from fa7-solid Iconify.design set."></iconify-icon></h3>
 <p>Welche Aussagen treffen auf obige Abbildung zu?</p>
-<div id="webex-cf53707d22d8a673a3c3a26a5b03511b" class="webex-checkboxgroup" data-answer="OFcZAhsAG1QeA0gJPA==">
-<label><input type="checkbox" autocomplete="off" name="cf53707d22d8a673a3c3a26a5b03511b"><span>Für den Slope der Regressionsgerade ist negativ.</span></label><label><input type="checkbox" autocomplete="off" name="cf53707d22d8a673a3c3a26a5b03511b"><span>Für den Intercept der Regressionsgerade gilt <span class="math inline">\(b_0 \approx 640\)</span>.</span></label><label><input type="checkbox" autocomplete="off" name="cf53707d22d8a673a3c3a26a5b03511b"><span>Die unabhängige Variable ist die Mathematikleistung.</span></label><label><input type="checkbox" autocomplete="off" name="cf53707d22d8a673a3c3a26a5b03511b"><span>Der Prädiktor ist die Klassengröße.</span></label><label><input type="checkbox" autocomplete="off" name="cf53707d22d8a673a3c3a26a5b03511b"><span><code>CLASS SIZE GRADE 3</code> ist bimodal verteilt.</span></label><label><input type="checkbox" autocomplete="off" name="cf53707d22d8a673a3c3a26a5b03511b"><span>Das Outcome ist ungefähr normalverteilt.</span></label>
+<div id="webex-96390ccc09ed613b3a8687d5999d8ead" class="webex-checkboxgroup" data-answer="YgcfCBxTT1McCElVaw==">
+<label><input type="checkbox" autocomplete="off" name="96390ccc09ed613b3a8687d5999d8ead"><span>Für den Slope der Regressionsgerade ist negativ.</span></label><label><input type="checkbox" autocomplete="off" name="96390ccc09ed613b3a8687d5999d8ead"><span>Für den Intercept der Regressionsgerade gilt <span class="math inline">\(b_0 \approx 640\)</span>.</span></label><label><input type="checkbox" autocomplete="off" name="96390ccc09ed613b3a8687d5999d8ead"><span>Die unabhängige Variable ist die Mathematikleistung.</span></label><label><input type="checkbox" autocomplete="off" name="96390ccc09ed613b3a8687d5999d8ead"><span>Der Prädiktor ist die Klassengröße.</span></label><label><input type="checkbox" autocomplete="off" name="96390ccc09ed613b3a8687d5999d8ead"><span><code>CLASS SIZE GRADE 3</code> ist bimodal verteilt.</span></label><label><input type="checkbox" autocomplete="off" name="96390ccc09ed613b3a8687d5999d8ead"><span>Das Outcome ist ungefähr normalverteilt.</span></label>
 </div>
 </section>
 <div class="webex-solution">
@@ -1405,8 +1413,8 @@ Warnung
 <section id="übung-15" class="level3 h3short unnumbered webex-check webex-box">
 <h3 class="h3short unnumbered anchored" data-anchor-id="übung-15">Übung <iconify-icon role="img" inline="" icon="fa7-solid:person-digging" aria-label="Icon person-digging from fa7-solid Iconify.design set." title="Icon person-digging from fa7-solid Iconify.design set."></iconify-icon></h3>
 <p>Welche Aussagen treffen auf obige Abbildung zu?</p>
-<div id="webex-543d950ad7ae7b6a476484f56767cd90" class="webex-checkboxgroup" data-answer="bgUfVRUFHFFIBk1Uag==">
-<label><input type="checkbox" autocomplete="off" name="543d950ad7ae7b6a476484f56767cd90"><span>Für den Slope der Regressionsgerade ist negativ.</span></label><label><input type="checkbox" autocomplete="off" name="543d950ad7ae7b6a476484f56767cd90"><span>Für den Intercept der Regressionsgerade gilt <span class="math inline">\(b_0 \approx 640\)</span>.</span></label><label><input type="checkbox" autocomplete="off" name="543d950ad7ae7b6a476484f56767cd90"><span>Die unabhängige Variable ist die Mathematikleistung.</span></label><label><input type="checkbox" autocomplete="off" name="543d950ad7ae7b6a476484f56767cd90"><span>Der Prädiktor ist die Klassengröße.</span></label><label><input type="checkbox" autocomplete="off" name="543d950ad7ae7b6a476484f56767cd90"><span><code>CLASS SIZE GRADE 3</code> ist bimodal verteilt.</span></label><label><input type="checkbox" autocomplete="off" name="543d950ad7ae7b6a476484f56767cd90"><span>Das Outcome ist ungefähr normalverteilt.</span></label>
+<div id="webex-b4779ac0966ef44f5aab4db4e02c0df8" class="webex-checkboxgroup" data-answer="OQUbBhVRTwAVBxpUOw==">
+<label><input type="checkbox" autocomplete="off" name="b4779ac0966ef44f5aab4db4e02c0df8"><span>Für den Slope der Regressionsgerade ist negativ.</span></label><label><input type="checkbox" autocomplete="off" name="b4779ac0966ef44f5aab4db4e02c0df8"><span>Für den Intercept der Regressionsgerade gilt <span class="math inline">\(b_0 \approx 640\)</span>.</span></label><label><input type="checkbox" autocomplete="off" name="b4779ac0966ef44f5aab4db4e02c0df8"><span>Die unabhängige Variable ist die Mathematikleistung.</span></label><label><input type="checkbox" autocomplete="off" name="b4779ac0966ef44f5aab4db4e02c0df8"><span>Der Prädiktor ist die Klassengröße.</span></label><label><input type="checkbox" autocomplete="off" name="b4779ac0966ef44f5aab4db4e02c0df8"><span><code>CLASS SIZE GRADE 3</code> ist bimodal verteilt.</span></label><label><input type="checkbox" autocomplete="off" name="b4779ac0966ef44f5aab4db4e02c0df8"><span>Das Outcome ist ungefähr normalverteilt.</span></label>
 </div>
 </section>
 <div class="webex-solution">
@@ -1417,8 +1425,8 @@ Warnung
 <section id="übung-16" class="level3 h3short unnumbered webex-check webex-box">
 <h3 class="h3short unnumbered anchored" data-anchor-id="übung-16">Übung <iconify-icon role="img" inline="" icon="fa7-solid:person-digging" aria-label="Icon person-digging from fa7-solid Iconify.design set." title="Icon person-digging from fa7-solid Iconify.design set."></iconify-icon></h3>
 <p>Welche Aussagen treffen auf obige Abbildung zu?</p>
-<div id="webex-1aeca0784ce38bf7b69450666cf67314" class="webex-checkboxgroup" data-answer="alBJUk0AGwgYUkkCZQ==">
-<label><input type="checkbox" autocomplete="off" name="1aeca0784ce38bf7b69450666cf67314"><span>Für den Slope der Regressionsgerade ist negativ.</span></label><label><input type="checkbox" autocomplete="off" name="1aeca0784ce38bf7b69450666cf67314"><span>Für den Intercept der Regressionsgerade gilt <span class="math inline">\(b_0 \approx 640\)</span>.</span></label><label><input type="checkbox" autocomplete="off" name="1aeca0784ce38bf7b69450666cf67314"><span>Die unabhängige Variable ist die Mathematikleistung.</span></label><label><input type="checkbox" autocomplete="off" name="1aeca0784ce38bf7b69450666cf67314"><span>Der Prädiktor ist die Klassengröße.</span></label><label><input type="checkbox" autocomplete="off" name="1aeca0784ce38bf7b69450666cf67314"><span><code>CLASS SIZE GRADE 3</code> ist bimodal verteilt.</span></label><label><input type="checkbox" autocomplete="off" name="1aeca0784ce38bf7b69450666cf67314"><span>Das Outcome ist ungefähr normalverteilt.</span></label>
+<div id="webex-b90bc622caf3f48c79fa4cc24de0e9c9" class="webex-checkboxgroup" data-answer="OQgcU08GHgJPUEoCOw==">
+<label><input type="checkbox" autocomplete="off" name="b90bc622caf3f48c79fa4cc24de0e9c9"><span>Für den Slope der Regressionsgerade ist negativ.</span></label><label><input type="checkbox" autocomplete="off" name="b90bc622caf3f48c79fa4cc24de0e9c9"><span>Für den Intercept der Regressionsgerade gilt <span class="math inline">\(b_0 \approx 640\)</span>.</span></label><label><input type="checkbox" autocomplete="off" name="b90bc622caf3f48c79fa4cc24de0e9c9"><span>Die unabhängige Variable ist die Mathematikleistung.</span></label><label><input type="checkbox" autocomplete="off" name="b90bc622caf3f48c79fa4cc24de0e9c9"><span>Der Prädiktor ist die Klassengröße.</span></label><label><input type="checkbox" autocomplete="off" name="b90bc622caf3f48c79fa4cc24de0e9c9"><span><code>CLASS SIZE GRADE 3</code> ist bimodal verteilt.</span></label><label><input type="checkbox" autocomplete="off" name="b90bc622caf3f48c79fa4cc24de0e9c9"><span>Das Outcome ist ungefähr normalverteilt.</span></label>
 </div>
 </section>
 <div class="webex-solution">
@@ -1429,8 +1437,8 @@ Warnung
 <section id="übung-17" class="level3 h3short unnumbered webex-check webex-box">
 <h3 class="h3short unnumbered anchored" data-anchor-id="übung-17">Übung <iconify-icon role="img" inline="" icon="fa7-solid:person-digging" aria-label="Icon person-digging from fa7-solid Iconify.design set." title="Icon person-digging from fa7-solid Iconify.design set."></iconify-icon></h3>
 <p>Welche Aussagen treffen auf obige Abbildung zu?</p>
-<div id="webex-3c45ae7aa5d8afa8ea8e774b60dbbc9a" class="webex-checkboxgroup" data-answer="aFIYBE1VG1FNBEgJPA==">
-<label><input type="checkbox" autocomplete="off" name="3c45ae7aa5d8afa8ea8e774b60dbbc9a"><span>Für den Slope der Regressionsgerade ist negativ.</span></label><label><input type="checkbox" autocomplete="off" name="3c45ae7aa5d8afa8ea8e774b60dbbc9a"><span>Für den Intercept der Regressionsgerade gilt <span class="math inline">\(b_0 \approx 640\)</span>.</span></label><label><input type="checkbox" autocomplete="off" name="3c45ae7aa5d8afa8ea8e774b60dbbc9a"><span>Die unabhängige Variable ist die Mathematikleistung.</span></label><label><input type="checkbox" autocomplete="off" name="3c45ae7aa5d8afa8ea8e774b60dbbc9a"><span>Der Prädiktor ist die Klassengröße.</span></label><label><input type="checkbox" autocomplete="off" name="3c45ae7aa5d8afa8ea8e774b60dbbc9a"><span><code>CLASS SIZE GRADE 3</code> ist bimodal verteilt.</span></label><label><input type="checkbox" autocomplete="off" name="3c45ae7aa5d8afa8ea8e774b60dbbc9a"><span>Das Outcome ist ungefähr normalverteilt.</span></label>
+<div id="webex-233576862c43c671c826857c42d5bf6f" class="webex-checkboxgroup" data-answer="aQIfBBsGFAYeUhgCPg==">
+<label><input type="checkbox" autocomplete="off" name="233576862c43c671c826857c42d5bf6f"><span>Für den Slope der Regressionsgerade ist negativ.</span></label><label><input type="checkbox" autocomplete="off" name="233576862c43c671c826857c42d5bf6f"><span>Für den Intercept der Regressionsgerade gilt <span class="math inline">\(b_0 \approx 640\)</span>.</span></label><label><input type="checkbox" autocomplete="off" name="233576862c43c671c826857c42d5bf6f"><span>Die unabhängige Variable ist die Mathematikleistung.</span></label><label><input type="checkbox" autocomplete="off" name="233576862c43c671c826857c42d5bf6f"><span>Der Prädiktor ist die Klassengröße.</span></label><label><input type="checkbox" autocomplete="off" name="233576862c43c671c826857c42d5bf6f"><span><code>CLASS SIZE GRADE 3</code> ist bimodal verteilt.</span></label><label><input type="checkbox" autocomplete="off" name="233576862c43c671c826857c42d5bf6f"><span>Das Outcome ist ungefähr normalverteilt.</span></label>
 </div>
 </section>
 <div class="webex-solution">
@@ -1441,8 +1449,8 @@ Warnung
 <section id="übung-18" class="level3 h3short unnumbered webex-check webex-box">
 <h3 class="h3short unnumbered anchored" data-anchor-id="übung-18">Übung <iconify-icon role="img" inline="" icon="fa7-solid:person-digging" aria-label="Icon person-digging from fa7-solid Iconify.design set." title="Icon person-digging from fa7-solid Iconify.design set."></iconify-icon></h3>
 <p>Welche Aussagen treffen auf obige Abbildung zu?</p>
-<div id="webex-87e7ff4539d0b01289f70a171388db6e" class="webex-checkboxgroup" data-answer="YwZJBkpWGAUfCEgBPw==">
-<label><input type="checkbox" autocomplete="off" name="87e7ff4539d0b01289f70a171388db6e"><span>Für den Slope der Regressionsgerade ist negativ.</span></label><label><input type="checkbox" autocomplete="off" name="87e7ff4539d0b01289f70a171388db6e"><span>Für den Intercept der Regressionsgerade gilt <span class="math inline">\(b_0 \approx 640\)</span>.</span></label><label><input type="checkbox" autocomplete="off" name="87e7ff4539d0b01289f70a171388db6e"><span>Die unabhängige Variable ist die Mathematikleistung.</span></label><label><input type="checkbox" autocomplete="off" name="87e7ff4539d0b01289f70a171388db6e"><span>Der Prädiktor ist die Klassengröße.</span></label><label><input type="checkbox" autocomplete="off" name="87e7ff4539d0b01289f70a171388db6e"><span><code>CLASS SIZE GRADE 3</code> ist bimodal verteilt.</span></label><label><input type="checkbox" autocomplete="off" name="87e7ff4539d0b01289f70a171388db6e"><span>Das Outcome ist ungefähr normalverteilt.</span></label>
+<div id="webex-c8feff3b21d886e3c470757f90c6dbfe" class="webex-checkboxgroup" data-answer="OAlKVEpWH1IeAEgJZQ==">
+<label><input type="checkbox" autocomplete="off" name="c8feff3b21d886e3c470757f90c6dbfe"><span>Für den Slope der Regressionsgerade ist negativ.</span></label><label><input type="checkbox" autocomplete="off" name="c8feff3b21d886e3c470757f90c6dbfe"><span>Für den Intercept der Regressionsgerade gilt <span class="math inline">\(b_0 \approx 640\)</span>.</span></label><label><input type="checkbox" autocomplete="off" name="c8feff3b21d886e3c470757f90c6dbfe"><span>Die unabhängige Variable ist die Mathematikleistung.</span></label><label><input type="checkbox" autocomplete="off" name="c8feff3b21d886e3c470757f90c6dbfe"><span>Der Prädiktor ist die Klassengröße.</span></label><label><input type="checkbox" autocomplete="off" name="c8feff3b21d886e3c470757f90c6dbfe"><span><code>CLASS SIZE GRADE 3</code> ist bimodal verteilt.</span></label><label><input type="checkbox" autocomplete="off" name="c8feff3b21d886e3c470757f90c6dbfe"><span>Das Outcome ist ungefähr normalverteilt.</span></label>
 </div>
 </section>
 <div class="webex-solution">
@@ -1453,8 +1461,8 @@ Warnung
 <section id="übung-19" class="level3 h3short unnumbered webex-check webex-box">
 <h3 class="h3short unnumbered anchored" data-anchor-id="übung-19">Übung <iconify-icon role="img" inline="" icon="fa7-solid:person-digging" aria-label="Icon person-digging from fa7-solid Iconify.design set." title="Icon person-digging from fa7-solid Iconify.design set."></iconify-icon></h3>
 <p>Welche Aussagen treffen auf obige Abbildung zu?</p>
-<div id="webex-83ab588d97b9dd8de747d9b52cf7f620" class="webex-checkboxgroup" data-answer="YwJNUxkIFFQVBk4IOQ==">
-<label><input type="checkbox" autocomplete="off" name="83ab588d97b9dd8de747d9b52cf7f620"><span>Für den Slope der Regressionsgerade ist negativ.</span></label><label><input type="checkbox" autocomplete="off" name="83ab588d97b9dd8de747d9b52cf7f620"><span>Für den Intercept der Regressionsgerade gilt <span class="math inline">\(b_0 \approx 640\)</span>.</span></label><label><input type="checkbox" autocomplete="off" name="83ab588d97b9dd8de747d9b52cf7f620"><span>Die unabhängige Variable ist die Mathematikleistung.</span></label><label><input type="checkbox" autocomplete="off" name="83ab588d97b9dd8de747d9b52cf7f620"><span>Der Prädiktor ist die Klassengröße.</span></label><label><input type="checkbox" autocomplete="off" name="83ab588d97b9dd8de747d9b52cf7f620"><span><code>CLASS SIZE GRADE 3</code> ist bimodal verteilt.</span></label><label><input type="checkbox" autocomplete="off" name="83ab588d97b9dd8de747d9b52cf7f620"><span>Das Outcome ist ungefähr normalverteilt.</span></label>
+<div id="webex-6888602714d148fa3d33f7f7751a8468" class="webex-checkboxgroup" data-answer="bQkUCRoAHgcdBUgAaQ==">
+<label><input type="checkbox" autocomplete="off" name="6888602714d148fa3d33f7f7751a8468"><span>Für den Slope der Regressionsgerade ist negativ.</span></label><label><input type="checkbox" autocomplete="off" name="6888602714d148fa3d33f7f7751a8468"><span>Für den Intercept der Regressionsgerade gilt <span class="math inline">\(b_0 \approx 640\)</span>.</span></label><label><input type="checkbox" autocomplete="off" name="6888602714d148fa3d33f7f7751a8468"><span>Die unabhängige Variable ist die Mathematikleistung.</span></label><label><input type="checkbox" autocomplete="off" name="6888602714d148fa3d33f7f7751a8468"><span>Der Prädiktor ist die Klassengröße.</span></label><label><input type="checkbox" autocomplete="off" name="6888602714d148fa3d33f7f7751a8468"><span><code>CLASS SIZE GRADE 3</code> ist bimodal verteilt.</span></label><label><input type="checkbox" autocomplete="off" name="6888602714d148fa3d33f7f7751a8468"><span>Das Outcome ist ungefähr normalverteilt.</span></label>
 </div>
 </section>
 <div class="webex-solution">
@@ -1465,8 +1473,8 @@ Warnung
 <section id="übung-20" class="level3 h3short unnumbered webex-check webex-box">
 <h3 class="h3short unnumbered anchored" data-anchor-id="übung-20">Übung <iconify-icon role="img" inline="" icon="fa7-solid:person-digging" aria-label="Icon person-digging from fa7-solid Iconify.design set." title="Icon person-digging from fa7-solid Iconify.design set."></iconify-icon></h3>
 <p>Welche Aussagen treffen auf obige Abbildung zu?</p>
-<div id="webex-fc1c916de89b15f5011a1a00bd9ceca4" class="webex-checkboxgroup" data-answer="PVIdUhUBGlRJCRVTbA==">
-<label><input type="checkbox" autocomplete="off" name="fc1c916de89b15f5011a1a00bd9ceca4"><span>Für den Slope der Regressionsgerade ist negativ.</span></label><label><input type="checkbox" autocomplete="off" name="fc1c916de89b15f5011a1a00bd9ceca4"><span>Für den Intercept der Regressionsgerade gilt <span class="math inline">\(b_0 \approx 640\)</span>.</span></label><label><input type="checkbox" autocomplete="off" name="fc1c916de89b15f5011a1a00bd9ceca4"><span>Die unabhängige Variable ist die Mathematikleistung.</span></label><label><input type="checkbox" autocomplete="off" name="fc1c916de89b15f5011a1a00bd9ceca4"><span>Der Prädiktor ist die Klassengröße.</span></label><label><input type="checkbox" autocomplete="off" name="fc1c916de89b15f5011a1a00bd9ceca4"><span><code>CLASS SIZE GRADE 3</code> ist bimodal verteilt.</span></label><label><input type="checkbox" autocomplete="off" name="fc1c916de89b15f5011a1a00bd9ceca4"><span>Das Outcome ist ungefähr normalverteilt.</span></label>
+<div id="webex-aef84fb9665c1464c96eba3e3cada9ea" class="webex-checkboxgroup" data-answer="OlRKCRhWTgkaBxlSbA==">
+<label><input type="checkbox" autocomplete="off" name="aef84fb9665c1464c96eba3e3cada9ea"><span>Für den Slope der Regressionsgerade ist negativ.</span></label><label><input type="checkbox" autocomplete="off" name="aef84fb9665c1464c96eba3e3cada9ea"><span>Für den Intercept der Regressionsgerade gilt <span class="math inline">\(b_0 \approx 640\)</span>.</span></label><label><input type="checkbox" autocomplete="off" name="aef84fb9665c1464c96eba3e3cada9ea"><span>Die unabhängige Variable ist die Mathematikleistung.</span></label><label><input type="checkbox" autocomplete="off" name="aef84fb9665c1464c96eba3e3cada9ea"><span>Der Prädiktor ist die Klassengröße.</span></label><label><input type="checkbox" autocomplete="off" name="aef84fb9665c1464c96eba3e3cada9ea"><span><code>CLASS SIZE GRADE 3</code> ist bimodal verteilt.</span></label><label><input type="checkbox" autocomplete="off" name="aef84fb9665c1464c96eba3e3cada9ea"><span>Das Outcome ist ungefähr normalverteilt.</span></label>
 </div>
 </section>
 <div class="webex-solution">
@@ -1477,8 +1485,8 @@ Warnung
 <section id="übung-21" class="level3 h3short unnumbered webex-check webex-box">
 <h3 class="h3short unnumbered anchored" data-anchor-id="übung-21">Übung <iconify-icon role="img" inline="" icon="fa7-solid:person-digging" aria-label="Icon person-digging from fa7-solid Iconify.design set." title="Icon person-digging from fa7-solid Iconify.design set."></iconify-icon></h3>
 <p>Welche Aussagen treffen auf obige Abbildung zu?</p>
-<div id="webex-19ccb9a3c1c82ff6f37122ebb85bf326" class="webex-checkboxgroup" data-answer="aghPUk4JTQNPAE8Jbw==">
-<label><input type="checkbox" autocomplete="off" name="19ccb9a3c1c82ff6f37122ebb85bf326"><span>Für den Slope der Regressionsgerade ist negativ.</span></label><label><input type="checkbox" autocomplete="off" name="19ccb9a3c1c82ff6f37122ebb85bf326"><span>Für den Intercept der Regressionsgerade gilt <span class="math inline">\(b_0 \approx 640\)</span>.</span></label><label><input type="checkbox" autocomplete="off" name="19ccb9a3c1c82ff6f37122ebb85bf326"><span>Die unabhängige Variable ist die Mathematikleistung.</span></label><label><input type="checkbox" autocomplete="off" name="19ccb9a3c1c82ff6f37122ebb85bf326"><span>Der Prädiktor ist die Klassengröße.</span></label><label><input type="checkbox" autocomplete="off" name="19ccb9a3c1c82ff6f37122ebb85bf326"><span><code>CLASS SIZE GRADE 3</code> ist bimodal verteilt.</span></label><label><input type="checkbox" autocomplete="off" name="19ccb9a3c1c82ff6f37122ebb85bf326"><span>Das Outcome ist ungefähr normalverteilt.</span></label>
+<div id="webex-848dbb5d73a078ff099ddbcd53abadfe" class="webex-checkboxgroup" data-answer="YwUUVU5SGVQbAk0Bag==">
+<label><input type="checkbox" autocomplete="off" name="848dbb5d73a078ff099ddbcd53abadfe"><span>Für den Slope der Regressionsgerade ist negativ.</span></label><label><input type="checkbox" autocomplete="off" name="848dbb5d73a078ff099ddbcd53abadfe"><span>Für den Intercept der Regressionsgerade gilt <span class="math inline">\(b_0 \approx 640\)</span>.</span></label><label><input type="checkbox" autocomplete="off" name="848dbb5d73a078ff099ddbcd53abadfe"><span>Die unabhängige Variable ist die Mathematikleistung.</span></label><label><input type="checkbox" autocomplete="off" name="848dbb5d73a078ff099ddbcd53abadfe"><span>Der Prädiktor ist die Klassengröße.</span></label><label><input type="checkbox" autocomplete="off" name="848dbb5d73a078ff099ddbcd53abadfe"><span><code>CLASS SIZE GRADE 3</code> ist bimodal verteilt.</span></label><label><input type="checkbox" autocomplete="off" name="848dbb5d73a078ff099ddbcd53abadfe"><span>Das Outcome ist ungefähr normalverteilt.</span></label>
 </div>
 </section>
 <div class="webex-solution">
@@ -1489,8 +1497,8 @@ Warnung
 <section id="übung-22" class="level3 h3short unnumbered webex-check webex-box">
 <h3 class="h3short unnumbered anchored" data-anchor-id="übung-22">Übung <iconify-icon role="img" inline="" icon="fa7-solid:person-digging" aria-label="Icon person-digging from fa7-solid Iconify.design set." title="Icon person-digging from fa7-solid Iconify.design set."></iconify-icon></h3>
 <p>Welche Aussagen treffen auf obige Abbildung zu?</p>
-<div id="webex-349332455804152f96b89532fca89f70" class="webex-checkboxgroup" data-answer="aAUVAh8CGAUZCRwFbA==">
-<label><input type="checkbox" autocomplete="off" name="349332455804152f96b89532fca89f70"><span>Für den Slope der Regressionsgerade ist negativ.</span></label><label><input type="checkbox" autocomplete="off" name="349332455804152f96b89532fca89f70"><span>Für den Intercept der Regressionsgerade gilt <span class="math inline">\(b_0 \approx 640\)</span>.</span></label><label><input type="checkbox" autocomplete="off" name="349332455804152f96b89532fca89f70"><span>Die unabhängige Variable ist die Mathematikleistung.</span></label><label><input type="checkbox" autocomplete="off" name="349332455804152f96b89532fca89f70"><span>Der Prädiktor ist die Klassengröße.</span></label><label><input type="checkbox" autocomplete="off" name="349332455804152f96b89532fca89f70"><span><code>CLASS SIZE GRADE 3</code> ist bimodal verteilt.</span></label><label><input type="checkbox" autocomplete="off" name="349332455804152f96b89532fca89f70"><span>Das Outcome ist ungefähr normalverteilt.</span></label>
+<div id="webex-6c83d2b7bc29da0f6461ab11082eff79" class="webex-checkboxgroup" data-answer="bVIUAkgCTgdOUh4IOQ==">
+<label><input type="checkbox" autocomplete="off" name="6c83d2b7bc29da0f6461ab11082eff79"><span>Für den Slope der Regressionsgerade ist negativ.</span></label><label><input type="checkbox" autocomplete="off" name="6c83d2b7bc29da0f6461ab11082eff79"><span>Für den Intercept der Regressionsgerade gilt <span class="math inline">\(b_0 \approx 640\)</span>.</span></label><label><input type="checkbox" autocomplete="off" name="6c83d2b7bc29da0f6461ab11082eff79"><span>Die unabhängige Variable ist die Mathematikleistung.</span></label><label><input type="checkbox" autocomplete="off" name="6c83d2b7bc29da0f6461ab11082eff79"><span>Der Prädiktor ist die Klassengröße.</span></label><label><input type="checkbox" autocomplete="off" name="6c83d2b7bc29da0f6461ab11082eff79"><span><code>CLASS SIZE GRADE 3</code> ist bimodal verteilt.</span></label><label><input type="checkbox" autocomplete="off" name="6c83d2b7bc29da0f6461ab11082eff79"><span>Das Outcome ist ungefähr normalverteilt.</span></label>
 </div>
 </section>
 <div class="webex-solution">
@@ -1705,13 +1713,13 @@ unterdurchschn. ML
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">unterdurchschn. ML</td>
-<td style="text-align: left;"><input class="webex-solveme nospaces" id="webex-48d329a531f4d752b151210aec8c0056" data-tol="0.2" size="20" data-answer="bxpUHQULQ2g="></td>
-<td style="text-align: left;"><input class="webex-solveme nospaces" id="webex-3f340b990606c59526d22aec23c86fb9" data-tol="0.2" size="20" data-answer="aEQDGgJaG2Q="></td>
+<td style="text-align: left;"><input class="webex-solveme nospaces" id="webex-d2fe2a7f27519521b84f63044ed2100c" data-tol="0.2" size="20" data-answer="PxBWSwVTFTs="></td>
+<td style="text-align: left;"><input class="webex-solveme nospaces" id="webex-1c84f82ce1fb2bf7accdf27a904ee695" data-tol="0.2" size="20" data-answer="akEIGlQAED4="></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">überdurchschn. ML</td>
-<td style="text-align: left;"><input class="webex-solveme nospaces" id="webex-2e2078dfab8de3c3d915b428e0cb2862" data-tol="0.2" size="20" data-answer="aUcCHgUARjs="></td>
-<td style="text-align: left;"><input class="webex-solveme nospaces" id="webex-a361c61dc2472481b69baa14ca8a0317" data-tol="0.2" size="20" data-answer="OhEGH1QEEzk="></td>
+<td style="text-align: left;"><input class="webex-solveme nospaces" id="webex-fd26d5c8fef392e5d221b6e40cd93b6b" data-tol="0.2" size="20" data-answer="PUYCGFYNQWU="></td>
+<td style="text-align: left;"><input class="webex-solveme nospaces" id="webex-3526c154461ed36fd9c9fcf023326ab7" data-tol="0.2" size="20" data-answer="aBcCGFQDF2k="></td>
 </tr>
 </tbody>
 </table>
@@ -1817,13 +1825,13 @@ unterdurchschn. ML
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">unterdurchschn. ML</td>
-<td style="text-align: left;"><input class="webex-solveme nospaces" id="webex-5ebbea635c34ccf8f6eb9777e6e9edc4" data-tol="0.2" size="20" data-answer="bkdSTF1Daw=="></td>
-<td style="text-align: left;"><input class="webex-solveme nospaces" id="webex-3433baddf4501567eb412f0399ce032b" data-tol="0.2" size="20" data-answer="aBYDHVBDOQ=="></td>
+<td style="text-align: left;"><input class="webex-solveme nospaces" id="webex-075c751127baab635c624e25e3b01458" data-tol="0.2" size="20" data-answer="axUFTQ8XbA=="></td>
+<td style="text-align: left;"><input class="webex-solveme nospaces" id="webex-552669bf4c845c1610fcf283b255db25" data-tol="0.2" size="20" data-answer="bhcCGAQbPw=="></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">überdurchschn. ML</td>
-<td style="text-align: left;"><input class="webex-solveme nospaces" id="webex-1940c0de15986bb569e9994620e23523" data-tol="0.2" size="20" data-answer="ahsEHlESOQ=="></td>
-<td style="text-align: left;"><input class="webex-solveme nospaces" id="webex-4f5a04a9a30bfbfdb15c57f7b70270a3" data-tol="0.2" size="20" data-answer="b0QFTwgWPA=="></td>
+<td style="text-align: left;"><input class="webex-solveme nospaces" id="webex-d4663ab1428b161f968d3bd1fda2407c" data-tol="0.2" size="20" data-answer="PxYGGAFDPw=="></td>
+<td style="text-align: left;"><input class="webex-solveme nospaces" id="webex-38906daa7e9522b9a41d422ec235e6aa" data-tol="0.2" size="20" data-answer="aBoJHg5GPA=="></td>
 </tr>
 </tbody>
 </table>
@@ -1929,13 +1937,13 @@ unterdurchschn. ML
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">unterdurchschn. ML</td>
-<td style="text-align: left;"><input class="webex-solveme nospaces" id="webex-00b0b29f6f6e01c9632ccbc86fed93a6" data-tol="0.2" size="20" data-answer="axJSHlUBGzs="></td>
-<td style="text-align: left;"><input class="webex-solveme nospaces" id="webex-80cf1d083834a6a6b49eb93f567848a4" data-tol="0.2" size="20" data-answer="YxJTSANTEmU="></td>
+<td style="text-align: left;"><input class="webex-solveme nospaces" id="webex-4f69801bc17947bbf97d405dd89c265f" data-tol="0.2" size="20" data-answer="b0QGFw8DEz8="></td>
+<td style="text-align: left;"><input class="webex-solveme nospaces" id="webex-94d421071b61756f92bd0c375b70aaee" data-tol="0.2" size="20" data-answer="YhZUGgAGEmo="></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">überdurchschn. ML</td>
-<td style="text-align: left;"><input class="webex-solveme nospaces" id="webex-b49d51f556fa474b08fc661656524c4c" data-tol="0.2" size="20" data-answer="ORYJSgcGRGg="></td>
-<td style="text-align: left;"><input class="webex-solveme nospaces" id="webex-f626b9df9212183c1e0e191a7a8d25cf" data-tol="0.2" size="20" data-answer="PRQCGFUKRjs="></td>
+<td style="text-align: left;"><input class="webex-solveme nospaces" id="webex-ad206cc6fe64b5d415907de84e0b553b" data-tol="0.2" size="20" data-answer="OkYCHgRUQWs="></td>
+<td style="text-align: left;"><input class="webex-solveme nospaces" id="webex-2a7c20d27516c8c6f1e435eb0d1a46a6" data-tol="0.2" size="20" data-answer="aUMHTQUDRm8="></td>
 </tr>
 </tbody>
 </table>
@@ -2041,13 +2049,13 @@ unterdurchschn. ML
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">unterdurchschn. ML</td>
-<td style="text-align: left;"><input class="webex-solveme nospaces" id="webex-f0a6c65d429427e56f64f8a8e4ce7d9c" data-tol="0.2" size="20" data-answer="PRJRGFsAFzk="></td>
-<td style="text-align: left;"><input class="webex-solveme nospaces" id="webex-e808098e08e5a1a8986f3413c0c43575" data-tol="0.2" size="20" data-answer="PhoAFgENGjg="></td>
+<td style="text-align: left;"><input class="webex-solveme nospaces" id="webex-683c5aac5520c4d9a96e049bb566b721" data-tol="0.2" size="20" data-answer="bRoDTQ1XQz4="></td>
+<td style="text-align: left;"><input class="webex-solveme nospaces" id="webex-b70ddeed9aa8ba039bae762b098fb194" data-tol="0.2" size="20" data-answer="ORUASlVRRzk="></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">überdurchschn. ML</td>
-<td style="text-align: left;"><input class="webex-solveme nospaces" id="webex-8324f51472b698f89f3c1152fce8b8ef" data-tol="0.2" size="20" data-answer="YxECGlcBE2k="></td>
-<td style="text-align: left;"><input class="webex-solveme nospaces" id="webex-72e0dcefe63525b4d2c7314819033b13" data-tol="0.2" size="20" data-answer="bBBVHlxVRzs="></td>
+<td style="text-align: left;"><input class="webex-solveme nospaces" id="webex-0956c482280ed55f4f112a99fa638af0" data-tol="0.2" size="20" data-answer="axsFGFIAGm8="></td>
+<td style="text-align: left;"><input class="webex-solveme nospaces" id="webex-4ff8670eac7ef360b72b4eb1c0344e95" data-tol="0.2" size="20" data-answer="b0RWFg4BEjg="></td>
 </tr>
 </tbody>
 </table>
