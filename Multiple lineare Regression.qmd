@@ -39,10 +39,9 @@ library(sjPlot)
 #| echo: false
 #| results: hide
 data_star <- read_sav(
-  #"https://raw.githubusercontent.com/sammerk/did_data/master/data_star.sav"
-  "data_star_workshop.sav"
+  "https://raw.githubusercontent.com/sammerk/WinterSchoolZH/master/data_star_workshop.sav"
 )
-#codebook::label_browser_static(data_star)
+
 data_star_subset <- data_star %>%
   group_by(g3tchid) %>%
   summarize(
