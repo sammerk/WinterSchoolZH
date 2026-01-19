@@ -1,0 +1,59 @@
+---
+title: "Methodologie des Längsschnitts"
+---
+
+## Was sind Längsschnittdaten?
+Längsschnittliche Daten werden typischerweise zur **explorativen** oder **konfirmatorischen** Modellierung von Form, Ursache oder Folge messwiederholter Daten verwendet [@curran2010].
+
+»**Messwiederholt**« meint dabei, dass dieselbe Variable zu mindestens zwei Zeitpunkten an demselben Merkmalsträger gemessen wird (siehe @fig-panel-vs-trend). Diese Terminologie wird in den Sozialwissenschaften sehr uneinheitlich gebraucht. So ist manchmal auch bei Trendstudien [@döring2016] die Rede von »Längsschnitten«.
+
+![Visualisierung von Trend- und Panelstudien](img/panel-vs-trend.svg){#fig-panel-vs-trend}
+
+## Erkenntnisinteressen sozialwissenschaftlicher Studien
+
+Wichtig zu bedenken ist, dass Messwiederholungen (»Längsschnitte«) ein Merkmal des Studiendesigns sind und damit recht unabhängig vom Erkenntnisinteresse (siehe @tbl-erkenntnisinteresse) der Studie.
+
+::: column-page-right
+| Deskriptiv | Explorativ | Explanativ | Prädiktiv |
+|------------------|------------------|------------------|-------------------|
+| populationsbeschreibend | hypothesengenerierend | hypothesenprüfend | Datenpunkte vorhersagend oder imputierend |
+| *Wie groß ist der durchschnittliche Kompetenzzuwachs in einem Jahr* | *Was sind potentielle Ursachen der Interessensabnahme bei Schülerinnen und Schülern?* | *Nimmt das Interesse an MINT-Fächern in der Sekundarstufe geschlechtsspezifisch ab?* | *Mit welchen Variablen können Schüler:innen at risk erfolgreich identifiziert werden?* |
+
+: Erkenntisinteressen sozialwissenschaftlicher Studien nach [@döring2016] {#tbl-erkenntnisinteresse}
+:::
+
+## Längsschnittdesigns und Erkenntnisinteressen
+
+Längsschnittliche Daten können für alle Erkenntnisinteressen verwendet werden. Es kann also deskriptive, explorative, explanative und prädiktive Studien mit querschnittlicher *oder* längsschnittlicher Datengrundlage geben.
+
+```{r}
+#| echo: false
+#| results: 'asis'
+#| warning: false
+#| label: erkenntnisinteresse-erkennen
+library(exams)
+library(exams2forms)
+exams2forms("exams/Deskriptive_Explorative_Explanative_Studien_r.Rmd", n = 20)
+```
+
+## Längsschnittdesigns und methodische Strenge
+
+Moderne Lehrbücher nennen als Gütekriterien quantitativer Sozialforschung oft Dinge wie »*inhaltiche Relevanz*«, »*Ethische Strenge*« oder »*Präsentationsqualität*« [@döring2016; @shadish2001]. Insbesondere wird aber meist die »*methodische Strenge*« untergliedert in die Validitätsformen nach Campbell [-@campbell1957] diskutiert. Diese sind:
+
+-   **Konstruktvalidität** (*Inwiefern ist die Interpretation der Messwerte angemessen?*)
+-   **Interne Validität** (*Inwiefern sind Assoziationen von unabhängiger \[beeinflussender\] und abhängiger \[beeinflusster\] Variabler als kausale Effekte interpretierbar?*)
+-   **Externe Validität** (*Inwiefern können die Schlussfolgerungen der Studie verallgemeinert werden?*)
+-   **Statistische Validität** (*Wie robust und angemessen sind die verwendeten statistischen Verfahren?*)
+
+Während zur Steigerung der internen Validität meist Maßnahmen wie Randomisierung der unabhängigen Variablen, Kontroll- und Vergleichsgruppen, Matching, Laborstudien, Direkte Replikationen, (Doppelte) Verblindung oder Präregistrerung genannt werden und zur Steigerung der externen Validität e Zufallsstichproben aus der Zielpopulation, Gewichtungen, Konzeptuelle Replikationen, Feldstudien und Metaanalysen, bleibt hervorzuheben, dass längsschnittliche Designs geeignet sind, vor allem die interne aber auch die externe Validität zu steigern: So können nur in längsschnittlichen Daten typische Bedrohungen der internen Validität [@cook1979] wie Reifungseffekte, unklare zeitliche Reihung, externe zeitliche Einflüsse oder Regression zur Mitte aufgedeckt werden.
+
+```{r}
+#| echo: false
+#| results: 'asis'
+#| warning: false
+#| label: guetekriterien-vergleichen
+library(exams)
+library(exams2forms)
+exams2forms("exams/methodische-strenge-vergleichen.Rmd", n = 20)
+```
+

@@ -1,0 +1,29 @@
+---
+title: "Herzlich Willkommen 👋🏼"
+---
+
+Auf dieser Seite finden Sie eine Sammlung von Ressourcen, Tutorials und Anleitungen rund um das Thema Längsschnittmodellierung mit {{< iconify fa6-brands r-project style="color:#267326;" >}}.
+
+
+:::{.callout-note collapse=false appearance='default' icon=false}
+## Zweck dieses E-Books {{< iconify fa6-solid lightbulb >}}
+Dieses E-Book soll kein Lehrbuch für {{< iconify fa6-brands r-project style="color:#267326;" >}} sein. Vielmehr ein Notizbuch für den Workshop mit einer Sammlung von Erklärungen, Aufgaben, Code, Links, Datensätzen und Literaturverweisen.
+Diese sollen als Ausgangpunkt für eigene Literatur- und Netzrecherche sowie vielfältiger AI-Chats sein.
+:::
+
+
+
+```{r}
+#| label: data preparation
+#| echo: false
+#| eval: false
+library(codebook)
+library(haven)
+library(tidyverse)
+
+read_sav(
+  "https://raw.githubusercontent.com/sammerk/did_data/master/data_star.sav"
+) %>%
+  select(g3tchid, g3classsize, g3tmathss, g2tmathss, g2freelunch) %>%
+  write_sav("data_star_workshop.sav")
+```
