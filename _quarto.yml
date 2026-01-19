@@ -11,10 +11,10 @@ website:
   sidebar:
     logo: img/logo.svg
     contents:
-      - chapters/index.qmd
-      - chapters/Methodologie des Längssschnitts.qmd
-      - chapters/Einfache lineare Regression.qmd
-      - chapters/Multiple lineare Regression.qmd
+      - index.qmd
+      - Methodologie des Längssschnitts.qmd
+      - Einfache lineare Regression.qmd
+      - Multiple lineare Regression.qmd
 
 format:
   live-html:
