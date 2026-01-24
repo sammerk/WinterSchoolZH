@@ -11,13 +11,14 @@ webr:
     - haven
 #    - ggplot2
 toc: true    
+lang: de
 ---
 
 {{< include _extensions/r-wasm/live/_knitr.qmd >}}
 
 ## Geometrische Repräsentation der multiplen Regression
 
-Die multiple Regression unterscheidet sich von der einfachen Regression dadurch, dass sie mehr als eine unabhängige Variable enthält. In der geometrischen Repräsentation einer multiplen Regression mit zwei Prädiktoren bedeutet dies, dass die Regressionsgerade zu eine Regressionsfläche wird (siehe @fig-plot-mult-reg).
+Die multiple Regression unterscheidet sich von der einfachen Regression dadurch, dass sie mehr als eine unabhängige Variable enthält. In der geometrischen Repräsentation einer multiplen Regression mit zwei Prädiktoren bedeutet dies, dass die Regressionsgerade zu einer Regressionsfläche wird (siehe @fig-plot-mult-reg).
 
 ```{r}
 #| label: libraries
@@ -183,7 +184,7 @@ exams2forms("exams/regressionsebene-interpretieren.Rmd", n = 1)
 
 ## Algebraische Notation der multiplen Regression
 
-Die algeraische Notation der einfachen lienaren Regression kann durch die Aufnahme weiterer \$b_j \cdot x\_{j} Terme leicht zur Notation der multiple lienaren Regression ausgebaut werden. Weiterhin wird jedoch nur ein Term für das Residuum benötigt, da dies den Abstand parallel zur Achse der abhängigen Variable eines Datenpunktes und der Regressionsebene darstellt.
+Die algeraische Notation der einfachen linearen Regression kann durch die Aufnahme weiterer $b_j \cdot x_{ji}$ Terme leicht zur Notation der multiplen linearen Regression ausgebaut werden. Weiterhin wird jedoch nur ein Term für das Residuum benötigt, da dies den Abstand parallel zur Achse der abhängigen Variable eines Datenpunktes und der Regressionsebene darstellt.
 
 $$
 y_i = b_0 + b_1 \cdot x_{1i} + b_2 \cdot x_{2i} + \dots +  \varepsilon_i
@@ -404,14 +405,14 @@ plot_ly(data_star_subset) %>%
 
 Die Geraden in @fig-plot-mult-reg-mit stellen die einfachen linearen Regressionsgeraden für die beiden unabhängigen Variablen dar. Sie sind jeweils steiler als die Schnittgeraden der Regressionsfläche mit den Koordinatenebenen in denen diese Regressionsgeraden liegen.
 
-Dies verdeutlicht, dass die beiden unabhängigen Variablen nicht unabhängig voneindander sind, das vierte Regressionsmodell in @tbl-multregression weist ebenfalls darauf hin.
+Dies verdeutlicht, dass die beiden unabhängigen Variablen nicht unabhängig voneinander sind. Das vierte Regressionsmodell in @tbl-multregression weist ebenfalls darauf hin.
 
 ## Kausalanalytische Betrachtung
 
-Ergebnisse wie das des dritten Modells in @tbl-multregression werden oft mit *»Effekt des Vorwissens auch nach Kontrolle des Sozioökonomischen Status«* beschrieben. Dabei kann der Eindruck entstehen, dass durch die Aufnahme weiterer Variablen in ein Regressionsmodell eine Art *»Bereinigung«* der Effekte der unabhängigen Variablen stattfindet, sodass kausale Effekte einzelner Prädiktoren isoliert betrachtet werden können. Dies ist allerdings nur sehr selten der Fall.
+Ergebnisse wie das des dritten Modells in @tbl-multregression werden oft mit *»Effekt des Vorwissens auf die Mathematikleistung auch nach Kontrolle des Sozioökonomischen Status«* beschrieben. Dabei kann der Eindruck entstehen, dass durch die Aufnahme weiterer Variablen in ein Regressionsmodell eine Art *»Bereinigung«* der Effekte der unabhängigen Variablen stattfindet, sodass kausale Effekte einzelner Prädiktoren isoliert betrachtet werden können. Dies ist allerdings nur sehr selten der Fall.
 
 > Die Ergebnisse von (multiplen) Regressionsanalysen sind (wie alle statistischen Modelle) nicht dazu geeignet kausale Zusammenhänge »zu entdecken« oder »aufzudecken« \[*the causes are not in the data*\].
 
-Vorab postulierte, theoretisch fundierte Kausalzusammenhänge können jedoch im Einklang oder im Widerspruch zu den Ergebnissen (multipler Regressionsmodelle) stehen (siehe @tbl-dags-regression): So sind die ersten beiden in @fig-DAG-multiple-Reg in Form von Direct Acyclic Graphs @rohrer2018 dargestellten Kausalannahmen mit den Regressionsergebnissen vereinbar, die dritte jedoch nicht. Sie impliziert keine Kovarianz zwischen `SES` (Anteil Free Lunch) und der Matheleistung in Kl. 2, der sich jedoch empirisch zeigt. 
+Vorab postulierte, theoretisch fundierte Kausalzusammenhänge können jedoch im Einklang oder im Widerspruch zu den Ergebnissen (multipler Regressionsmodelle) stehen: So sind die ersten beiden in @fig-DAG-multiple-Reg in Form von Direct Acyclic Graphs [@rohrer2018] dargestellten Kausalannahmen mit den Regressionsergebnissen vereinbar, die dritte jedoch nicht. Sie impliziert keine Kovarianz zwischen SES (Anteil Free Lunch) und der Matheleistung in Kl. 2, der sich jedoch empirisch zeigt. 
 
 ![Hypothetische Kausalzusammenhänge in Form von Direct Acyclic Graphs.](img/DAG-multiple-Reg.svg){#fig-DAG-multiple-Reg fig-align="left" width="68%"}

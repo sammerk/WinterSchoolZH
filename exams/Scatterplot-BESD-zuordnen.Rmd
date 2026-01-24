@@ -62,7 +62,6 @@ ggplot(data_gt, aes(`Sozioökonomischer Status (SES)`, `Matheleistung (ML)`)) +
 ```
 
 
-`r data_cloze |>  kable(digits = 2) |>  kable_styling(full_width = FALSE, position = "left")`
 Geben Sie in folgender Tabelle die vier Felder des Binomial Effect Size Display als Werte jeweils zwischen 0 und 1 an.
 `r add_cloze(data_cloze, tolerance = .2)`
 

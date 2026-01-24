@@ -9,6 +9,16 @@ Längsschnittliche Daten werden typischerweise zur **explorativen** oder **konfi
 
 ![Visualisierung von Trend- und Panelstudien](img/panel-vs-trend.svg){#fig-panel-vs-trend}
 
+```{r}
+#| echo: false
+#| results: 'asis'
+#| warning: false
+#| label: laengsschnitte-erkennen
+library(exams)
+library(exams2forms)
+exams2forms("exams/Laengsschnitttliche_Studie_erkennen.Rmd", n = 20)
+```
+
 ## Erkenntnisinteressen sozialwissenschaftlicher Studien
 
 Wichtig zu bedenken ist, dass Messwiederholungen (»Längsschnitte«) ein Merkmal des Studiendesigns sind und damit recht unabhängig vom Erkenntnisinteresse (siehe @tbl-erkenntnisinteresse) der Studie.
@@ -33,7 +43,7 @@ Längsschnittliche Daten können für alle Erkenntnisinteressen verwendet werden
 #| label: erkenntnisinteresse-erkennen
 library(exams)
 library(exams2forms)
-exams2forms("exams/Deskriptive_Explorative_Explanative_Studien_r.Rmd", n = 20)
+exams2forms("exams/Deskriptive_Explorative_Explanative_Praediktive_Studien_Laengsschnitt.Rmd", n = 20)
 ```
 
 ## Längsschnittdesigns und methodische Strenge

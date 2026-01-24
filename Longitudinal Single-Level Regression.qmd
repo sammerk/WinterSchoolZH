@@ -1,0 +1,67 @@
+---
+title: "Longitudinal Single Level Regression"
+format:
+  live-html:
+    css: 
+      - exams/webex.css
+    include-after-body: exams/webex.js
+webr:
+  packages:
+    - dplyr
+    - ggplot2
+    - haven
+toc: true    
+---
+
+{{< include _extensions/r-wasm/live/_knitr.qmd >}}
+
+Die multiple Regression ist bereits ein mächtiges Werkzeug zur Modellierung längsschnittlicher Daten, wenn nicht mehr als zwei Messzeitpunkte vorliegen.
+
+## Grundidee
+Wird eine Messung genau einmal wiederholt (z.B. Variablen $AVPRE$, $AVPOST$), so kann in einem Single-Level Regressionsmodell 
+
+* die Differenz $\left(AVPOST - AVPRE\right)$  (siehe @sec-prädiktion-differenzen) oder 
+* die Differenz individueller Werte zum zweiten Zeitpunkt von der erwartbaren Entwicklung (z.B. Residuum der Regression $AVPOST_i = b_0 + b_1 \cdot AVPRE_i + \epsilon_i$) (siehe @sec-prädiktion-nach-adjustierung)
+
+mit weiteren unabhängigen Variablen prädiziert werden.
+
+
+## Prädiktion von Differenzwerten {#sec-prädiktion-differenzen}
+```{r}
+#| label: data setup longitudinal single level
+#| cache: true
+#| echo: false
+#| results: hide
+library(haven)
+library(tidyverse)
+data_star <- read_sav(
+  "https://raw.githubusercontent.com/sammerk/WinterSchoolZH/master/data_star_workshop.sav"
+)
+
+data_star_subset <- data_star %>%
+  group_by(g3tchid) %>%
+  summarize(
+    `Mathe Klassenmittelwert Kl. 2` = mean(g2tmathss, na.rm = T),
+    `Mathe Klassenmittelwert Kl. 3` = mean(g3tmathss, na.rm = T),
+    `Anteil Free Lunch` = mean(ifelse(g2freelunch == 1, 1, 0), na.rm = T),
+    g3classsize = mean(g3classsize, na.rm = T)
+  ) %>%
+  ungroup() %>%
+  # Berechnung des Veränderungsscores
+  mutate(
+    `Mathe Klassenmittelwert Veränderung` = `Mathe Klassenmittelwert Kl. 3` -
+      `Mathe Klassenmittelwert Kl. 2`
+  )
+```
+
+### Prädiktion der Veränderung mit `g3classsize`
+
+```{r}
+mod_change_linreg01 <- lm(
+  `Mathe Klassenmittelwert Veränderung` ~ + g3classsize,
+  data = data_star_subset
+)
+```
+
+## Prädiktion nach Adjustierung um Prä-Messung {#sec-prädiktion-nach-adjustierung}
+
