@@ -1,5 +1,5 @@
 ---
-title: "Longitudinal Single Level Regression"
+title: "Longitudinal Single-Level Regression"
 format:
   live-html:
     css: 
@@ -15,38 +15,36 @@ toc: true
 
 {{< include _extensions/r-wasm/live/_knitr.qmd >}}
 
-Die multiple Regression ist bereits ein mächtiges Werkzeug zur Modellierung längsschnittlicher Daten, wenn nicht mehr als zwei Messzeitpunkte vorliegen.
 
 ## Grundidee
-Wird eine Messung genau einmal wiederholt (z.B. Variablen $AVPRE$, $AVPOST$), so kann in einem Single-Level Regressionsmodell 
+Mehrebenenregressionsmodelle (auch Multi-Level-Modelle, Hierachische Modelle oder Mixed-Effects-Modelle) sind ein mächtiges Werkzeug zur Modellierung von Daten, die auf mehreren Ebenen genested (geclusterd) organisiert sind. Diese Cluster können etwa Schülerinnen und Schüler in Klassen sein oder Messwiederholungen in Merkmalsträgern. 
+Die Grundidee der Modellierung längsschnittlicher Daten mit Mehrebenenmodellen besteht darin, sowohl die Variation innerhalb der Cluster (=Merkmalsträger) als auch zwischen den Clustern zu modellieren. Die Variation zischen den Clustern (auch Level-2 Effekte oder Random Effekte) werden dabei als »Streuung von Regressionsparametern« konzeptualisiert.
 
-* die Differenz $\left(AVPOST - AVPRE\right)$  (siehe @sec-prädiktion-differenzen) oder 
-* die Differenz individueller Werte zum zweiten Zeitpunkt von der erwartbaren Entwicklung (z.B. Residuum der Regression $AVPOST_i = b_0 + b_1 \cdot AVPRE_i + \epsilon_i$) (siehe @sec-prädiktion-nach-adjustierung)
-
-mit weiteren unabhängigen Variablen prädiziert werden.
 
 
 ## Prädiktion von Differenzwerten {#sec-prädiktion-differenzen}
-```{webr}
-#| envir: env chapter single-level
-#| exercise: data setup longitudinal single level
-#| autorun: false
-#| warning:	false
-
+```{r}
 library(haven)
 library(dplyr)
 library(ggplot2)
+
+
 data_star <- read_sav(
   "https://raw.githubusercontent.com/sammerk/WinterSchoolZH/master/data_star_workshop.sav"
 )
 
 data_star_subset <- data_star %>%
-  group_by(g3tchid) %>%
+  group_by(g2tchid) %>%
   summarize(
-    `Mathe Klassenmittelwert Kl. 2` = mean(g2tmathss, na.rm = T),
-    `Mathe Klassenmittelwert Kl. 3` = mean(g3tmathss, na.rm = T),
-    `Anteil Free Lunch` = mean(ifelse(g2freelunch == 1, 1, 0), na.rm = T),
-    g3classsize = mean(g3classsize, na.rm = T)
+    MathClassMeanCl2 = mean(g2tmathss, na.rm = T),
+    MathClassMeanCl3 = mean(g3tmathss, na.rm = T),
+    MathClassMeanCl4 = mean(g4tmathss, na.rm = T),
+    PropFreeLunchCl2 = mean(ifelse(g2freelunch == 1, 1, 0), na.rm = T),
+    PropFreeLunchCl3 = mean(ifelse(g3freelunch == 1, 1, 0), na.rm = T),
+    PropFreeLunchCl4 = mean(ifelse(g4freelunch == 1, 1, 0), na.rm = T),
+    g2classsize = mean(g2classsize, na.rm = T),
+    g3classsize = mean(g3classsize, na.rm = T),
+    g4classsize = mean(g4classsize, na.rm = T)
   ) %>%
   ungroup() %>%
   # Berechnung des Veränderungsscores
@@ -59,7 +57,7 @@ data_star_subset <- data_star %>%
 
 ### Grafische Darstellung
 ```{webr}
-#| envir: env chapter single-level
+#| envir: myenv
 #| exercise: plot diff prediction
 #| autorun: false
 #| warning:	false
@@ -83,7 +81,7 @@ ggplot(
 ### Prädiktion der Differenz mit `g3classsize`
 
 ```{webr}
-#| envir: env chapter single-level
+#| envir: myenv
 #| exercise: model diff prediction
 #| autorun: false
 #| warning:	false
@@ -100,7 +98,7 @@ summary(mod_change_linreg01)
 ### Grafische Darstellung
 
 ```{webr}
-#| envir: env chapter single-level
+#| envir: myenv
 #| exercise: plot adjusted prediction
 #| autorun: false
 #| warning:	false
@@ -125,7 +123,7 @@ ggplot(
 
 ### Prädiktion nach Adjustierung
 ```{webr}
-#| envir: env chapter single-level
+#| envir: myenv
 #| exercise: model adjusted prediction
 #| autorun: false
 #| warning:	false

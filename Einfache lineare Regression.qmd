@@ -926,7 +926,6 @@ library(brand.yml)  # für Anpassung der Plots an das Design des eBooks
 #| cache: true
 #| result: hide
 data_star <- read_sav(
-  #"https://raw.githubusercontent.com/sammerk/did_data/master/data_star.sav"
   "data_star_workshop.sav"
 )
 
@@ -975,7 +974,7 @@ schätzen und inferenzstatistisch absichern lassen. Nutzen Sie die gestuften Lö
 #| exercise:
 #|   - einf lin reg classmean classsize
 data_star <- read_sav(
-  "https://raw.githubusercontent.com/sammerk/did_data/master/STAR.sav"
+  "https://raw.githubusercontent.com/sammerk/WinterSchoolZH/master/data_workshop.sav"
 )
 
 data_star_subset <- data_star %>%
