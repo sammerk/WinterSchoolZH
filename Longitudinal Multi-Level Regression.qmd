@@ -22,7 +22,7 @@ Die Grundidee der Modellierung längsschnittlicher Daten mit Mehrebenenmodellen 
 
 
 
-## Prädiktion von Differenzwerten {#sec-prädiktion-differenzen}
+## Data Wranglong {#sec-prädiktion-differenzen}
 ```{r}
 library(haven)
 library(dplyr)
@@ -34,24 +34,22 @@ data_star <- read_sav(
 )
 
 data_star_subset <- data_star %>%
-  group_by(g2tchid) %>%
+  group_by(g1tchid) %>%
   summarize(
+    MathClassMeanCl1 = mean(g1tmathss, na.rm = T),
     MathClassMeanCl2 = mean(g2tmathss, na.rm = T),
     MathClassMeanCl3 = mean(g3tmathss, na.rm = T),
     MathClassMeanCl4 = mean(g4tmathss, na.rm = T),
+    PropFreeLunchCl1 = mean(ifelse(g1freelunch == 1, 1, 0), na.rm = T),
     PropFreeLunchCl2 = mean(ifelse(g2freelunch == 1, 1, 0), na.rm = T),
     PropFreeLunchCl3 = mean(ifelse(g3freelunch == 1, 1, 0), na.rm = T),
     PropFreeLunchCl4 = mean(ifelse(g4freelunch == 1, 1, 0), na.rm = T),
+    g1classsize = mean(g1classsize, na.rm = T),
     g2classsize = mean(g2classsize, na.rm = T),
-    g3classsize = mean(g3classsize, na.rm = T),
-    g4classsize = mean(g4classsize, na.rm = T)
+    g3classsize = mean(g3classsize, na.rm = T)
   ) %>%
-  ungroup() %>%
-  # Berechnung des Veränderungsscores
-  mutate(
-    `Mathe Klassenmittelwert Veränderung` = `Mathe Klassenmittelwert Kl. 3` -
-      `Mathe Klassenmittelwert Kl. 2`
-  )
+  ungroup()
+
 ```
 
 

@@ -10,6 +10,10 @@ data_star <- read_sav(
 write_sav(
   data_star %>%
     select(
+      g1tchid,
+      g2tchid,
+      g3tchid,
+      g4tchid,
       g1tmathss,
       g2tmathss,
       g3tmathss,
