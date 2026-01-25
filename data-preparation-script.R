@@ -25,6 +25,17 @@ write_sav(
       g1classsize,
       g2classsize,
       g3classsize
+    ) %>%
+    mutate(
+      classID = ifelse(
+        !is.na(g1tchid),
+        g1tchid,
+        ifelse(
+          !is.na(g2tchid),
+          g2tchid,
+          g3tchid
+        )
+      )
     ),
   "data_star_workshop.sav"
 )

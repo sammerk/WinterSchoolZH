@@ -23,14 +23,14 @@ exams2forms("exams/Laengsschnitttliche_Studie_erkennen.Rmd", n = 20)
 
 Wichtig zu bedenken ist, dass Messwiederholungen (»Längsschnitte«) ein Merkmal des Studiendesigns sind und damit recht unabhängig vom Erkenntnisinteresse (siehe @tbl-erkenntnisinteresse) der Studie.
 
-::: column-page-right
+
 | Deskriptiv | Explorativ | Explanativ | Prädiktiv |
 |------------------|------------------|------------------|-------------------|
 | populationsbeschreibend | hypothesengenerierend | hypothesenprüfend | Datenpunkte vorhersagend oder imputierend |
 | *Wie groß ist der durchschnittliche Kompetenzzuwachs in einem Jahr* | *Was sind potentielle Ursachen der Interessensabnahme bei Schülerinnen und Schülern?* | *Nimmt das Interesse an MINT-Fächern in der Sekundarstufe geschlechtsspezifisch ab?* | *Mit welchen Variablen können Schüler:innen at risk erfolgreich identifiziert werden?* |
 
 : Erkenntisinteressen sozialwissenschaftlicher Studien nach [@döring2016] {#tbl-erkenntnisinteresse}
-:::
+
 
 ## Längsschnittdesigns und Erkenntnisinteressen
 

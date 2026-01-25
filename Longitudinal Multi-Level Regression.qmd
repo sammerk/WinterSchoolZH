@@ -15,14 +15,37 @@ toc: true
 
 {{< include _extensions/r-wasm/live/_knitr.qmd >}}
 
-
 ## Grundidee
-Mehrebenenregressionsmodelle (auch Multi-Level-Modelle, Hierachische Modelle oder Mixed-Effects-Modelle) sind ein mächtiges Werkzeug zur Modellierung von Daten, die auf mehreren Ebenen genested (geclusterd) organisiert sind. Diese Cluster können etwa Schülerinnen und Schüler in Klassen sein oder Messwiederholungen in Merkmalsträgern. 
-Die Grundidee der Modellierung längsschnittlicher Daten mit Mehrebenenmodellen besteht darin, sowohl die Variation innerhalb der Cluster (=Merkmalsträger) als auch zwischen den Clustern zu modellieren. Die Variation zischen den Clustern (auch Level-2 Effekte oder Random Effekte) werden dabei als »Streuung von Regressionsparametern« konzeptualisiert.
+
+Mehrebenenregressionsmodelle (auch Multi-Level-Modelle, Hierachische Modelle oder Mixed-Effects-Modelle) sind ein mächtiges Werkzeug zur Modellierung von Daten, die auf mehreren Ebenen genested (geclusterd) organisiert sind. Diese Cluster können etwa Schülerinnen und Schüler in Klassen sein oder Messwiederholungen in Merkmalsträgern. Die Grundidee der Modellierung längsschnittlicher Daten mit Mehrebenenmodellen besteht darin, sowohl die Variation innerhalb der Cluster (=Merkmalsträger) als auch zwischen den Clustern zu modellieren. Die Variation zischen den Clustern (auch Level-2 Effekte oder Random Effekte) werden dabei als »Streuung von Regressionsparametern« konzeptualisiert. Damit die Zeit in diesem Modellen als Prädiktor berücksichtigt werden kann, müssen die Daten in einer bestimmten Weise strukturiert werden die oft »long data« genannt wird (siehe @tbl-long-data).
 
 
+| ID | Mathe Klasse 1 | Mathe Klasse 2 | Mathe Klasse 3 |
+|----------------|----------------|----------------|----------------|
+| A              | 463            | 475            | 501            |
+| B              | 499            | 503            | 505            |
+| C              | 360            | 365            | 372            |
 
-## Data Wranglong {#sec-prädiktion-differenzen}
+: »Wide data« {#tbl-wide-data}
+
+
+| ID | Mathe | Klasse |
+|----------------|-------|--------|
+| A              | 463   | 1      |
+| A              | 475   | 2      |
+| A              | 501   | 3      |
+| B              | 499   | 1      |
+| B              | 503   | 2      |
+| B              | 505   | 3      |
+| C              | 360   | 1      |
+| C              | 365   | 2      |
+| C              | 372   | 3      |
+ 
+: »Long data« {#tbl-long-data}
+
+
+## Data Wrangling {#sec-prädiktion-differenzen}
+Fast jede Statistiksoftware verfügt über mehr oder weniger intuitive Werkzeuge zur Datenaufbereitung. In {{< fa-brands:r-project >>}} sind insbesondere die Pakete `dplyr` und `tidyr` sehr hilfreich. Hier ein Beispiel für die Warangling von "Wide" in "Long" Format:
 ```{r}
 library(haven)
 library(dplyr)
@@ -43,38 +66,47 @@ data_star_subset <- data_star %>%
     PropFreeLunchCl1 = mean(ifelse(g1freelunch == 1, 1, 0), na.rm = T),
     PropFreeLunchCl2 = mean(ifelse(g2freelunch == 1, 1, 0), na.rm = T),
     PropFreeLunchCl3 = mean(ifelse(g3freelunch == 1, 1, 0), na.rm = T),
-    PropFreeLunchCl4 = mean(ifelse(g4freelunch == 1, 1, 0), na.rm = T),
-    g1classsize = mean(g1classsize, na.rm = T),
-    g2classsize = mean(g2classsize, na.rm = T),
-    g3classsize = mean(g3classsize, na.rm = T)
+    ClasssizeCl1 = mean(g1classsize, na.rm = T),
+    ClasssizeCl2 = mean(g2classsize, na.rm = T),
+    ClasssizeCl3 = mean(g3classsize, na.rm = T)
   ) %>%
   ungroup()
 
-```
+data_star_subset_long <- data_star_subset %>%
+  # pivoting
+  pivot_longer(
+    cols = c(
+      starts_with("MathClassMean"),
+      starts_with("PropFreeLunch"),
+      starts_with("Classsize")
+    ),
+    names_to = "variable",
+    values_to = "value"
+  ) %>%
+  # separating variable names
+  mutate(
+    time = str_sub(variable, -1, -1),
+    variable = str_sub(variable, 1, -4)
+  ) %>%
+  # pivot wider in tidy data format  
+  pivot_wider(
+    names_from = variable,
+    values_from = value
+  )
 
+```
 
 ### Grafische Darstellung
-```{webr}
-#| envir: myenv
-#| exercise: plot diff prediction
-#| autorun: false
-#| warning:	false
 
+```{r}
 ggplot(
-  data_star_subset,
-  aes(x = g3classsize, y = `Mathe Klassenmittelwert Veränderung`)
+  data_star_subset_long %>% sample_n(30),
+  aes(x = time, y = MathClassMean, group = g1tchid)
 ) +
-  geom_point() +
-  geom_smooth(method = "lm", se = FALSE) +
-  labs(
-    title = "Veränderung des Mathe Klassenmittelwerts nach Klassenstärke",
-    x = "Klassenstärke (Kl. 3)",
-    y = "Veränderung des Mathe Klassenmittelwerts"
-  ) +
+  geom_point(aes(color = as.factor(g1tchid))) +
+  geom_line() +
   theme_minimal()
-
 ```
-
 
 ### Prädiktion der Differenz mit `g3classsize`
 
@@ -93,6 +125,7 @@ summary(mod_change_linreg01)
 ```
 
 ## Prädiktion nach Adjustierung um Prä-Messung {#sec-prädiktion-nach-adjustierung}
+
 ### Grafische Darstellung
 
 ```{webr}
@@ -120,6 +153,7 @@ ggplot(
 ```
 
 ### Prädiktion nach Adjustierung
+
 ```{webr}
 #| envir: myenv
 #| exercise: model adjusted prediction
@@ -133,4 +167,3 @@ mod_change_linreg02 <- lm(
 
 summary(mod_change_linreg02)
 ```
-
