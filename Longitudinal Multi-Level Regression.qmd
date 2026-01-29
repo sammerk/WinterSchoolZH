@@ -16,7 +16,6 @@ toc: true
 {{< include _extensions/r-wasm/live/_knitr.qmd >}}
 
 ## Grundidee
-
 Mehrebenenregressionsmodelle (auch Multi-Level-Modelle, Hierachische Modelle oder Mixed-Effects-Modelle) sind ein mächtiges Werkzeug zur Modellierung von Daten, die auf mehreren Ebenen genested (geclusterd) organisiert sind. Diese Cluster können etwa Schülerinnen und Schüler in Klassen sein oder Messwiederholungen in Merkmalsträgern. Die Grundidee der Modellierung längsschnittlicher Daten mit Mehrebenenmodellen besteht darin, sowohl die Variation innerhalb der Cluster (=Merkmalsträger) als auch zwischen den Clustern zu modellieren. Die Variation zischen den Clustern (auch Level-2 Effekte oder Random Effekte) werden dabei als »Streuung von Regressionsparametern« konzeptualisiert. Damit die Zeit in diesem Modellen als Prädiktor berücksichtigt werden kann, müssen die Daten in einer bestimmten Weise strukturiert werden die oft »long data« genannt wird (siehe @tbl-long-data).
 
 
@@ -49,23 +48,28 @@ Fast jede Statistiksoftware verfügt über mehr oder weniger intuitive Werkzeuge
 ```{r}
 library(haven)
 library(dplyr)
+library(tidyr)
+library(stringr)
 library(ggplot2)
-
+library(colorspace)
 
 data_star <- read_sav(
   "https://raw.githubusercontent.com/sammerk/WinterSchoolZH/master/data_star_workshop.sav"
 )
 
 data_star_subset <- data_star %>%
-  group_by(g1tchid) %>%
+  group_by(classID) %>%
   summarize(
+    MathClassMeanCl0 = mean(gktmathss, na.rm = T),
     MathClassMeanCl1 = mean(g1tmathss, na.rm = T),
     MathClassMeanCl2 = mean(g2tmathss, na.rm = T),
     MathClassMeanCl3 = mean(g3tmathss, na.rm = T),
     MathClassMeanCl4 = mean(g4tmathss, na.rm = T),
+    PropFreeLunchCl0 = mean(ifelse(g0freelunch == 1, 1, 0), na.rm = T),
     PropFreeLunchCl1 = mean(ifelse(g1freelunch == 1, 1, 0), na.rm = T),
     PropFreeLunchCl2 = mean(ifelse(g2freelunch == 1, 1, 0), na.rm = T),
     PropFreeLunchCl3 = mean(ifelse(g3freelunch == 1, 1, 0), na.rm = T),
+    ClasssizeCl0 = mean(gkclasssize, na.rm = T),
     ClasssizeCl1 = mean(g1classsize, na.rm = T),
     ClasssizeCl2 = mean(g2classsize, na.rm = T),
     ClasssizeCl3 = mean(g3classsize, na.rm = T)
@@ -85,7 +89,7 @@ data_star_subset_long <- data_star_subset %>%
   ) %>%
   # separating variable names
   mutate(
-    time = str_sub(variable, -1, -1),
+    time = as.numeric(str_sub(variable, -1, -1)),
     variable = str_sub(variable, 1, -4)
   ) %>%
   # pivot wider in tidy data format  
@@ -97,73 +101,86 @@ data_star_subset_long <- data_star_subset %>%
 ```
 
 ### Grafische Darstellung
+```{r}
+data_sample_naomit <- 
+  data_star_subset_long %>% 
+  na.omit() %>% 
+  group_by(classID) %>% 
+  mutate(npergroup = n()) %>% 
+  ungroup() %>% 
+  filter(npergroup == 3) %>% 
+  arrange(classID) %>% 
+  slice(31:61)
+
+ggplot(data_sample_naomit, aes(x = time, y = MathClassMean)) +
+  geom_point(aes(color = as.factor(classID))) +
+  stat_smooth(
+    aes(color = as.factor(classID)),
+    method = "lm",
+    se = FALSE,
+    linewidth = .4
+  ) +
+  stat_smooth(
+    method = "lm",
+    se = FALSE,
+    linewidth = 2,
+    linetype = "dashed",
+    color = "#267326"
+  ) +
+  scale_color_discrete_qualitative(palette = "Dark3") +
+  theme_minimal() +
+  theme(legend.position = "none")
+```
+
+In Abbildung XX sehen wir die Entwicklung der Mathematik-Klassenmittelwerte über die Zeit, wobei die einzelnen Klassen durch unterschiedliche Farben dargestellt sind und jede Klasse eine eigene Regressionsgerade hat (No Pooling Modell). Die gestrichelte Linie repräsentiert ein lineares Regressionsmodell für alle Datenpunkte (Complete Pooling Modell).
+
+::: {.callout-caution}
+Achtung: Die Inferenzstatistik des Complete Pooling Modells bedarf besonderer Aufmerksamkeit. Die »klassische« Berechnung von p-Werten und Konfidenzintervallen setzt eine Unabhängigkeit der Residuen voraus. Diese ist hier aber nicht gegeben, denn z.B. starke Klassen werden etwa tendenziell positive Residuen haben.
+:::
+
+Ein Mehrebenenmodell stellt eine Art Kompromiss aus No Pooling und Complete Pooling dar und wird daher auch Partial Poolign Modell genannt. Es lässt zwarfür jeden Merkmalsträger eine individuelle Regressionsgerade zu, berücksichtigt bei deren Wahl aber auch Information aus den anderen Merkmalsträgern (sog. Shrinkage). Die Variation zwischen den einzelnen Klassen kann sich auf alle Parameter (etwa Intercept und/oder Slopes) beziehen (siehe Abbildungen).
 
 ```{r}
-ggplot(
-  data_star_subset_long %>% sample_n(30),
-  aes(x = time, y = MathClassMean, group = g1tchid)
-) +
-  geom_point(aes(color = as.factor(g1tchid))) +
-  geom_line() +
-  theme_minimal()
-```
+library(lme4)
+# Random Intercept Modell
+model_ri <- lmer(MathClassMean ~ time + (1| classID), data = data_sample_naomit)
 
-### Prädiktion der Differenz mit `g3classsize`
+# Vorhersagen für jede Klasse
+predictions <- data_sample_naomit %>%
+  mutate(predicted = predict(model_ri))
 
-```{webr}
-#| envir: myenv
-#| exercise: model diff prediction
-#| autorun: false
-#| warning:	false
-
-mod_change_linreg01 <- lm(
-  `Mathe Klassenmittelwert Veränderung` ~ + g3classsize,
-  data = data_star_subset
-)
-
-summary(mod_change_linreg01)
-```
-
-## Prädiktion nach Adjustierung um Prä-Messung {#sec-prädiktion-nach-adjustierung}
-
-### Grafische Darstellung
-
-```{webr}
-#| envir: myenv
-#| exercise: plot adjusted prediction
-#| autorun: false
-#| warning:	false
-
-ggplot(
-  data_star_subset,
-  aes(
-    x = `Mathe Klassenmittelwert Kl. 2`,
-    y = `Mathe Klassenmittelwert Kl. 3`,
-    color = g3classsize
-  )
-) +
-  geom_point() +
-  geom_smooth(method = "lm", se = FALSE) +
-  labs(
-    title = "Mathe Klassenmittelwerte Kl. 2 vs. Kl. 3",
-    x = "Mathe Klassenmittelwert Kl. 2",
-    y = "Mathe Klassenmittelwert Kl. 3"
+# Plot mit Random Intercept Modell
+ggplot(data_sample_naomit, aes(x = time, y = MathClassMean)) +
+  geom_point(aes(color = as.factor(classID))) +
+  geom_line(
+    data = predictions,
+    aes(x = time, y = predicted, color = as.factor(classID)),
+    linewidth = 0.7
   ) +
-  theme_minimal()
+  stat_smooth(method = "lm", se = FALSE, linewidth = 2, linetype = "dashed", color = "#267326") +
+  scale_color_discrete_qualitative(palette = "Dark3") +
+  theme_minimal() +
+  theme(legend.position = "none")
+
+model_rirs <- lmer(MathClassMean ~ time + (1 + time| classID), data = data_sample_naomit)
+
+# Vorhersagen für jede Klasse
+predictions_rirs <- data_sample_naomit %>%
+  mutate(predicted = predict(model_rirs))
+
+# Plot mit Random Intercept Modell
+ggplot(data_sample_naomit, aes(x = time, y = MathClassMean)) +
+  geom_point(aes(color = as.factor(classID))) +
+  geom_line(
+    data = predictions_rirs,
+    aes(x = time, y = predicted, color = as.factor(classID)),
+    linewidth = 0.7
+  ) +
+  stat_smooth(method = "lm", se = FALSE, linewidth = 2, linetype = "dashed", color = "#267326") +
+  scale_color_discrete_qualitative(palette = "Dark3") +
+  theme_minimal() +
+  theme(legend.position = "none")
 ```
 
-### Prädiktion nach Adjustierung
 
-```{webr}
-#| envir: myenv
-#| exercise: model adjusted prediction
-#| autorun: false
-#| warning:	false
-
-mod_change_linreg02 <- lm(
-  `Mathe Klassenmittelwert Kl. 3` ~ `Mathe Klassenmittelwert Kl. 2` + g3classsize,
-  data = data_star_subset
-)
-
-summary(mod_change_linreg02)
-```
+Typischerweise baut man längsschnittliche Mehrebenenmodelle Schritt für Schritt auf und testet jeweils, inwiefern weitere Modellfreiehitsgrade (z.B. varying Slopes) zu zusätzlicher Varianzaufklärung führen.

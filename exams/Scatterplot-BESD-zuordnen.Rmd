@@ -32,9 +32,9 @@ besd_gt <- tibble(
 # create data frame for cloze
 data_cloze <-
   tibble(
-    `unterdurchschn. SES` = round(besd_gt$unterAV, 2),
-    `überdurchschn. SES` = round(besd_gt$überAV, 2),
-    row_names = c("unterdurchschn. ML", "überdurchschn. ML")
+    `unterdurchschn. SES` = rev(round(besd_gt$unterAV, 2)),
+    `überdurchschn. SES` = rev(round(besd_gt$überAV, 2)),
+    row_names = rev(c("unterdurchschn. ML", "überdurchschn. ML"))
   ) %>%
   column_to_rownames(var = "row_names")
 

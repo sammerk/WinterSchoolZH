@@ -10,31 +10,32 @@ data_star <- read_sav(
 write_sav(
   data_star %>%
     select(
+      gktchid,
       g1tchid,
       g2tchid,
       g3tchid,
       g4tchid,
+      gktmathss,
       g1tmathss,
       g2tmathss,
       g3tmathss,
       g4tmathss,
+      gkfreelunch,
       g1freelunch,
       g2freelunch,
       g3freelunch,
       g4nfreelunch,
+      gkclasssize,
       g1classsize,
       g2classsize,
       g3classsize
     ) %>%
     mutate(
-      classID = ifelse(
-        !is.na(g1tchid),
-        g1tchid,
-        ifelse(
-          !is.na(g2tchid),
-          g2tchid,
-          g3tchid
-        )
+      classID = case_when(
+        !is.na(gktchid) ~ gktchid,
+        !is.na(g1tchid) ~ g1tchid,
+        !is.na(g2tchid) ~ g2tchid,
+        T ~ g3tchid
       )
     ),
   "data_star_workshop.sav"

@@ -241,17 +241,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="grundidee" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="grundidee"><span class="header-section-number">1</span> Grundidee</h2>
-<p>Mehrebenenregressionsmodelle (auch Multi-Level-Modelle, Hierachische Modelle oder Mixed-Effects-Modelle) sind ein mächtiges Werkzeug zur Modellierung von Daten, die auf mehreren Ebenen genested (geclusterd) organisiert sind. Diese Cluster können etwa Schülerinnen und Schüler in Klassen sein oder Messwiederholungen in Merkmalsträgern. Die Grundidee der Modellierung längsschnittlicher Daten mit Mehrebenenmodellen besteht darin, sowohl die Variation innerhalb der Cluster (=Merkmalsträger) als auch zwischen den Clustern zu modellieren. Die Variation zischen den Clustern (auch Level-2 Effekte oder Random Effekte) werden dabei als »Streuung von Regressionsparametern« konzeptualisiert. Damit die Zeit in diesem Modellen als Prädiktor berücksichtigt werden kann, müssen die Daten in einer bestimmten Weise strukturiert werden die oft »long data« genannt wird (siehe <a href="#tbl-long-data" class="quarto-xref">Tabelle&nbsp;2</a>).</p>
-<div id="tbl-wide-data" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-tbl figure">
-<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-wide-data-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Tabelle&nbsp;1: »Wide data«
-</figcaption>
-<div aria-describedby="tbl-wide-data-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<p>Mehrebenenregressionsmodelle (auch Multi-Level-Modelle, Hierachische Modelle oder Mixed-Effects-Modelle) sind ein mächtiges Werkzeug zur Modellierung von Daten, die auf mehreren Ebenen genested (geclusterd) organisiert sind. Diese Cluster können etwa Schülerinnen und Schüler in Klassen sein oder Messwiederholungen in Merkmalsträgern. Die Grundidee der Modellierung längsschnittlicher Daten mit Mehrebenenmodellen besteht darin, sowohl die Variation innerhalb der Cluster (=Merkmalsträger) als auch zwischen den Clustern zu modellieren. Die Variation zischen den Clustern (auch Level-2 Effekte oder Random Effekte) werden dabei als »Streuung von Regressionsparametern« konzeptualisiert. Damit die Zeit in diesem Modellen als Prädiktor berücksichtigt werden kann, müssen die Daten in einer bestimmten Weise strukturiert werden die oft »long data« genannt wird (siehe).</p>
+<div class="columns">
+<div class="column">
 <table class="caption-top table">
+<caption>»Wide data«</caption>
 <thead>
 <tr class="header">
-<th>ID</th>
+<th>Merkmalsträger</th>
 <th>Mathe Klasse 1</th>
 <th>Mathe Klasse 2</th>
 <th>Mathe Klasse 3</th>
@@ -278,19 +275,12 @@ Tabelle&nbsp;1: »Wide data«
 </tr>
 </tbody>
 </table>
-</div>
-</figure>
-</div>
-<div id="tbl-long-data" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-tbl figure">
-<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-long-data-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Tabelle&nbsp;2: »Long data«
-</figcaption>
-<div aria-describedby="tbl-long-data-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+</div><div class="column">
 <table class="caption-top table">
+<caption>»Long data«</caption>
 <thead>
 <tr class="header">
-<th>ID</th>
+<th>Merkmalsträger</th>
 <th>Mathe</th>
 <th>Klasse</th>
 </tr>
@@ -304,17 +294,17 @@ Tabelle&nbsp;2: »Long data«
 <tr class="even">
 <td>A</td>
 <td>475</td>
-<td>2</td>
+<td>1</td>
 </tr>
 <tr class="odd">
 <td>A</td>
 <td>501</td>
-<td>3</td>
+<td>1</td>
 </tr>
 <tr class="even">
 <td>B</td>
 <td>499</td>
-<td>1</td>
+<td>2</td>
 </tr>
 <tr class="odd">
 <td>B</td>
@@ -324,17 +314,17 @@ Tabelle&nbsp;2: »Long data«
 <tr class="even">
 <td>B</td>
 <td>505</td>
-<td>3</td>
+<td>2</td>
 </tr>
 <tr class="odd">
 <td>C</td>
 <td>360</td>
-<td>1</td>
+<td>3</td>
 </tr>
 <tr class="even">
 <td>C</td>
 <td>365</td>
-<td>2</td>
+<td>3</td>
 </tr>
 <tr class="odd">
 <td>C</td>
@@ -344,7 +334,6 @@ Tabelle&nbsp;2: »Long data«
 </tbody>
 </table>
 </div>
-</figure>
 </div>
 </section>
 <section id="sec-prädiktion-differenzen" class="level2" data-number="2">
