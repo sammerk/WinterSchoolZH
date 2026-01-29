@@ -49,7 +49,9 @@ data_star_subset <- data_star %>%
     ClasssizeCl0 = mean(gkclasssize, na.rm = T),
     ClasssizeCl1 = mean(g1classsize, na.rm = T),
     ClasssizeCl2 = mean(g2classsize, na.rm = T),
-    ClasssizeCl3 = mean(g3classsize, na.rm = T)
+    ClasssizeCl3 = mean(g3classsize, na.rm = T),
+    classtype = mode(classtype)
+  
   ) %>%
   ungroup()
 ```
@@ -104,7 +106,7 @@ model_lcs <- '
   # Parameters
   MathClassMeanCl0 ~ 1                       # Mean of initial level
   MathClassMeanCl0 ~~ MathClassMeanCl0       # Variance of initial level
-  delta ~ 1                                  # Mean change
+  delta ~ 1  + classtype                               # Mean change
   delta ~~ delta                             # Variance of change
   
   # Variances
@@ -114,14 +116,12 @@ model_lcs <- '
   # Identification constraints
   MathClassMeanCl0 ~ 0*1
   MathClassMeanCl1 ~ 0*1
-  MathClassMeanCl1 ~~ 0*ClasssizeCl0
+  MathClassMeanCl1 ~~ 0*MathClassMeanCl1
 
-  # Predictor
-  delta ~ PropFreeLunchCl0
 '
 
 
 fit_lcs <- sem(model_lcs, data = data_star_subset)
 summary(fit_lcs)
-parameterEstimates(fit_lcs, standardized = T)
+parameterEstimates(fit_lcs)
 ```
