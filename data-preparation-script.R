@@ -28,7 +28,11 @@ write_sav(
       gkclasssize,
       g1classsize,
       g2classsize,
-      g3classsize
+      g3classsize,
+      gkclasstype,
+      g1classtype,
+      g2classtype,
+      g3classtype
     ) %>%
     mutate(
       classID = case_when(
@@ -36,6 +40,12 @@ write_sav(
         !is.na(g1tchid) ~ g1tchid,
         !is.na(g2tchid) ~ g2tchid,
         T ~ g3tchid
+      ),
+      classtype = case_when(
+        !is.na(gkclasstype) ~ gkclasstype,
+        !is.na(g1classtype) ~ g1classtype,
+        !is.na(g2classtype) ~ g1classtype,
+        T ~ g3classtype
       )
     ),
   "data_star_workshop.sav"

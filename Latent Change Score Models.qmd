@@ -1,0 +1,127 @@
+---
+title: "Latent Change Score Models"
+format:
+  live-html:
+    css: 
+      - exams/webex.css
+    include-after-body: exams/webex.js
+webr:
+  packages:
+    - dplyr
+    - ggplot2
+    - haven
+toc: true    
+---
+
+{{< include _extensions/r-wasm/live/_knitr.qmd >}}
+
+## Grundidee
+Die Grundidee von Latent Change Score Modellen ist es, Veränderungen als latente Variable zu modellieren indem deren Mittelwert und Varianz sowie deren Kovarianz mit anderen Variablen geschätzt wird.
+
+## Beispiel
+Wir können z.B. zunächst den Zuwachs der Mathematik-Klassenmittelwerte von einem Jahr zum nächsten Modellieren .
+
+### Datenimport
+```{r}
+library(haven)
+library(dplyr)
+library(tidyr)
+library(stringr)
+library(ggplot2)
+library(colorspace)
+
+data_star <- read_sav(
+  "https://raw.githubusercontent.com/sammerk/WinterSchoolZH/master/data_star_workshop.sav"
+)
+
+data_star_subset <- data_star %>%
+  group_by(classID) %>%
+  summarize(
+    MathClassMeanCl0 = mean(gktmathss, na.rm = T),
+    MathClassMeanCl1 = mean(g1tmathss, na.rm = T),
+    MathClassMeanCl2 = mean(g2tmathss, na.rm = T),
+    MathClassMeanCl3 = mean(g3tmathss, na.rm = T),
+    MathClassMeanCl4 = mean(g4tmathss, na.rm = T),
+    PropFreeLunchCl0 = mean(ifelse(gkfreelunch == 1, 1, 0), na.rm = T),
+    PropFreeLunchCl1 = mean(ifelse(g1freelunch == 1, 1, 0), na.rm = T),
+    PropFreeLunchCl2 = mean(ifelse(g2freelunch == 1, 1, 0), na.rm = T),
+    PropFreeLunchCl3 = mean(ifelse(g3freelunch == 1, 1, 0), na.rm = T),
+    ClasssizeCl0 = mean(gkclasssize, na.rm = T),
+    ClasssizeCl1 = mean(g1classsize, na.rm = T),
+    ClasssizeCl2 = mean(g2classsize, na.rm = T),
+    ClasssizeCl3 = mean(g3classsize, na.rm = T)
+  ) %>%
+  ungroup()
+```
+
+### Latent Change Score Model
+
+```{r}
+library(lavaan)
+# Latent Change Score Model
+model_lcs <- '
+  # Latent change score
+  delta =~ 1*MathClassMeanCl1
+  
+  # Autoregressive constraint
+  MathClassMeanCl1 ~ 1*MathClassMeanCl0
+  
+  # Parameters
+  MathClassMeanCl0 ~ 1                       # Mean of initial level
+  MathClassMeanCl0 ~~ MathClassMeanCl0       # Variance of initial level
+  delta ~ 1                                  # Mean change
+  delta ~~ delta                             # Variance of change
+  
+  # Variances
+  MathClassMeanCl0 ~~ MathClassMeanCl0
+  MathClassMeanCl1 ~~ MathClassMeanCl1
+  
+  # Identification constraints
+  MathClassMeanCl0 ~ 0*1
+  MathClassMeanCl1 ~ 0*1
+  MathClassMeanCl1 ~~ 0*MathClassMeanCl1
+'
+
+
+fit_lcs <- sem(model_lcs, data = data_star_subset)
+summary(fit_lcs)
+parameterEstimates(fit_lcs, standardized = T)
+```
+
+
+### Latent Change Score Model mit Prädiktor
+
+```{r}
+library(lavaan)
+# Latent Change Score Model
+model_lcs <- '
+  # Latent change score
+  delta =~ 1*MathClassMeanCl1
+  
+  # Autoregressive constraint
+  MathClassMeanCl1 ~ 1*MathClassMeanCl0
+  
+  # Parameters
+  MathClassMeanCl0 ~ 1                       # Mean of initial level
+  MathClassMeanCl0 ~~ MathClassMeanCl0       # Variance of initial level
+  delta ~ 1                                  # Mean change
+  delta ~~ delta                             # Variance of change
+  
+  # Variances
+  MathClassMeanCl0 ~~ MathClassMeanCl0
+  MathClassMeanCl1 ~~ MathClassMeanCl1
+  
+  # Identification constraints
+  MathClassMeanCl0 ~ 0*1
+  MathClassMeanCl1 ~ 0*1
+  MathClassMeanCl1 ~~ 0*ClasssizeCl0
+
+  # Predictor
+  delta ~ PropFreeLunchCl0
+'
+
+
+fit_lcs <- sem(model_lcs, data = data_star_subset)
+summary(fit_lcs)
+parameterEstimates(fit_lcs, standardized = T)
+```

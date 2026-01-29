@@ -8,7 +8,7 @@
 
 <meta name="author" content="Samuel Merk">
 
-<title>Longitudinal Single-Level Regression – Modellierung von Längs­schnitt­daten</title>
+<title>Längsschnittliche Modelle im Überblick – Modellierung von Längs­schnitt­daten</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,7 +21,27 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -76,6 +96,9 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 <script type="module" src="site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
 <link href="site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
+<script src="site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
 
 <link rel="stylesheet" href="brand.css">
@@ -103,7 +126,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Seitenleiste umschalten" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Longitudinal Single-Level Regression</li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./Längsschnittliche Modelle im Überblick.html">Längsschnittliche Modelle im Überblick</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Seitenleiste umschalten" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -145,6 +168,12 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">Multiple lineare Regression</span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Längsschnittliche Modelle im Überblick.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Längsschnittliche Modelle im Überblick</span></a>
+  </div>
+</li>
     </ul>
     </div>
 </nav>
@@ -155,8 +184,7 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Auf dieser Seite</h2>
    
   <ul>
-  <li><a href="#grundidee" id="toc-grundidee" class="nav-link active" data-scroll-target="#grundidee"><span class="header-section-number">1</span> Grundidee</a></li>
-  <li><a href="#sec-prädiktion-differenzen" id="toc-sec-prädiktion-differenzen" class="nav-link" data-scroll-target="#sec-prädiktion-differenzen"><span class="header-section-number">2</span> Data Wrangling</a></li>
+  <li><a href="#entscheidungsbaum" id="toc-entscheidungsbaum" class="nav-link active" data-scroll-target="#entscheidungsbaum"><span class="header-section-number">1</span> Entscheidungsbaum</a></li>
   </ul>
 </nav>
     </div>
@@ -165,7 +193,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Longitudinal Single-Level Regression</h1>
+<h1 class="title">Längsschnittliche Modelle im Überblick</h1>
 </div>
 
 
@@ -195,117 +223,87 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="grundidee" class="level2" data-number="1">
-<h2 data-number="1" class="anchored" data-anchor-id="grundidee"><span class="header-section-number">1</span> Grundidee</h2>
-<p>Mehrebenenregressionsmodelle (auch Multi-Level-Modelle, Hierachische Modelle oder Mixed-Effects-Modelle) sind ein mächtiges Werkzeug zur Modellierung von Daten, die auf mehreren Ebenen genested (geclusterd) organisiert sind. Diese Cluster können etwa Schülerinnen und Schüler in Klassen sein oder Messwiederholungen in Merkmalsträgern. Die Grundidee der Modellierung längsschnittlicher Daten mit Mehrebenenmodellen besteht darin, sowohl die Variation innerhalb der Cluster (=Merkmalsträger) als auch zwischen den Clustern zu modellieren. Die Variation zischen den Clustern (auch Level-2 Effekte oder Random Effekte) werden dabei als »Streuung von Regressionsparametern« konzeptualisiert. Damit die Zeit in diesem Modellen als Prädiktor berücksichtigt werden kann, müssen die Daten in einer bestimmten Weise strukturiert werden die oft »long data« genannt wird (siehe <a href="#tbl-long-data" class="quarto-xref">Tabelle&nbsp;2</a>).</p>
-<div id="tbl-wide-data" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-tbl figure">
-<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-wide-data-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Tabelle&nbsp;1: »Wide data«
-</figcaption>
-<div aria-describedby="tbl-wide-data-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>ID</th>
-<th>Mathe Klasse 1</th>
-<th>Mathe Klasse 2</th>
-<th>Mathe Klasse 3</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>A</td>
-<td>463</td>
-<td>475</td>
-<td>501</td>
-</tr>
-<tr class="even">
-<td>B</td>
-<td>499</td>
-<td>503</td>
-<td>505</td>
-</tr>
-<tr class="odd">
-<td>C</td>
-<td>360</td>
-<td>365</td>
-<td>372</td>
-</tr>
-</tbody>
-</table>
+<p>Die psychometrische und ökonometrische Literatur hat eine nahezu unüberschaubare Fülle an Modellen hervorgebracht, die für die Analyse von Längsschnittdaten geeignet sind. <span class="citation" data-cites="longitud2008 mccormick2023 hedeker2006">(<a href="#ref-longitud2008" role="doc-biblioref">Fitzmaurice, Davidian, Verbeke, &amp; Molenberghs, 2008</a>; <a href="#ref-hedeker2006" role="doc-biblioref">Hedeker &amp; Gibbons, 2006</a>; <a href="#ref-mccormick2023" role="doc-biblioref">McCormick, Byrne, Flournoy, Mills, &amp; Pfeifer, 2023</a>)</span>. Einen guten Überblick bieten McCormick und Kolleg:innen (siehe <a href="#fig-hitchhiker" class="quarto-xref">Abbildung&nbsp;1</a>) und führen gleichzeitig in die wichtigsten technischen Aspekte der Modellunterschiede ein.</p>
+<section id="entscheidungsbaum" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="entscheidungsbaum"><span class="header-section-number">1</span> Entscheidungsbaum</h2>
+<div id="fig-hitchhiker" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-hitchhiker-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart TB
+
+TS[Time Structure] --&gt; LD{Longitudinal&lt;br/&gt;Data?}
+
+LD -- No --&gt; BAD[I have bad news...]
+
+LD -- Yes --&gt; OS{One&lt;br&gt;assessment&lt;br/&gt;schedule?}
+
+OS -- No --&gt; INC[No, I have fully&lt;br/&gt;inconsistent assessments]
+OS -- No --&gt; COH[No, I have multiple&lt;br/&gt;discrete cohorts]
+
+OS -- Yes --&gt; SC[Yes, I have a&lt;br/&gt;single-cohort study]
+
+INC --&gt; COMP{Does&lt;br/&gt;your model&lt;br/&gt;need to be&lt;br/&gt;complex?}
+COH --&gt; SC
+
+COMP -- No --&gt; STR[No, my model is&lt;br/&gt;reasonably straightforward]
+COMP -- Yes --&gt; ADD[Yes, I need additional&lt;br/&gt;modeling capabilities]
+
+
+
+%% --- Model choices (dotted box) ---
+
+subgraph Models [" "]
+  direction TB
+  MLM[Multi-Level Models&lt;br&gt;**MLM**]
+  GAMM[Generalized Additive&lt;br&gt;Mixed Models&lt;br&gt;**GAMM**]
+  LCM[Latent Curve Models&lt;br&gt;**LCM**]
+  LCSM[Latent Change Score Models&lt;br&gt;**LCSM**]
+end
+
+style Models stroke-dasharray: 5 5, fill:#EBBF80
+style MLM fill:#f2f2f2
+style GAMM fill:#f2f2f2
+style LCM fill:#f2f2f2
+style LCSM fill:#f2f2f2
+
+STR --&gt; MLM
+STR --&gt; GAMM
+
+ADD --&gt; LCM
+ADD --&gt; LCSM
+
+SC --&gt; Models
+
+%% --- Time encoding / interpretation ---
+
+MLM -- Time Encoding: --&gt; OP[Observed Predictor]
+GAMM -- Time Encoding: --&gt; OP
+
+LCM --&gt; TE{Time Encoding}
+TE -- Discrete Time --&gt; FL[Factor&lt;br&gt;Loadings]
+TE -- Continuous Time --&gt; CT[Definition&lt;br&gt;Variables]
+%%-- Time Encoding: --&gt; E1[Discrete Time:&lt;br/&gt;factor loadings&lt;br/&gt;&lt;br/&gt;Continuous Time:&lt;br/&gt;definition variables]
+
+LCSM -- Time Encoding: --&gt; TE2[Implicit in summing&lt;br/&gt;across Δ factors]
+</pre>
 </div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-hitchhiker-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Abbildung&nbsp;1: Einer der Entscheidungsbäume in McCormick et al. <span class="citation" data-cites="mccormick2023">(<a href="#ref-mccormick2023" role="doc-biblioref">2023</a>)</span>
+</figcaption>
 </figure>
 </div>
-<div id="tbl-long-data" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-tbl figure">
-<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-long-data-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Tabelle&nbsp;2: »Long data«
-</figcaption>
-<div aria-describedby="tbl-long-data-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>ID</th>
-<th>Mathe</th>
-<th>Klasse</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>A</td>
-<td>463</td>
-<td>1</td>
-</tr>
-<tr class="even">
-<td>A</td>
-<td>475</td>
-<td>2</td>
-</tr>
-<tr class="odd">
-<td>A</td>
-<td>501</td>
-<td>3</td>
-</tr>
-<tr class="even">
-<td>B</td>
-<td>499</td>
-<td>1</td>
-</tr>
-<tr class="odd">
-<td>B</td>
-<td>503</td>
-<td>2</td>
-</tr>
-<tr class="even">
-<td>B</td>
-<td>505</td>
-<td>3</td>
-</tr>
-<tr class="odd">
-<td>C</td>
-<td>360</td>
-<td>1</td>
-</tr>
-<tr class="even">
-<td>C</td>
-<td>365</td>
-<td>2</td>
-</tr>
-<tr class="odd">
-<td>C</td>
-<td>372</td>
-<td>3</td>
-</tr>
-</tbody>
-</table>
-</div>
-</figure>
-</div>
-</section>
-<section id="sec-prädiktion-differenzen" class="level2" data-number="2">
-<h2 data-number="2" class="anchored" data-anchor-id="sec-prädiktion-differenzen"><span class="header-section-number">2</span> Data Wrangling</h2>
-<p>Fast jede Statistiksoftware verfügt über mehr oder weniger intuitive Werkzeuge zur Datenaufbereitung. In</p>
+
+
 <script type="ojs-module-contents">
 eyJjb250ZW50cyI6W119
 </script>
@@ -320,9 +318,20 @@ eyJjb250ZW50cyI6W119
 <script type="vfs-file">
 W10=
 </script>
+
 </section>
 
-</main> <!-- /main -->
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">Literatur</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list">
+<div id="ref-longitud2008" class="csl-entry" role="listitem">
+Fitzmaurice, G., Davidian, M., Verbeke, G., &amp; Molenberghs, G. (Hrsg.). (2008). <em><a href="https://doi.org/10.1201/9781420011579">Longitudinal Data Analysis</a></em>. New York: Chapman; Hall/CRC.
+</div>
+<div id="ref-hedeker2006" class="csl-entry" role="listitem">
+Hedeker, D. R., &amp; Gibbons, R. D. (2006). <em>Longitudinal data analysis</em>. Wiley.
+</div>
+<div id="ref-mccormick2023" class="csl-entry" role="listitem">
+McCormick, E. M., Byrne, M. L., Flournoy, J. C., Mills, K. L., &amp; Pfeifer, J. H. (2023). <a href="https://doi.org/10.1016/j.dcn.2023.101281">The <span>Hitchhiker</span>’s guide to longitudinal models: <span>A</span> primer on model selection for repeated-measures methods</a>. <em>Developmental Cognitive Neuroscience</em>, <em>63</em>, 101281.
+</div>
+</div></section></div></main> <!-- /main -->
 <script>
 
 /* definition of content for the buttons */

@@ -1,0 +1,76 @@
+---
+title: "Längsschnittliche Modelle im Überblick"     
+format:
+  live-html:
+    css: 
+      - exams/webex.css
+    include-after-body: exams/webex.js
+toc: true    
+---
+
+Die psychometrische und ökonometrische Literatur hat eine nahezu unüberschaubare Fülle an Modellen hervorgebracht, die für die Analyse von Längsschnittdaten geeignet sind. [@longitud2008; @mccormick2023; @hedeker2006].
+Einen guten Überblick bieten McCormick und Kolleg:innen (siehe @fig-hitchhiker) und führen gleichzeitig in die wichtigsten technischen Aspekte der Modellunterschiede ein.
+
+## Entscheidungsbaum 
+
+::: {#fig-hitchhiker}
+```{mermaid}
+flowchart TB
+
+TS[Time Structure] --> LD{Longitudinal<br/>Data?}
+
+LD -- No --> BAD[I have bad news...]
+
+LD -- Yes --> OS{One<br>assessment<br/>schedule?}
+
+OS -- No --> INC[No, I have fully<br/>inconsistent assessments]
+OS -- No --> COH[No, I have multiple<br/>discrete cohorts]
+
+OS -- Yes --> SC[Yes, I have a<br/>single-cohort study]
+
+INC --> COMP{Does<br/>your model<br/>need to be<br/>complex?}
+COH --> SC
+
+COMP -- No --> STR[No, my model is<br/>reasonably straightforward]
+COMP -- Yes --> ADD[Yes, I need additional<br/>modeling capabilities]
+
+
+
+%% --- Model choices (dotted box) ---
+
+subgraph Models [" "]
+  direction TB
+  MLM[Multi-Level Models<br>**MLM**]
+  GAMM[Generalized Additive<br>Mixed Models<br>**GAMM**]
+  LCM[Latent Curve Models<br>**LCM**]
+  LCSM[Latent Change Score Models<br>**LCSM**]
+end
+
+style Models stroke-dasharray: 5 5, fill:#EBBF80
+style MLM fill:#f2f2f2
+style GAMM fill:#f2f2f2
+style LCM fill:#f2f2f2
+style LCSM fill:#f2f2f2
+
+STR --> MLM
+STR --> GAMM
+
+ADD --> LCM
+ADD --> LCSM
+
+SC --> Models
+
+%% --- Time encoding / interpretation ---
+
+MLM -- Time Encoding: --> OP[Observed Predictor]
+GAMM -- Time Encoding: --> OP
+
+LCM --> TE{Time Encoding}
+TE -- Discrete Time --> FL[Factor<br>Loadings]
+TE -- Continuous Time --> CT[Definition<br>Variables]
+%%-- Time Encoding: --> E1[Discrete Time:<br/>factor loadings<br/><br/>Continuous Time:<br/>definition variables]
+
+LCSM -- Time Encoding: --> TE2[Implicit in summing<br/>across Δ factors]
+```
+Einer der Entscheidungsbäume in McCormick et al. [-@mccormick2023]
+:::
