@@ -36,7 +36,10 @@ write_sav(
       gkclasstype,
       g1classtype,
       g2classtype,
-      g3classtype
+      g3classtype,
+      g1selfconcraw,
+      g2selfconcraw,
+      g3selfconcraw
     ) %>%
     mutate(
       classID = case_when(

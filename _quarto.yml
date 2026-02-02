@@ -23,6 +23,7 @@ website:
       - Longitudinal Single-Level Regression.qmd
       - Longitudinal Multi-Level Regression.qmd
       - Latent Change Score Models.qmd
+      - Cross Lagged Panel Models.qmd
 
 format:
   live-html:

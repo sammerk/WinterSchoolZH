@@ -11,6 +11,7 @@ webr:
     - ggplot2
     - haven
 toc: true    
+lightbox: true
 ---
 
 {{< include _extensions/r-wasm/live/_knitr.qmd >}}
@@ -44,8 +45,9 @@ Mehrebenenregressionsmodelle (auch Multi-Level-Modelle, Hierachische Modelle ode
 
 
 ## Data Wrangling {#sec-prädiktion-differenzen}
-Fast jede Statistiksoftware verfügt über mehr oder weniger intuitive Werkzeuge zur Datenaufbereitung. In {{< fa-brands:r-project >}} sind insbesondere die Pakete `dplyr` und `tidyr` sehr hilfreich. Hier ein Beispiel für das Wrangling von "Wide" in "Long" Format:
+Fast jede Statistiksoftware verfügt über mehr oder weniger intuitive Werkzeuge zur Datenaufbereitung. In {{< iconify fa-brands:r-project style="color:#267326;" >}} sind insbesondere die Pakete `dplyr` und `tidyr` sehr hilfreich. Hier ein Beispiel für das Wrangling von "Wide" in "Long" Format:
 ```{r}
+#| message: false
 library(haven)
 library(dplyr)
 library(tidyr)
@@ -101,6 +103,14 @@ data_star_subset_long <- data_star_subset %>%
 
 ### Grafische Darstellung
 ```{r}
+#| label: fig-pooling
+#| echo: false
+#| message: false
+#| warning: false
+#| layout-ncol: 3
+#| fig-subcap: true
+#| fig-cap: "Complete Pooling vs. No Pooling (links), Complete Pooling vs. Partial Pooling (mitte und rechts)"
+
 data_sample_naomit <- 
   data_star_subset_long %>% 
   na.omit() %>% 
@@ -109,7 +119,8 @@ data_sample_naomit <-
   ungroup() %>% 
   filter(npergroup == 3) %>% 
   arrange(classID) %>% 
-  slice(31:61)
+  slice(31:61) %>% 
+  filter(time > 0)
 
 ggplot(data_sample_naomit, aes(x = time, y = MathClassMean)) +
   geom_point(aes(color = as.factor(classID))) +
@@ -129,17 +140,7 @@ ggplot(data_sample_naomit, aes(x = time, y = MathClassMean)) +
   scale_color_discrete_qualitative(palette = "Dark3") +
   theme_minimal() +
   theme(legend.position = "none")
-```
 
-In Abbildung XX sehen wir die Entwicklung der Mathematik-Klassenmittelwerte über die Zeit, wobei die einzelnen Klassen durch unterschiedliche Farben dargestellt sind und jede Klasse eine eigene Regressionsgerade hat (No Pooling Modell). Die gestrichelte Linie repräsentiert ein lineares Regressionsmodell für alle Datenpunkte (Complete Pooling Modell).
-
-::: {.callout-caution}
-Achtung: Die Inferenzstatistik des Complete Pooling Modells bedarf besonderer Aufmerksamkeit. Die »klassische« Berechnung von p-Werten und Konfidenzintervallen setzt eine Unabhängigkeit der Residuen voraus. Diese ist hier aber nicht gegeben, denn z.B. starke Klassen werden etwa tendenziell positive Residuen haben.
-:::
-
-Ein Mehrebenenmodell stellt eine Art Kompromiss aus No Pooling und Complete Pooling dar und wird daher auch Partial Poolign Modell genannt. Es lässt zwarfür jeden Merkmalsträger eine individuelle Regressionsgerade zu, berücksichtigt bei deren Wahl aber auch Information aus den anderen Merkmalsträgern (sog. Shrinkage). Die Variation zwischen den einzelnen Klassen kann sich auf alle Parameter (etwa Intercept und/oder Slopes) beziehen (siehe Abbildungen).
-
-```{r}
 library(lme4)
 # Random Intercept Modell
 model_ri <- lmer(MathClassMean ~ time + (1| classID), data = data_sample_naomit)
@@ -181,5 +182,32 @@ ggplot(data_sample_naomit, aes(x = time, y = MathClassMean)) +
   theme(legend.position = "none")
 ```
 
+In Abbildung @fig-pooling-1 sehen wir die Entwicklung der Mathematik-Klassenmittelwerte über die Zeit, wobei die einzelnen Klassen durch unterschiedliche Farben dargestellt sind und jede Klasse eine eigene Regressionsgerade hat (No Pooling Modell). Die gestrichelte Linie repräsentiert ein lineares Regressionsmodell für alle Datenpunkte (Complete Pooling Modell).
 
-Typischerweise baut man längsschnittliche Mehrebenenmodelle Schritt für Schritt auf und testet jeweils, inwiefern weitere Modellfreiehitsgrade (z.B. varying Slopes) zu zusätzlicher Varianzaufklärung führen.
+::: {.callout-caution}
+Achtung: Die Inferenzstatistik des Complete Pooling Modells bedarf besonderer Aufmerksamkeit. Die »klassische« Berechnung von p-Werten und Konfidenzintervallen setzt eine Unabhängigkeit der Residuen voraus. Diese ist hier aber nicht gegeben, denn z.B. starke Klassen werden etwa tendenziell positive Residuen haben.
+:::
+
+Ein Mehrebenenmodell stellt eine Art Kompromiss aus No Pooling und Complete Pooling dar und wird daher auch Partial Pooling Modell genannt. Es lässt zwarfür jeden Merkmalsträger eine individuelle Regressionsgerade zu, berücksichtigt bei deren Wahl aber auch Information aus den anderen Merkmalsträgern (sog. Shrinkage). Die Variation zwischen den einzelnen Klassen kann sich auf alle Parameter beziehen. Etwa die Intercepts (siehe @fig-pooling-2) oder (Intercepts und) Slopes (siehe @fig-pooling-3).
+
+### Modellierung
+Die Modellierung längsschnittlicher Daten mit Mehrebenenmodellen erfolgt typischerweise in mehreren Schritten. Zunächst wird oft ein sogenanntes varying Intercept Mdoel geschätzt:
+
+```{r}
+library(lme4)
+mod0 <- lmer(MathClassMean ~ time + (1 | classID), data = data_sample_naomit)
+summary(mod0)
+```
+
+Hierbei wird die Mathematikleistung als Funktion der Zeit modelliert, wobei für jede Klasse ein eigener Intercept in abhängigkeit der anderen Intercepts geschätzt wird (partial pooling). Dies ermöglicht es, die durchschnittliche Entwicklung der Mathematikleistung über die Zeit zu erfassen, während gleichzeitig die Unterschiede zwischen den Klassen berücksichtigt werden.
+
+Als nächstes kann ein varying Intercept and Slope Modell geschätzt werden:
+```{r}
+mod1 <- lmer(MathClassMean ~ time + (1 + time | classID), data = data_sample_naomit)
+summary(mod1)
+```
+
+Und diese beiden Modelle gegeneinander getestet werden:
+```{r}
+anova(mod0, mod1)
+```
