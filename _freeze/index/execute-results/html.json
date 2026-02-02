@@ -1,0 +1,15 @@
+{
+  "hash": "69b3a73c3b6843a9eb5509342051289b",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"Herzlich Willkommen 👋🏼\"\n---\n\nAuf dieser Seite finden Sie eine Sammlung von Ressourcen, Tutorials und Anleitungen rund um das Thema Längsschnittmodellierung.\n\n\n:::{.callout-note collapse=false appearance='default' icon=false}\n## Zweck dieses E-Books {{< iconify fa6-solid lightbulb >}}\nDieses E-Book soll kein Lehrbuch sein. Vielmehr ein Notizbuch für den Workshop mit einer Sammlung von Erklärungen, Aufgaben, Code, Links, Datensätzen und Literaturverweisen.\n:::\n\n\n\n\n::: {.cell}\n\n:::\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

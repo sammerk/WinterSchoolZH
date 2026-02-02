@@ -18,15 +18,17 @@ toc: true
 Die multiple Regression ist bereits ein mächtiges Werkzeug zur Modellierung längsschnittlicher Daten, wenn nicht mehr als zwei Messzeitpunkte vorliegen.
 
 ## Grundidee
-Wird eine Messung genau einmal wiederholt (z.B. Variablen $AVPRE$, $AVPOST$), so kann in einem Single-Level Regressionsmodell 
+Wird eine Messung genau einmal wiederholt (z.B. Variablen $AV_{PRE}$, $AV_{POST}$), so kann in einem Single-Level Regressionsmodell 
 
-* die Differenz $\left(AVPOST - AVPRE\right)$  (siehe @sec-prädiktion-differenzen) oder 
-* die Differenz individueller Werte zum zweiten Zeitpunkt von der erwartbaren Entwicklung (z.B. Residuum der Regression $AVPOST_i = b_0 + b_1 \cdot AVPRE_i + \epsilon_i$) (siehe @sec-prädiktion-nach-adjustierung)
+* die Differenz $\left(AV^{POST}_i - AV^{PRE}_i\right)$  (siehe @sec-prädiktion-differenzen) oder 
+* die Abweichung des tatsächlichen zweiten Messwertes vom erwarteten zweiten Wert (z.B. Residuum der Regression $AV^{POST}_i = b_0 + b_1 \cdot AV^{PRE}_i + \epsilon_i$ (siehe @sec-prädiktion-nach-adjustierung)
 
 mit weiteren unabhängigen Variablen prädiziert werden.
 
 
 ## Prädiktion von Differenzwerten {#sec-prädiktion-differenzen}
+### Datenaufbereitung
+
 ```{webr}
 #| envir: env chapter single-level
 #| exercise: data setup longitudinal single level
@@ -81,7 +83,7 @@ ggplot(
 
 
 ### Prädiktion der Differenz mit `g3classsize`
-
+Nach einer ersten grafischen Inspektion wollen wir den Veränderungs
 ```{webr}
 #| envir: env chapter single-level
 #| exercise: model diff prediction
@@ -89,7 +91,7 @@ ggplot(
 #| warning:	false
 
 mod_change_linreg01 <- lm(
-  `Mathe Klassenmittelwert Veränderung` ~ + g3classsize,
+  `Mathe Klassenmittelwert Veränderung` ~ g3classsize,
   data = data_star_subset
 )
 

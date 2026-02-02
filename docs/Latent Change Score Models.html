@@ -21,6 +21,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -77,6 +112,35 @@ ul.task-list li input[type="checkbox"] {
 <script type="module" src="site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
 <link href="site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="brand.css">
 <link rel="stylesheet" href="exams/webex.css">
@@ -103,7 +167,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Seitenleiste umschalten" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Latent Change Score Models</li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./Latent Change Score Models.html">Latent Change Score Models</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Seitenleiste umschalten" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -145,6 +209,30 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">Multiple lineare Regression</span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Längsschnittliche Modelle im Überblick.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Längsschnittliche Modelle im Überblick</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Longitudinal Single-Level Regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Longitudinal Single Level Regression</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Longitudinal Multi-Level Regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Longitudinal Multi-Level Regression</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Latent Change Score Models.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Latent Change Score Models</span></a>
+  </div>
+</li>
     </ul>
     </div>
 </nav>
@@ -156,7 +244,12 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#grundidee" id="toc-grundidee" class="nav-link active" data-scroll-target="#grundidee"><span class="header-section-number">1</span> Grundidee</a></li>
-  <li><a href="#sec-prädiktion-differenzen" id="toc-sec-prädiktion-differenzen" class="nav-link" data-scroll-target="#sec-prädiktion-differenzen"><span class="header-section-number">2</span> Data Wrangling</a></li>
+  <li><a href="#beispiel" id="toc-beispiel" class="nav-link" data-scroll-target="#beispiel"><span class="header-section-number">2</span> Beispiel</a>
+  <ul class="collapse">
+  <li><a href="#datenimport" id="toc-datenimport" class="nav-link" data-scroll-target="#datenimport"><span class="header-section-number">2.1</span> Datenimport</a></li>
+  <li><a href="#latent-change-score-model" id="toc-latent-change-score-model" class="nav-link" data-scroll-target="#latent-change-score-model"><span class="header-section-number">2.2</span> Latent Change Score Model</a></li>
+  <li><a href="#latent-change-score-model-mit-prädiktor" id="toc-latent-change-score-model-mit-prädiktor" class="nav-link" data-scroll-target="#latent-change-score-model-mit-prädiktor"><span class="header-section-number">2.3</span> Latent Change Score Model mit Prädiktor</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -197,115 +290,570 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="grundidee" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="grundidee"><span class="header-section-number">1</span> Grundidee</h2>
-<p>Mehrebenenregressionsmodelle (auch Multi-Level-Modelle, Hierachische Modelle oder Mixed-Effects-Modelle) sind ein mächtiges Werkzeug zur Modellierung von Daten, die auf mehreren Ebenen genested (geclusterd) organisiert sind. Diese Cluster können etwa Schülerinnen und Schüler in Klassen sein oder Messwiederholungen in Merkmalsträgern. Die Grundidee der Modellierung längsschnittlicher Daten mit Mehrebenenmodellen besteht darin, sowohl die Variation innerhalb der Cluster (=Merkmalsträger) als auch zwischen den Clustern zu modellieren. Die Variation zischen den Clustern (auch Level-2 Effekte oder Random Effekte) werden dabei als »Streuung von Regressionsparametern« konzeptualisiert. Damit die Zeit in diesem Modellen als Prädiktor berücksichtigt werden kann, müssen die Daten in einer bestimmten Weise strukturiert werden die oft »long data« genannt wird (siehe <a href="#tbl-long-data" class="quarto-xref">Tabelle&nbsp;2</a>).</p>
-<div id="tbl-wide-data" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-tbl figure">
-<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-wide-data-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Tabelle&nbsp;1: »Wide data«
-</figcaption>
-<div aria-describedby="tbl-wide-data-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>ID</th>
-<th>Mathe Klasse 1</th>
-<th>Mathe Klasse 2</th>
-<th>Mathe Klasse 3</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>A</td>
-<td>463</td>
-<td>475</td>
-<td>501</td>
-</tr>
-<tr class="even">
-<td>B</td>
-<td>499</td>
-<td>503</td>
-<td>505</td>
-</tr>
-<tr class="odd">
-<td>C</td>
-<td>360</td>
-<td>365</td>
-<td>372</td>
-</tr>
-</tbody>
-</table>
+<p>Die Grundidee von Latent Change Score Modellen ist es, Veränderungen als latente Variablen zu modellieren, indem deren Mittelwert und Varianz (sowie deren Kovarianz mit anderen Variablen) geschätzt wird.</p>
+</section>
+<section id="beispiel" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="beispiel"><span class="header-section-number">2</span> Beispiel</h2>
+<p>Wir können z.B. zunächst den Zuwachs der Mathematik-Klassenmittelwerte von einem Jahr zum nächsten modellieren .</p>
+<div id="fig-univariate-lcsm" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-univariate-lcsm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="img/univariate-LCSM.svg" class="img-fluid figure-img">
 </div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-univariate-lcsm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Abbildung&nbsp;1: Univariates Latent Change Score Modell mit manifesten Indikatoren
+</figcaption>
 </figure>
 </div>
-<div id="tbl-long-data" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-tbl figure">
-<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-long-data-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Tabelle&nbsp;2: »Long data«
-</figcaption>
-<div aria-describedby="tbl-long-data-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>ID</th>
-<th>Mathe</th>
-<th>Klasse</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>A</td>
-<td>463</td>
-<td>1</td>
-</tr>
-<tr class="even">
-<td>A</td>
-<td>475</td>
-<td>2</td>
-</tr>
-<tr class="odd">
-<td>A</td>
-<td>501</td>
-<td>3</td>
-</tr>
-<tr class="even">
-<td>B</td>
-<td>499</td>
-<td>1</td>
-</tr>
-<tr class="odd">
-<td>B</td>
-<td>503</td>
-<td>2</td>
-</tr>
-<tr class="even">
-<td>B</td>
-<td>505</td>
-<td>3</td>
-</tr>
-<tr class="odd">
-<td>C</td>
-<td>360</td>
-<td>1</td>
-</tr>
-<tr class="even">
-<td>C</td>
-<td>365</td>
-<td>2</td>
-</tr>
-<tr class="odd">
-<td>C</td>
-<td>372</td>
-<td>3</td>
-</tr>
-</tbody>
-</table>
-</div>
-</figure>
+<p>Dem Modell nach setzt sich der Postwert wie folgt zusammen:</p>
+<p><span class="math display">\[
+M^{Post} =b_0 + 1 \cdot M^{Pre} + 1 \cdot \Delta_M + \varepsilon_i
+\]</span></p>
+<p>Die Variable <span class="math inline">\(\Delta_M\)</span> wurde jedoch nicht beobachtet - für sie liegt keine Spalte im Datensatz vor. Klassische Techniken der Strukturgleichungsmodellierung erlauben es jedoch dennoch eine Varianz und einen Mittelwert (sowie deren Unsicherheit [z.B. SE oder CI])für diese latente Variable zu schätzen.</p>
+<section id="datenimport" class="level3" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="datenimport"><span class="header-section-number">2.1</span> Datenimport</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(haven)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stringr)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(colorspace)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tinytable)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>data_star <span class="ot">&lt;-</span> <span class="fu">read_sav</span>(</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="st">"https://raw.githubusercontent.com/sammerk/WinterSchoolZH/master/data_star_workshop.sav"</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>data_star_subset <span class="ot">&lt;-</span> data_star <span class="sc">%&gt;%</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(classID) <span class="sc">%&gt;%</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">MathClassMeanCl0 =</span> <span class="fu">mean</span>(gktmathss, <span class="at">na.rm =</span> T),</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">MathClassMeanCl1 =</span> <span class="fu">mean</span>(g1tmathss, <span class="at">na.rm =</span> T),</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">MathClassMeanCl2 =</span> <span class="fu">mean</span>(g2tmathss, <span class="at">na.rm =</span> T),</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">MathClassMeanCl3 =</span> <span class="fu">mean</span>(g3tmathss, <span class="at">na.rm =</span> T),</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">MathClassMeanCl4 =</span> <span class="fu">mean</span>(g4tmathss, <span class="at">na.rm =</span> T),</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">PropFreeLunchCl0 =</span> <span class="fu">mean</span>(<span class="fu">ifelse</span>(gkfreelunch <span class="sc">==</span> <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>), <span class="at">na.rm =</span> T),</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">PropFreeLunchCl1 =</span> <span class="fu">mean</span>(<span class="fu">ifelse</span>(g1freelunch <span class="sc">==</span> <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>), <span class="at">na.rm =</span> T),</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">PropFreeLunchCl2 =</span> <span class="fu">mean</span>(<span class="fu">ifelse</span>(g2freelunch <span class="sc">==</span> <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>), <span class="at">na.rm =</span> T),</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">PropFreeLunchCl3 =</span> <span class="fu">mean</span>(<span class="fu">ifelse</span>(g3freelunch <span class="sc">==</span> <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>), <span class="at">na.rm =</span> T),</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">ClasssizeCl0 =</span> <span class="fu">mean</span>(gkclasssize, <span class="at">na.rm =</span> T),</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">ClasssizeCl1 =</span> <span class="fu">mean</span>(g1classsize, <span class="at">na.rm =</span> T),</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">ClasssizeCl2 =</span> <span class="fu">mean</span>(g2classsize, <span class="at">na.rm =</span> T),</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">ClasssizeCl3 =</span> <span class="fu">mean</span>(g3classsize, <span class="at">na.rm =</span> T),</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">ClasstypeCl0 =</span> <span class="fu">median</span>(gkclasstype, <span class="at">na.rm =</span> T),</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">ClasstypeCl1 =</span> <span class="fu">median</span>(g1classtype, <span class="at">na.rm =</span> T),</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">ClasstypeCl2 =</span> <span class="fu">median</span>(g2classtype, <span class="at">na.rm =</span> T),</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">ClasstypeCl3 =</span> <span class="fu">median</span>(g3classtype, <span class="at">na.rm =</span> T),</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>    <span class="at">DummySmallClassCl0 =</span> <span class="fu">ifelse</span>(ClasstypeCl0 <span class="sc">==</span> <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>),</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>    <span class="at">DummySmallClassCl1 =</span> <span class="fu">ifelse</span>(ClasstypeCl1 <span class="sc">==</span> <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>),</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>    <span class="at">DummySmallClassCl2 =</span> <span class="fu">ifelse</span>(ClasstypeCl2 <span class="sc">==</span> <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>),</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>    <span class="at">DummySmallClassCl3 =</span> <span class="fu">ifelse</span>(ClasstypeCl3 <span class="sc">==</span> <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>),</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>    <span class="at">DummyAidClassCl0 =</span> <span class="fu">ifelse</span>(ClasstypeCl0 <span class="sc">==</span> <span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">0</span>),</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>    <span class="at">DummyAidClassCl1 =</span> <span class="fu">ifelse</span>(ClasstypeCl1 <span class="sc">==</span> <span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">0</span>),</span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>    <span class="at">DummyAidClassCl2 =</span> <span class="fu">ifelse</span>(ClasstypeCl2 <span class="sc">==</span> <span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">0</span>),</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>    <span class="at">DummyAidClassCl3 =</span> <span class="fu">ifelse</span>(ClasstypeCl3 <span class="sc">==</span> <span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">0</span>)</span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
-<section id="sec-prädiktion-differenzen" class="level2" data-number="2">
-<h2 data-number="2" class="anchored" data-anchor-id="sec-prädiktion-differenzen"><span class="header-section-number">2</span> Data Wrangling</h2>
-<p>Fast jede Statistiksoftware verfügt über mehr oder weniger intuitive Werkzeuge zur Datenaufbereitung. In</p>
+<section id="latent-change-score-model" class="level3" data-number="2.2">
+<h3 data-number="2.2" class="anchored" data-anchor-id="latent-change-score-model"><span class="header-section-number">2.2</span> Latent Change Score Model</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lavaan)</span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>This is lavaan 0.6-21
+lavaan is FREE software! Please report any bugs.</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Latent Change Score Model</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>model_lcs <span class="ot">&lt;-</span> <span class="st">'</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="st">  # Latent change score</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="st">  delta =~ 1*MathClassMeanCl1</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="st">  </span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="st">  # Autoregressive constraint</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="st">  MathClassMeanCl1 ~ 1*MathClassMeanCl0</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="st">  </span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="st">  # Parameters</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="st">  MathClassMeanCl0 ~ 1                       # Mean of initial level</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="st">  MathClassMeanCl0 ~~ MathClassMeanCl0       # Variance of initial level</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="st">  delta ~ 1                                  # Mean change</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="st">  delta ~~ delta                             # Variance of change</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="st">  </span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="st">  # Variances</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="st">  MathClassMeanCl0 ~~ MathClassMeanCl0</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="st">  MathClassMeanCl1 ~~ MathClassMeanCl1</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="st">  </span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="st">  # Identification constraints</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="st">  MathClassMeanCl0 ~ 0*1</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="st">  MathClassMeanCl1 ~ 0*1</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a><span class="st">  MathClassMeanCl1 ~~ 0*MathClassMeanCl1</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="st">'</span></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>fit_lcs <span class="ot">&lt;-</span> <span class="fu">sem</span>(model_lcs, <span class="at">data =</span> data_star_subset)</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit_lcs)</span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>lavaan 0.6-21 ended normally after 55 iterations
+
+  Estimator                                         ML
+  Optimization method                           NLMINB
+  Number of model parameters                         3
+
+                                                  Used       Total
+  Number of observations                           317        1280
+
+Model Test User Model:
+                                                      
+  Test statistic                              1956.817
+  Degrees of freedom                                 2
+  P-value (Chi-square)                           0.000
+
+Parameter Estimates:
+
+  Standard errors                             Standard
+  Information                                 Expected
+  Information saturated (h1) model          Structured
+
+Latent Variables:
+                   Estimate    Std.Err  z-value  P(&gt;|z|)
+  delta =~                                              
+    MathClassMnCl1      1.000                           
+
+Regressions:
+                     Estimate    Std.Err  z-value  P(&gt;|z|)
+  MathClassMeanCl1 ~                                      
+    MathClassMnCl0        1.000                           
+
+Intercepts:
+                   Estimate    Std.Err   z-value  P(&gt;|z|)
+    MathClassMnCl0      0.000                            
+    delta              47.792     1.511   31.638    0.000
+   .MathClassMnCl1      0.000                            
+
+Variances:
+                   Estimate    Std.Err   z-value  P(&gt;|z|)
+    MathClassMnCl0 237549.821 18868.617   12.590    0.000
+    delta             723.374    57.458   12.590    0.000
+   .MathClassMnCl1      0.000                            </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">parameterEstimates</span>(fit_lcs, <span class="at">standardized =</span> T) <span class="sc">%&gt;%</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tt</span>(<span class="at">digits =</span> <span class="dv">3</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">style_tt</span>(<span class="at">i =</span> <span class="dv">5</span>, <span class="at">background =</span> <span class="st">"#26732640"</span>, <span class="at">bold =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<!-- preamble start -->
+
+    <script src="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.js"></script>
+
+    <script>
+      // Create table-specific functions using external factory
+      const tableFns_p425v1j6jwt72tdijge9 = TinyTable.createTableFunctions("tinytable_p425v1j6jwt72tdijge9");
+      // tinytable span after
+      window.addEventListener('load', function () {
+          var cellsToStyle = [
+            // tinytable style arrays after
+          { positions: [ { i: '8', j: 1 }, { i: '8', j: 2 }, { i: '8', j: 3 }, { i: '8', j: 4 }, { i: '8', j: 5 }, { i: '8', j: 6 }, { i: '8', j: 7 }, { i: '8', j: 8 }, { i: '8', j: 9 }, { i: '8', j: 10 }, { i: '8', j: 11 } ], css_id: 'tinytable_css_tf1je4lw5gxrqb74lszw',}, 
+          { positions: [ { i: '5', j: 1 }, { i: '5', j: 2 }, { i: '5', j: 3 }, { i: '5', j: 4 }, { i: '5', j: 5 }, { i: '5', j: 6 }, { i: '5', j: 7 }, { i: '5', j: 8 }, { i: '5', j: 9 }, { i: '5', j: 10 }, { i: '5', j: 11 } ], css_id: 'tinytable_css_icn7nkrmzvqd1u3xqs1q',}, 
+          { positions: [ { i: '0', j: 1 }, { i: '0', j: 2 }, { i: '0', j: 3 }, { i: '0', j: 4 }, { i: '0', j: 5 }, { i: '0', j: 6 }, { i: '0', j: 7 }, { i: '0', j: 8 }, { i: '0', j: 9 }, { i: '0', j: 10 }, { i: '0', j: 11 } ], css_id: 'tinytable_css_4hap5n5zz677na75doop',}, 
+          ];
+
+          // Loop over the arrays to style the cells
+          cellsToStyle.forEach(function (group) {
+              group.positions.forEach(function (cell) {
+                  tableFns_p425v1j6jwt72tdijge9.styleCell(cell.i, cell.j, group.css_id);
+              });
+          });
+      });
+    </script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
+    <style>
+    /* tinytable css entries after */
+    #tinytable_p425v1j6jwt72tdijge9 td.tinytable_css_tf1je4lw5gxrqb74lszw, #tinytable_p425v1j6jwt72tdijge9 th.tinytable_css_tf1je4lw5gxrqb74lszw {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.1em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%;  }
+    #tinytable_p425v1j6jwt72tdijge9 td.tinytable_css_icn7nkrmzvqd1u3xqs1q, #tinytable_p425v1j6jwt72tdijge9 th.tinytable_css_icn7nkrmzvqd1u3xqs1q { font-weight: bold; background-color: #26732640 }
+    #tinytable_p425v1j6jwt72tdijge9 td.tinytable_css_4hap5n5zz677na75doop, #tinytable_p425v1j6jwt72tdijge9 th.tinytable_css_4hap5n5zz677na75doop {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%;  }
+    </style>
+    <div class="container">
+      <table class="tinytable" id="tinytable_p425v1j6jwt72tdijge9" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+        
+        <thead>
+              <tr>
+                <th scope="col" data-row="0" data-col="1">lhs</th>
+                <th scope="col" data-row="0" data-col="2">op</th>
+                <th scope="col" data-row="0" data-col="3">rhs</th>
+                <th scope="col" data-row="0" data-col="4">est</th>
+                <th scope="col" data-row="0" data-col="5">se</th>
+                <th scope="col" data-row="0" data-col="6">z</th>
+                <th scope="col" data-row="0" data-col="7">pvalue</th>
+                <th scope="col" data-row="0" data-col="8">ci.lower</th>
+                <th scope="col" data-row="0" data-col="9">ci.upper</th>
+                <th scope="col" data-row="0" data-col="10">std.lv</th>
+                <th scope="col" data-row="0" data-col="11">std.all</th>
+              </tr>
+        </thead>
+        
+        <tbody>
+                <tr>
+                  <td data-row="1" data-col="1">delta</td>
+                  <td data-row="1" data-col="2">=~</td>
+                  <td data-row="1" data-col="3">MathClassMeanCl1</td>
+                  <td data-row="1" data-col="4">1</td>
+                  <td data-row="1" data-col="5">0</td>
+                  <td data-row="1" data-col="6">NA</td>
+                  <td data-row="1" data-col="7">NA</td>
+                  <td data-row="1" data-col="8">1</td>
+                  <td data-row="1" data-col="9">1</td>
+                  <td data-row="1" data-col="10">26.9</td>
+                  <td data-row="1" data-col="11">0.0551</td>
+                </tr>
+                <tr>
+                  <td data-row="2" data-col="1">MathClassMeanCl1</td>
+                  <td data-row="2" data-col="2">~</td>
+                  <td data-row="2" data-col="3">MathClassMeanCl0</td>
+                  <td data-row="2" data-col="4">1</td>
+                  <td data-row="2" data-col="5">0</td>
+                  <td data-row="2" data-col="6">NA</td>
+                  <td data-row="2" data-col="7">NA</td>
+                  <td data-row="2" data-col="8">1</td>
+                  <td data-row="2" data-col="9">1</td>
+                  <td data-row="2" data-col="10">1</td>
+                  <td data-row="2" data-col="11">0.9985</td>
+                </tr>
+                <tr>
+                  <td data-row="3" data-col="1">MathClassMeanCl0</td>
+                  <td data-row="3" data-col="2">~1</td>
+                  <td data-row="3" data-col="3"></td>
+                  <td data-row="3" data-col="4">0</td>
+                  <td data-row="3" data-col="5">0</td>
+                  <td data-row="3" data-col="6">NA</td>
+                  <td data-row="3" data-col="7">NA</td>
+                  <td data-row="3" data-col="8">0</td>
+                  <td data-row="3" data-col="9">0</td>
+                  <td data-row="3" data-col="10">0</td>
+                  <td data-row="3" data-col="11">0</td>
+                </tr>
+                <tr>
+                  <td data-row="4" data-col="1">MathClassMeanCl0</td>
+                  <td data-row="4" data-col="2">~~</td>
+                  <td data-row="4" data-col="3">MathClassMeanCl0</td>
+                  <td data-row="4" data-col="4">237549.8</td>
+                  <td data-row="4" data-col="5">18868.62</td>
+                  <td data-row="4" data-col="6">12.6</td>
+                  <td data-row="4" data-col="7">0</td>
+                  <td data-row="4" data-col="8">200568</td>
+                  <td data-row="4" data-col="9">274531.6</td>
+                  <td data-row="4" data-col="10">237549.82</td>
+                  <td data-row="4" data-col="11">1</td>
+                </tr>
+                <tr>
+                  <td data-row="5" data-col="1">delta</td>
+                  <td data-row="5" data-col="2">~1</td>
+                  <td data-row="5" data-col="3"></td>
+                  <td data-row="5" data-col="4">47.8</td>
+                  <td data-row="5" data-col="5">1.51</td>
+                  <td data-row="5" data-col="6">31.6</td>
+                  <td data-row="5" data-col="7">0</td>
+                  <td data-row="5" data-col="8">44.8</td>
+                  <td data-row="5" data-col="9">50.8</td>
+                  <td data-row="5" data-col="10">1.78</td>
+                  <td data-row="5" data-col="11">1.7769</td>
+                </tr>
+                <tr>
+                  <td data-row="6" data-col="1">delta</td>
+                  <td data-row="6" data-col="2">~~</td>
+                  <td data-row="6" data-col="3">delta</td>
+                  <td data-row="6" data-col="4">723.4</td>
+                  <td data-row="6" data-col="5">57.46</td>
+                  <td data-row="6" data-col="6">12.6</td>
+                  <td data-row="6" data-col="7">0</td>
+                  <td data-row="6" data-col="8">610.8</td>
+                  <td data-row="6" data-col="9">836</td>
+                  <td data-row="6" data-col="10">1</td>
+                  <td data-row="6" data-col="11">1</td>
+                </tr>
+                <tr>
+                  <td data-row="7" data-col="1">MathClassMeanCl1</td>
+                  <td data-row="7" data-col="2">~~</td>
+                  <td data-row="7" data-col="3">MathClassMeanCl1</td>
+                  <td data-row="7" data-col="4">0</td>
+                  <td data-row="7" data-col="5">0</td>
+                  <td data-row="7" data-col="6">NA</td>
+                  <td data-row="7" data-col="7">NA</td>
+                  <td data-row="7" data-col="8">0</td>
+                  <td data-row="7" data-col="9">0</td>
+                  <td data-row="7" data-col="10">0</td>
+                  <td data-row="7" data-col="11">0</td>
+                </tr>
+                <tr>
+                  <td data-row="8" data-col="1">MathClassMeanCl1</td>
+                  <td data-row="8" data-col="2">~1</td>
+                  <td data-row="8" data-col="3"></td>
+                  <td data-row="8" data-col="4">0</td>
+                  <td data-row="8" data-col="5">0</td>
+                  <td data-row="8" data-col="6">NA</td>
+                  <td data-row="8" data-col="7">NA</td>
+                  <td data-row="8" data-col="8">0</td>
+                  <td data-row="8" data-col="9">0</td>
+                  <td data-row="8" data-col="10">0</td>
+                  <td data-row="8" data-col="11">0</td>
+                </tr>
+        </tbody>
+      </table>
+    </div>
+<!-- hack to avoid NA insertion in last line -->
+</div>
+</div>
+</section>
+<section id="latent-change-score-model-mit-prädiktor" class="level3" data-number="2.3">
+<h3 data-number="2.3" class="anchored" data-anchor-id="latent-change-score-model-mit-prädiktor"><span class="header-section-number">2.3</span> Latent Change Score Model mit Prädiktor</h3>
+<p>Einer der großen Vorteile von Latent Change Score Modellen ist die Möglichkeit, Prädiktoren für die latente Veränderung zu integrieren. So kann das obige Modell etwa leicht zu einem Modell erweitert werden, das den SES als Prädiktor für die latente Veränderung einbezieht.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lavaan)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Latent Change Score Model</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>model_lcs2 <span class="ot">&lt;-</span> <span class="st">'</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="st">  # Latent change score</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="st">  delta =~ 1*MathClassMeanCl1</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="st">  </span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="st">  # Autoregressive constraint</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="st">  MathClassMeanCl1 ~ 1*MathClassMeanCl0</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="st">  </span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="st">  # Parameters</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="st">  MathClassMeanCl0 ~ 1                       # Mean of initial level</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="st">  MathClassMeanCl0 ~~ MathClassMeanCl0       # Variance of initial level</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="st">  delta ~ 1  + PropFreeLunchCl0              # Prediction of Change</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="st">  delta ~~ delta                             # Variance of change</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="st">  </span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="st">  # Variances</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="st">  MathClassMeanCl0 ~~ MathClassMeanCl0</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a><span class="st">  MathClassMeanCl1 ~~ MathClassMeanCl1</span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a><span class="st">  </span></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a><span class="st">  # Identification constraints</span></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a><span class="st">  MathClassMeanCl0 ~ 0*1</span></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a><span class="st">  MathClassMeanCl1 ~ 0*1</span></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a><span class="st">  MathClassMeanCl1 ~~ 0*MathClassMeanCl1</span></span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a><span class="st">'</span></span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>fit_lcs2 <span class="ot">&lt;-</span> <span class="fu">sem</span>(model_lcs2, <span class="at">data =</span> data_star_subset)</span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a><span class="fu">parameterEstimates</span>(fit_lcs2, <span class="at">standardized =</span> T) <span class="sc">%&gt;%</span></span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tt</span>(<span class="at">digits =</span> <span class="dv">3</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">style_tt</span>(<span class="at">i =</span> <span class="dv">6</span>, <span class="at">background =</span> <span class="st">"#26732640"</span>, <span class="at">bold =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<!-- preamble start -->
+
+    <script src="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.js"></script>
+
+    <script>
+      // Create table-specific functions using external factory
+      const tableFns_aub1ugxmt19sneak85u1 = TinyTable.createTableFunctions("tinytable_aub1ugxmt19sneak85u1");
+      // tinytable span after
+      window.addEventListener('load', function () {
+          var cellsToStyle = [
+            // tinytable style arrays after
+          { positions: [ { i: '11', j: 1 }, { i: '11', j: 2 }, { i: '11', j: 3 }, { i: '11', j: 4 }, { i: '11', j: 5 }, { i: '11', j: 6 }, { i: '11', j: 7 }, { i: '11', j: 8 }, { i: '11', j: 9 }, { i: '11', j: 10 }, { i: '11', j: 11 }, { i: '11', j: 12 } ], css_id: 'tinytable_css_bfk0frh9n6hhazw6511s',}, 
+          { positions: [ { i: '6', j: 1 }, { i: '6', j: 2 }, { i: '6', j: 3 }, { i: '6', j: 4 }, { i: '6', j: 5 }, { i: '6', j: 6 }, { i: '6', j: 7 }, { i: '6', j: 8 }, { i: '6', j: 9 }, { i: '6', j: 10 }, { i: '6', j: 11 }, { i: '6', j: 12 } ], css_id: 'tinytable_css_2tkzsmkjtoiq7mfl7vh3',}, 
+          { positions: [ { i: '0', j: 1 }, { i: '0', j: 2 }, { i: '0', j: 3 }, { i: '0', j: 4 }, { i: '0', j: 5 }, { i: '0', j: 6 }, { i: '0', j: 7 }, { i: '0', j: 8 }, { i: '0', j: 9 }, { i: '0', j: 10 }, { i: '0', j: 11 }, { i: '0', j: 12 } ], css_id: 'tinytable_css_5p96hoteelq6d9awjjg0',}, 
+          ];
+
+          // Loop over the arrays to style the cells
+          cellsToStyle.forEach(function (group) {
+              group.positions.forEach(function (cell) {
+                  tableFns_aub1ugxmt19sneak85u1.styleCell(cell.i, cell.j, group.css_id);
+              });
+          });
+      });
+    </script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
+    <style>
+    /* tinytable css entries after */
+    #tinytable_aub1ugxmt19sneak85u1 td.tinytable_css_bfk0frh9n6hhazw6511s, #tinytable_aub1ugxmt19sneak85u1 th.tinytable_css_bfk0frh9n6hhazw6511s {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.1em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%;  }
+    #tinytable_aub1ugxmt19sneak85u1 td.tinytable_css_2tkzsmkjtoiq7mfl7vh3, #tinytable_aub1ugxmt19sneak85u1 th.tinytable_css_2tkzsmkjtoiq7mfl7vh3 { font-weight: bold; background-color: #26732640 }
+    #tinytable_aub1ugxmt19sneak85u1 td.tinytable_css_5p96hoteelq6d9awjjg0, #tinytable_aub1ugxmt19sneak85u1 th.tinytable_css_5p96hoteelq6d9awjjg0 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%;  }
+    </style>
+    <div class="container">
+      <table class="tinytable" id="tinytable_aub1ugxmt19sneak85u1" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+        
+        <thead>
+              <tr>
+                <th scope="col" data-row="0" data-col="1">lhs</th>
+                <th scope="col" data-row="0" data-col="2">op</th>
+                <th scope="col" data-row="0" data-col="3">rhs</th>
+                <th scope="col" data-row="0" data-col="4">est</th>
+                <th scope="col" data-row="0" data-col="5">se</th>
+                <th scope="col" data-row="0" data-col="6">z</th>
+                <th scope="col" data-row="0" data-col="7">pvalue</th>
+                <th scope="col" data-row="0" data-col="8">ci.lower</th>
+                <th scope="col" data-row="0" data-col="9">ci.upper</th>
+                <th scope="col" data-row="0" data-col="10">std.lv</th>
+                <th scope="col" data-row="0" data-col="11">std.all</th>
+                <th scope="col" data-row="0" data-col="12">std.nox</th>
+              </tr>
+        </thead>
+        
+        <tbody>
+                <tr>
+                  <td data-row="1" data-col="1">delta</td>
+                  <td data-row="1" data-col="2">=~</td>
+                  <td data-row="1" data-col="3">MathClassMeanCl1</td>
+                  <td data-row="1" data-col="4">1</td>
+                  <td data-row="1" data-col="5">0</td>
+                  <td data-row="1" data-col="6">NA</td>
+                  <td data-row="1" data-col="7">NA</td>
+                  <td data-row="1" data-col="8">1</td>
+                  <td data-row="1" data-col="9">1</td>
+                  <td data-row="1" data-col="10">54.2582</td>
+                  <td data-row="1" data-col="11">0.1461</td>
+                  <td data-row="1" data-col="12">0.1461</td>
+                </tr>
+                <tr>
+                  <td data-row="2" data-col="1">MathClassMeanCl1</td>
+                  <td data-row="2" data-col="2">~</td>
+                  <td data-row="2" data-col="3">MathClassMeanCl0</td>
+                  <td data-row="2" data-col="4">1</td>
+                  <td data-row="2" data-col="5">0</td>
+                  <td data-row="2" data-col="6">NA</td>
+                  <td data-row="2" data-col="7">NA</td>
+                  <td data-row="2" data-col="8">1</td>
+                  <td data-row="2" data-col="9">1</td>
+                  <td data-row="2" data-col="10">1</td>
+                  <td data-row="2" data-col="11">0.9893</td>
+                  <td data-row="2" data-col="12">0.9893</td>
+                </tr>
+                <tr>
+                  <td data-row="3" data-col="1">MathClassMeanCl0</td>
+                  <td data-row="3" data-col="2">~1</td>
+                  <td data-row="3" data-col="3"></td>
+                  <td data-row="3" data-col="4">0</td>
+                  <td data-row="3" data-col="5">0</td>
+                  <td data-row="3" data-col="6">NA</td>
+                  <td data-row="3" data-col="7">NA</td>
+                  <td data-row="3" data-col="8">0</td>
+                  <td data-row="3" data-col="9">0</td>
+                  <td data-row="3" data-col="10">0</td>
+                  <td data-row="3" data-col="11">0</td>
+                  <td data-row="3" data-col="12">0</td>
+                </tr>
+                <tr>
+                  <td data-row="4" data-col="1">MathClassMeanCl0</td>
+                  <td data-row="4" data-col="2">~~</td>
+                  <td data-row="4" data-col="3">MathClassMeanCl0</td>
+                  <td data-row="4" data-col="4">134934.5872</td>
+                  <td data-row="4" data-col="5">10717.87</td>
+                  <td data-row="4" data-col="6">12.59</td>
+                  <td data-row="4" data-col="7">0</td>
+                  <td data-row="4" data-col="8">113927.9399</td>
+                  <td data-row="4" data-col="9">155941.2344</td>
+                  <td data-row="4" data-col="10">134934.5872</td>
+                  <td data-row="4" data-col="11">1</td>
+                  <td data-row="4" data-col="12">1</td>
+                </tr>
+                <tr>
+                  <td data-row="5" data-col="1">delta</td>
+                  <td data-row="5" data-col="2">~1</td>
+                  <td data-row="5" data-col="3"></td>
+                  <td data-row="5" data-col="4">55.9017</td>
+                  <td data-row="5" data-col="5">5.91</td>
+                  <td data-row="5" data-col="6">9.46</td>
+                  <td data-row="5" data-col="7">0</td>
+                  <td data-row="5" data-col="8">44.3212</td>
+                  <td data-row="5" data-col="9">67.4821</td>
+                  <td data-row="5" data-col="10">1.0303</td>
+                  <td data-row="5" data-col="11">1.0303</td>
+                  <td data-row="5" data-col="12">1.0303</td>
+                </tr>
+                <tr>
+                  <td data-row="6" data-col="1">delta</td>
+                  <td data-row="6" data-col="2">~</td>
+                  <td data-row="6" data-col="3">PropFreeLunchCl0</td>
+                  <td data-row="6" data-col="4">-16.8498</td>
+                  <td data-row="6" data-col="5">10.54</td>
+                  <td data-row="6" data-col="6">-1.6</td>
+                  <td data-row="6" data-col="7">0.11</td>
+                  <td data-row="6" data-col="8">-37.5117</td>
+                  <td data-row="6" data-col="9">3.8121</td>
+                  <td data-row="6" data-col="10">-0.3105</td>
+                  <td data-row="6" data-col="11">-0.0894</td>
+                  <td data-row="6" data-col="12">-0.3105</td>
+                </tr>
+                <tr>
+                  <td data-row="7" data-col="1">delta</td>
+                  <td data-row="7" data-col="2">~~</td>
+                  <td data-row="7" data-col="3">delta</td>
+                  <td data-row="7" data-col="4">2920.4141</td>
+                  <td data-row="7" data-col="5">231.97</td>
+                  <td data-row="7" data-col="6">12.59</td>
+                  <td data-row="7" data-col="7">0</td>
+                  <td data-row="7" data-col="8">2465.7634</td>
+                  <td data-row="7" data-col="9">3375.0648</td>
+                  <td data-row="7" data-col="10">0.992</td>
+                  <td data-row="7" data-col="11">0.992</td>
+                  <td data-row="7" data-col="12">0.992</td>
+                </tr>
+                <tr>
+                  <td data-row="8" data-col="1">MathClassMeanCl1</td>
+                  <td data-row="8" data-col="2">~~</td>
+                  <td data-row="8" data-col="3">MathClassMeanCl1</td>
+                  <td data-row="8" data-col="4">0</td>
+                  <td data-row="8" data-col="5">0</td>
+                  <td data-row="8" data-col="6">NA</td>
+                  <td data-row="8" data-col="7">NA</td>
+                  <td data-row="8" data-col="8">0</td>
+                  <td data-row="8" data-col="9">0</td>
+                  <td data-row="8" data-col="10">0</td>
+                  <td data-row="8" data-col="11">0</td>
+                  <td data-row="8" data-col="12">0</td>
+                </tr>
+                <tr>
+                  <td data-row="9" data-col="1">MathClassMeanCl1</td>
+                  <td data-row="9" data-col="2">~1</td>
+                  <td data-row="9" data-col="3"></td>
+                  <td data-row="9" data-col="4">0</td>
+                  <td data-row="9" data-col="5">0</td>
+                  <td data-row="9" data-col="6">NA</td>
+                  <td data-row="9" data-col="7">NA</td>
+                  <td data-row="9" data-col="8">0</td>
+                  <td data-row="9" data-col="9">0</td>
+                  <td data-row="9" data-col="10">0</td>
+                  <td data-row="9" data-col="11">0</td>
+                  <td data-row="9" data-col="12">0</td>
+                </tr>
+                <tr>
+                  <td data-row="10" data-col="1">PropFreeLunchCl0</td>
+                  <td data-row="10" data-col="2">~~</td>
+                  <td data-row="10" data-col="3">PropFreeLunchCl0</td>
+                  <td data-row="10" data-col="4">0.0829</td>
+                  <td data-row="10" data-col="5">0</td>
+                  <td data-row="10" data-col="6">NA</td>
+                  <td data-row="10" data-col="7">NA</td>
+                  <td data-row="10" data-col="8">0.0829</td>
+                  <td data-row="10" data-col="9">0.0829</td>
+                  <td data-row="10" data-col="10">0.0829</td>
+                  <td data-row="10" data-col="11">1</td>
+                  <td data-row="10" data-col="12">0.0829</td>
+                </tr>
+                <tr>
+                  <td data-row="11" data-col="1">PropFreeLunchCl0</td>
+                  <td data-row="11" data-col="2">~1</td>
+                  <td data-row="11" data-col="3"></td>
+                  <td data-row="11" data-col="4">0.4809</td>
+                  <td data-row="11" data-col="5">0</td>
+                  <td data-row="11" data-col="6">NA</td>
+                  <td data-row="11" data-col="7">NA</td>
+                  <td data-row="11" data-col="8">0.4809</td>
+                  <td data-row="11" data-col="9">0.4809</td>
+                  <td data-row="11" data-col="10">0.4809</td>
+                  <td data-row="11" data-col="11">1.6701</td>
+                  <td data-row="11" data-col="12">0.4809</td>
+                </tr>
+        </tbody>
+      </table>
+    </div>
+<!-- hack to avoid NA insertion in last line -->
+</div>
+</div>
+
+
 <script type="ojs-module-contents">
 eyJjb250ZW50cyI6W119
 </script>
@@ -320,6 +868,7 @@ eyJjb250ZW50cyI6W119
 <script type="vfs-file">
 W10=
 </script>
+</section>
 </section>
 
 </main> <!-- /main -->

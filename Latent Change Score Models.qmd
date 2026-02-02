@@ -5,30 +5,38 @@ format:
     css: 
       - exams/webex.css
     include-after-body: exams/webex.js
-webr:
-  packages:
-    - dplyr
-    - ggplot2
-    - haven
 toc: true    
 ---
 
 {{< include _extensions/r-wasm/live/_knitr.qmd >}}
 
 ## Grundidee
-Die Grundidee von Latent Change Score Modellen ist es, Veränderungen als latente Variable zu modellieren indem deren Mittelwert und Varianz sowie deren Kovarianz mit anderen Variablen geschätzt wird.
+Die Grundidee von Latent Change Score Modellen ist es, Veränderungen als latente Variablen zu modellieren, indem deren Mittelwert und Varianz (sowie deren Kovarianz mit anderen Variablen) geschätzt wird.
 
 ## Beispiel
-Wir können z.B. zunächst den Zuwachs der Mathematik-Klassenmittelwerte von einem Jahr zum nächsten Modellieren .
+Wir können z.B. zunächst den Zuwachs der Mathematik-Klassenmittelwerte von einem Jahr zum nächsten modellieren .
+
+![Univariates Latent Change Score Modell mit manifesten Indikatoren](img/univariate-LCSM.svg){#fig-univariate-lcsm}
+
+Dem Modell nach setzt sich der Postwert wie folgt zusammen:
+
+$$
+M^{Post} =b_0 + 1 \cdot M^{Pre} + 1 \cdot \Delta_M + \varepsilon_i
+$$
+
+Die Variable $\Delta_M$ wurde jedoch nicht beobachtet - für sie liegt keine Spalte im Datensatz vor. Klassische Techniken der Strukturgleichungsmodellierung erlauben es jedoch dennoch eine Varianz und einen Mittelwert (sowie deren Unsicherheit [z.B. SE oder CI])für diese latente Variable zu schätzen.
 
 ### Datenimport
 ```{r}
+#| message: false
+#| warning: false
 library(haven)
 library(dplyr)
 library(tidyr)
 library(stringr)
 library(ggplot2)
 library(colorspace)
+library(tinytable)
 
 data_star <- read_sav(
   "https://raw.githubusercontent.com/sammerk/WinterSchoolZH/master/data_star_workshop.sav"
@@ -50,8 +58,18 @@ data_star_subset <- data_star %>%
     ClasssizeCl1 = mean(g1classsize, na.rm = T),
     ClasssizeCl2 = mean(g2classsize, na.rm = T),
     ClasssizeCl3 = mean(g3classsize, na.rm = T),
-    classtype = mode(classtype)
-  
+    ClasstypeCl0 = median(gkclasstype, na.rm = T),
+    ClasstypeCl1 = median(g1classtype, na.rm = T),
+    ClasstypeCl2 = median(g2classtype, na.rm = T),
+    ClasstypeCl3 = median(g3classtype, na.rm = T),
+    DummySmallClassCl0 = ifelse(ClasstypeCl0 == 1, 1, 0),
+    DummySmallClassCl1 = ifelse(ClasstypeCl1 == 1, 1, 0),
+    DummySmallClassCl2 = ifelse(ClasstypeCl2 == 1, 1, 0),
+    DummySmallClassCl3 = ifelse(ClasstypeCl3 == 1, 1, 0),
+    DummyAidClassCl0 = ifelse(ClasstypeCl0 == 3, 1, 0),
+    DummyAidClassCl1 = ifelse(ClasstypeCl1 == 3, 1, 0),
+    DummyAidClassCl2 = ifelse(ClasstypeCl2 == 3, 1, 0),
+    DummyAidClassCl3 = ifelse(ClasstypeCl3 == 3, 1, 0)
   ) %>%
   ungroup()
 ```
@@ -87,16 +105,19 @@ model_lcs <- '
 
 fit_lcs <- sem(model_lcs, data = data_star_subset)
 summary(fit_lcs)
-parameterEstimates(fit_lcs, standardized = T)
+parameterEstimates(fit_lcs, standardized = T) %>%
+  tt(digits = 3) %>%
+  style_tt(i = 5, background = "#26732640", bold = TRUE)
 ```
 
 
 ### Latent Change Score Model mit Prädiktor
+Einer der großen Vorteile von Latent Change Score Modellen ist die Möglichkeit, Prädiktoren für die latente Veränderung zu integrieren. So kann das obige Modell etwa leicht zu einem Modell erweitert werden, das den SES als Prädiktor für die latente Veränderung einbezieht.
 
 ```{r}
 library(lavaan)
 # Latent Change Score Model
-model_lcs <- '
+model_lcs2 <- '
   # Latent change score
   delta =~ 1*MathClassMeanCl1
   
@@ -106,7 +127,7 @@ model_lcs <- '
   # Parameters
   MathClassMeanCl0 ~ 1                       # Mean of initial level
   MathClassMeanCl0 ~~ MathClassMeanCl0       # Variance of initial level
-  delta ~ 1  + classtype                               # Mean change
+  delta ~ 1  + PropFreeLunchCl0              # Prediction of Change
   delta ~~ delta                             # Variance of change
   
   # Variances
@@ -121,7 +142,8 @@ model_lcs <- '
 '
 
 
-fit_lcs <- sem(model_lcs, data = data_star_subset)
-summary(fit_lcs)
-parameterEstimates(fit_lcs)
+fit_lcs2 <- sem(model_lcs2, data = data_star_subset)
+parameterEstimates(fit_lcs2, standardized = T) %>%
+  tt(digits = 3) %>% 
+  style_tt(i = 6, background = "#26732640", bold = TRUE)
 ```

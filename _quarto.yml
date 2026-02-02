@@ -2,6 +2,10 @@ project:
   type: website
   output-dir: docs
 
+execute:
+  freeze: auto
+  cache: true  
+
 lang: de
 
 website:
@@ -16,7 +20,9 @@ website:
       - Einfache lineare Regression.qmd
       - Multiple lineare Regression.qmd
       - Längsschnittliche Modelle im Überblick.qmd
-      # - Longitudinale Single-Level Regressionen.qmd
+      - Longitudinal Single-Level Regression.qmd
+      - Longitudinal Multi-Level Regression.qmd
+      - Latent Change Score Models.qmd
 
 format:
   live-html:

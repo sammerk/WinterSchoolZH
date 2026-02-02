@@ -132,7 +132,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Seitenleiste umschalten" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Longitudinal Single Level Regression</li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./Longitudinal Single-Level Regression.html">Longitudinal Single Level Regression</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Seitenleiste umschalten" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -172,6 +172,30 @@ window.Quarto = {
   <div class="sidebar-item-container"> 
   <a href="./Multiple lineare Regression.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Multiple lineare Regression</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Längsschnittliche Modelle im Überblick.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Längsschnittliche Modelle im Überblick</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Longitudinal Single-Level Regression.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Longitudinal Single Level Regression</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Longitudinal Multi-Level Regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Longitudinal Multi-Level Regression</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Latent Change Score Models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Latent Change Score Models</span></a>
   </div>
 </li>
     </ul>
@@ -236,10 +260,10 @@ window.Quarto = {
 <p>Die multiple Regression ist bereits ein mächtiges Werkzeug zur Modellierung längsschnittlicher Daten, wenn nicht mehr als zwei Messzeitpunkte vorliegen.</p>
 <section id="grundidee" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="grundidee"><span class="header-section-number">1</span> Grundidee</h2>
-<p>Wird eine Messung genau einmal wiederholt (z.B. Variablen <span class="math inline">\(AVPRE\)</span>, <span class="math inline">\(AVPOST\)</span>), so kann in einem Single-Level Regressionsmodell</p>
+<p>Wird eine Messung genau einmal wiederholt (z.B. Variablen <span class="math inline">\(AV_{PRE}\)</span>, <span class="math inline">\(AV_{POST}\)</span>), so kann in einem Single-Level Regressionsmodell</p>
 <ul>
-<li>die Differenz <span class="math inline">\(\left(AVPOST - AVPRE\right)\)</span> (siehe <a href="#sec-prädiktion-differenzen" class="quarto-xref">Kapitel&nbsp;2</a>) oder</li>
-<li>die Differenz individueller Werte zum zweiten Zeitpunkt von der erwartbaren Entwicklung (z.B. Residuum der Regression <span class="math inline">\(AVPOST_i = b_0 + b_1 \cdot AVPRE_i + \epsilon_i\)</span>) (siehe <a href="#sec-prädiktion-nach-adjustierung" class="quarto-xref">Kapitel&nbsp;3</a>)</li>
+<li>die Differenz <span class="math inline">\(\left(AV^{POST}_i - AV^{PRE}_i\right)\)</span> (siehe <a href="#sec-prädiktion-differenzen" class="quarto-xref">Kapitel&nbsp;2</a>) oder</li>
+<li>die Abweichung des tatsächlichen zweiten Messwertes vom erwarteten zweiten Wert (z.B. Residuum der Regression <span class="math inline">\(AV^{POST}_i = b_0 + b_1 \cdot AV^{PRE}_i + \epsilon_i\)</span> (siehe <a href="#sec-prädiktion-nach-adjustierung" class="quarto-xref">Kapitel&nbsp;3</a>)</li>
 </ul>
 <p>mit weiteren unabhängigen Variablen prädiziert werden.</p>
 </section>

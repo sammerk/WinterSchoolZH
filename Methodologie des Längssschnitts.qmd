@@ -48,14 +48,14 @@ exams2forms("exams/Deskriptive_Explorative_Explanative_Praediktive_Studien_Laeng
 
 ## Längsschnittdesigns und methodische Strenge
 
-Moderne Lehrbücher nennen als Gütekriterien quantitativer Sozialforschung oft Dinge wie »*inhaltiche Relevanz*«, »*Ethische Strenge*« oder »*Präsentationsqualität*« [@döring2016; @shadish2001]. Insbesondere wird aber meist die »*methodische Strenge*« untergliedert in die Validitätsformen nach Campbell [-@campbell1957] diskutiert. Diese sind:
+Moderne Lehrbücher nennen als Gütekriterien quantitativer Sozialforschung oft Dinge wie »*inhaltliche Relevanz*«, »*Ethische Strenge*« oder »*Präsentationsqualität*« [@döring2016; @shadish2001]. Insbesondere wird aber meist die »*methodische Strenge*« untergliedert in die Validitätsformen nach Campbell [-@campbell1957] diskutiert. Diese sind:
 
 -   **Konstruktvalidität** (*Inwiefern ist die Interpretation der Messwerte angemessen?*)
--   **Interne Validität** (*Inwiefern sind Assoziationen von unabhängiger \[beeinflussender\] und abhängiger \[beeinflusster\] Variabler als kausale Effekte interpretierbar?*)
+-   **Interne Validität** (*Inwiefern sind Assoziationen von unabhängiger \[beeinflussender\] und abhängiger \[beeinflusster\] Variablen als kausale Effekte interpretierbar?*)
 -   **Externe Validität** (*Inwiefern können die Schlussfolgerungen der Studie verallgemeinert werden?*)
 -   **Statistische Validität** (*Wie robust und angemessen sind die verwendeten statistischen Verfahren?*)
 
-Während zur Steigerung der internen Validität meist Maßnahmen wie Randomisierung der unabhängigen Variablen, Kontroll- und Vergleichsgruppen, Matching, Laborstudien, Direkte Replikationen, (Doppelte) Verblindung oder Präregistrerung genannt werden und zur Steigerung der externen Validität e Zufallsstichproben aus der Zielpopulation, Gewichtungen, Konzeptuelle Replikationen, Feldstudien und Metaanalysen, bleibt hervorzuheben, dass längsschnittliche Designs geeignet sind, vor allem die interne aber auch die externe Validität zu steigern: So können nur in längsschnittlichen Daten typische Bedrohungen der internen Validität [@cook1979] wie Reifungseffekte, unklare zeitliche Reihung, externe zeitliche Einflüsse oder Regression zur Mitte aufgedeckt werden.
+Während zur Steigerung der internen Validität meist Maßnahmen wie Randomisierung der unabhängigen Variablen, Kontroll- und Vergleichsgruppen, Matching, Laborstudien, Direkte Replikationen, (Doppelte) Verblindung oder Präregistrierung genannt werden und zur Steigerung der externen Validität e Zufallsstichproben aus der Zielpopulation, Gewichtungen, Konzeptuelle Replikationen, Feldstudien und Metaanalysen, bleibt hervorzuheben, dass längsschnittliche Designs geeignet sind, vor allem die interne aber auch die externe Validität zu steigern: So können nur in längsschnittlichen Daten typische Bedrohungen der internen Validität [@cook1979] wie Reifungseffekte, unklare zeitliche Reihung, externe zeitliche Einflüsse oder Regression zur Mitte aufgedeckt werden.
 
 ```{r}
 #| echo: false

@@ -1,5 +1,5 @@
 ---
-title: "Longitudinal Single-Level Regression"
+title: "Longitudinal Multi-Level Regression"
 format:
   live-html:
     css: 
@@ -44,7 +44,7 @@ Mehrebenenregressionsmodelle (auch Multi-Level-Modelle, Hierachische Modelle ode
 
 
 ## Data Wrangling {#sec-prädiktion-differenzen}
-Fast jede Statistiksoftware verfügt über mehr oder weniger intuitive Werkzeuge zur Datenaufbereitung. In {{< fa-brands:r-project >>}} sind insbesondere die Pakete `dplyr` und `tidyr` sehr hilfreich. Hier ein Beispiel für die Warangling von "Wide" in "Long" Format:
+Fast jede Statistiksoftware verfügt über mehr oder weniger intuitive Werkzeuge zur Datenaufbereitung. In {{< fa-brands:r-project >}} sind insbesondere die Pakete `dplyr` und `tidyr` sehr hilfreich. Hier ein Beispiel für das Wrangling von "Wide" in "Long" Format:
 ```{r}
 library(haven)
 library(dplyr)

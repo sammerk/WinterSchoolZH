@@ -1,0 +1,99 @@
+---
+title: "Cross Lagged Panel Models"
+format:
+  live-html:
+    css: 
+      - exams/webex.css
+    include-after-body: exams/webex.js
+toc: true    
+---
+
+{{< include _extensions/r-wasm/live/_knitr.qmd >}}
+
+## Grundidee
+Die Grundidee von Cross Lagged Panel Models ist die Modellierung von wechselseitigen Einflüssen zwischen zwei oder mehr Variablen über die Zeit hinweg. Dabei wird angenommen, dass jede Variable nicht nur durch ihre eigenen vorherigen Werte (autoregressive Effekte) beeinflusst wird, sondern auch durch die vorherigen Werte der anderen Variablen [cross-lagged Effekte, @mackinnon2022, @hamaker2015]. Dies ermöglicht es unter bestimmten Annahmen, kausale Beziehungen zwischen den Variablen zu untersuchen und zu verstehen, wie Veränderungen in einer Variable Veränderungen in einer anderen Variable im Laufe der Zeit beeinflussen können.
+Inwiefern die Annahmen für die kausale Interpretierbarkeit von Cross-Lagged Panel Models realistisch sind, gilt als stark diskutiert [eine unterhaltsame Einführung bietet @rohrer2025b].
+
+
+## Datenimport
+```{r}
+#| message: false
+#| warning: false
+library(haven)
+library(dplyr)
+library(tidyr)
+library(stringr)
+library(ggplot2)
+library(colorspace)
+library(tinytable)
+library(lavaan)
+
+data_star <- read_sav(
+  "https://raw.githubusercontent.com/sammerk/WinterSchoolZH/master/data_star_workshop.sav"
+)
+
+data_star_subset <- data_star %>%
+  group_by(classID) %>%
+  summarize(
+    MathClassMeanCl0 = mean(gktmathss, na.rm = T),
+    MathClassMeanCl1 = mean(g1tmathss, na.rm = T),
+    MathClassMeanCl2 = mean(g2tmathss, na.rm = T),
+    MathClassMeanCl3 = mean(g3tmathss, na.rm = T),
+    MathClassMeanCl4 = mean(g4tmathss, na.rm = T),
+    PropFreeLunchCl0 = mean(ifelse(gkfreelunch == 1, 1, 0), na.rm = T),
+    PropFreeLunchCl1 = mean(ifelse(g1freelunch == 1, 1, 0), na.rm = T),
+    PropFreeLunchCl2 = mean(ifelse(g2freelunch == 1, 1, 0), na.rm = T),
+    PropFreeLunchCl3 = mean(ifelse(g3freelunch == 1, 1, 0), na.rm = T),
+    ClasssizeCl0 = mean(gkclasssize, na.rm = T),
+    ClasssizeCl1 = mean(g1classsize, na.rm = T),
+    ClasssizeCl2 = mean(g2classsize, na.rm = T),
+    ClasssizeCl3 = mean(g3classsize, na.rm = T),
+    ClasstypeCl0 = median(gkclasstype, na.rm = T),
+    ClasstypeCl1 = median(g1classtype, na.rm = T),
+    ClasstypeCl2 = median(g2classtype, na.rm = T),
+    ClasstypeCl3 = median(g3classtype, na.rm = T),
+    DummySmallClassCl0 = ifelse(ClasstypeCl0 == 1, 1, 0),
+    DummySmallClassCl1 = ifelse(ClasstypeCl1 == 1, 1, 0),
+    DummySmallClassCl2 = ifelse(ClasstypeCl2 == 1, 1, 0),
+    DummySmallClassCl3 = ifelse(ClasstypeCl3 == 1, 1, 0),
+    DummyAidClassCl0 = ifelse(ClasstypeCl0 == 3, 1, 0),
+    DummyAidClassCl1 = ifelse(ClasstypeCl1 == 3, 1, 0),
+    DummyAidClassCl2 = ifelse(ClasstypeCl2 == 3, 1, 0),
+    DummyAidClassCl3 = ifelse(ClasstypeCl3 == 3, 1, 0)
+  ) %>%
+  ungroup()
+```
+
+## Cross Lagged Panel Model
+
+```{r}
+
+model_clp <- '
+
+# autoregressive paths
+g1selfconcraw ~ gkselfconcraw
+g2selfconcraw ~ g1selfconcraw
+g3selfconcraw ~ g2selfconcraw
+
+g1tmathss ~ gktmathss
+g2tmathss ~ g1tmathss
+g3tmathss ~ g2tmathss
+
+# cross lagged paths
+g1selfconcraw ~ gktmathss
+g2selfconcraw ~ g1tmathss
+g3selfconcraw ~ g2tmathss
+
+g1tmathss ~ gkselfconcraw
+g2tmathss ~ g1selfconcraw
+g3tmathss ~ g2selfconcraw
+'
+
+
+fit_clp <- sem(model_clp, data = data_star)
+summary(fit_clp)
+parameterEstimates(fit_clp, standardized = T) %>%
+  tt(digits = 3)
+semPlot::semPaths(fit_clp, what = "std", fade = F)
+```
+
