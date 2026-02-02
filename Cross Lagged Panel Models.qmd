@@ -33,6 +33,7 @@ data_star <- read_sav(
   "https://raw.githubusercontent.com/sammerk/WinterSchoolZH/master/data_star_workshop.sav"
 )
 
+#data_star_subset <- read_sav("data_star_workshop.sav") %>% 
 data_star_subset <- data_star %>%
   group_by(classID) %>%
   summarize(
@@ -41,6 +42,11 @@ data_star_subset <- data_star %>%
     MathClassMeanCl2 = mean(g2tmathss, na.rm = T),
     MathClassMeanCl3 = mean(g3tmathss, na.rm = T),
     MathClassMeanCl4 = mean(g4tmathss, na.rm = T),
+    ReadClassMeanCl0 = mean(gktreadss, na.rm = T),
+    ReadClassMeanCl1 = mean(g1treadss, na.rm = T),
+    ReadClassMeanCl2 = mean(g2treadss, na.rm = T),
+    ReadClassMeanCl3 = mean(g3treadss, na.rm = T),
+    MathClassMeanCl4 = mean(g4treadss, na.rm = T),
     SelfConRawCl1 = mean(g1selfconcraw, na.rm = T),
     SelfConRawCl2 = mean(g2selfconcraw, na.rm = T),
     SelfConRawCl3 = mean(g3selfconcraw, na.rm = T)
@@ -52,22 +58,31 @@ data_star_subset <- data_star %>%
 model_clp <- '
 
 # autoregressive paths
-SelfConRawCl2 ~ SelfConRawCl1
-SelfConRawCl3 ~ SelfConRawCl2
+ReadClassMeanCl1 ~ ReadClassMeanCl0
+ReadClassMeanCl2 ~ ReadClassMeanCl1
+ReadClassMeanCl3 ~ ReadClassMeanCl2
 
+MathClassMeanCl1 ~ MathClassMeanCl0
 MathClassMeanCl2 ~ MathClassMeanCl1
 MathClassMeanCl3 ~ MathClassMeanCl2
 
 # cross lagged paths
-MathClassMeanCl2 ~ SelfConRawCl1
-SelfConRawCl2 ~ MathClassMeanCl1
+ReadClassMeanCl1 ~ MathClassMeanCl0
+ReadClassMeanCl2 ~ MathClassMeanCl1
+ReadClassMeanCl3 ~ MathClassMeanCl2
+
+MathClassMeanCl1 ~ ReadClassMeanCl0
+MathClassMeanCl2 ~ ReadClassMeanCl1
+MathClassMeanCl3 ~ ReadClassMeanCl2
 '
 
 
 fit_clp <- sem(model_clp, data = data_star_subset)
 summary(fit_clp)
 parameterEstimates(fit_clp, standardized = T) %>%
+  filter(op == "~") %>%
+  select(lhs, rhs, est, pvalue, std.all) %>%
   tt(digits = 3)
-semPlot::semPaths(fit_clp, what = "std", fade = F)
 ```
+
 
