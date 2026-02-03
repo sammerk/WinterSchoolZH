@@ -7,7 +7,7 @@ Welche Aussagen treffen auf obige Abbildung zu?
 
 ```{r questionlist, echo = FALSE, results = "asis"}
 library(exams)
-answerlist(c("Für den Slope der Regressionsgerade ist negativ.",
+answerlist(c("Der Slope der Regressionsgerade ist negativ.",
              "Für den Intercept der Regressionsgerade gilt $b_0 \\approx 640$.",
              "Die unabhängige Variable ist die Mathematikleistung.",
              "Der Prädiktor ist die Klassengröße.",
