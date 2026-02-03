@@ -2,9 +2,9 @@ project:
   type: website
   output-dir: docs
 
-execute:
-  freeze: auto
-  cache: true  
+# execute:
+#   freeze: auto
+#   cache: true  
 
 lang: de
 

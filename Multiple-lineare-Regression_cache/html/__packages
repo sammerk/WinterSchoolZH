@@ -1,5 +1,4 @@
-exams
-exams2forms
+haven
 tidyverse
 ggplot2
 tibble
@@ -10,5 +9,8 @@ dplyr
 stringr
 forcats
 lubridate
-haven
-brand.yml
+reshape2
+plotly
+sjPlot
+exams
+exams2forms

@@ -217,8 +217,9 @@ window.Quarto = {
   <li><a href="#grundidee" id="toc-grundidee" class="nav-link active" data-scroll-target="#grundidee"><span class="header-section-number">1</span> Grundidee</a></li>
   <li><a href="#sec-prädiktion-differenzen" id="toc-sec-prädiktion-differenzen" class="nav-link" data-scroll-target="#sec-prädiktion-differenzen"><span class="header-section-number">2</span> Prädiktion von Differenzwerten</a>
   <ul class="collapse">
-  <li><a href="#grafische-darstellung" id="toc-grafische-darstellung" class="nav-link" data-scroll-target="#grafische-darstellung"><span class="header-section-number">2.1</span> Grafische Darstellung</a></li>
-  <li><a href="#prädiktion-der-differenz-mit-g3classsize" id="toc-prädiktion-der-differenz-mit-g3classsize" class="nav-link" data-scroll-target="#prädiktion-der-differenz-mit-g3classsize"><span class="header-section-number">2.2</span> Prädiktion der Differenz mit <code>g3classsize</code></a></li>
+  <li><a href="#datenaufbereitung" id="toc-datenaufbereitung" class="nav-link" data-scroll-target="#datenaufbereitung"><span class="header-section-number">2.1</span> Datenaufbereitung</a></li>
+  <li><a href="#grafische-darstellung" id="toc-grafische-darstellung" class="nav-link" data-scroll-target="#grafische-darstellung"><span class="header-section-number">2.2</span> Grafische Darstellung</a></li>
+  <li><a href="#prädiktion-der-differenz-mit-g3classsize" id="toc-prädiktion-der-differenz-mit-g3classsize" class="nav-link" data-scroll-target="#prädiktion-der-differenz-mit-g3classsize"><span class="header-section-number">2.3</span> Prädiktion der Differenz mit <code>g3classsize</code></a></li>
   </ul></li>
   <li><a href="#sec-prädiktion-nach-adjustierung" id="toc-sec-prädiktion-nach-adjustierung" class="nav-link" data-scroll-target="#sec-prädiktion-nach-adjustierung"><span class="header-section-number">3</span> Prädiktion nach Adjustierung um Prä-Messung</a>
   <ul class="collapse">
@@ -275,6 +276,8 @@ window.Quarto = {
 </section>
 <section id="sec-prädiktion-differenzen" class="level2" data-number="2">
 <h2 data-number="2" class="anchored" data-anchor-id="sec-prädiktion-differenzen"><span class="header-section-number">2</span> Prädiktion von Differenzwerten</h2>
+<section id="datenaufbereitung" class="level3" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="datenaufbereitung"><span class="header-section-number">2.1</span> Datenaufbereitung</h3>
 <div class="cell" data-envir="env chapter single-level" data-exercise="data setup longitudinal single level" data-autorun="false">
 <div>
 <div id="webr-1" class="exercise-cell">
@@ -285,8 +288,9 @@ eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJlbnZpciI6ImVudiBjaGFwdGVyIHNp
 </script>
 </div>
 </div>
-<section id="grafische-darstellung" class="level3" data-number="2.1">
-<h3 data-number="2.1" class="anchored" data-anchor-id="grafische-darstellung"><span class="header-section-number">2.1</span> Grafische Darstellung</h3>
+</section>
+<section id="grafische-darstellung" class="level3" data-number="2.2">
+<h3 data-number="2.2" class="anchored" data-anchor-id="grafische-darstellung"><span class="header-section-number">2.2</span> Grafische Darstellung</h3>
 <div class="cell" data-envir="env chapter single-level" data-exercise="plot diff prediction" data-autorun="false">
 <div>
 <div id="webr-2" class="exercise-cell">
@@ -298,15 +302,16 @@ eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJlbnZpciI6ImVudiBjaGFwdGVyIHNp
 </div>
 </div>
 </section>
-<section id="prädiktion-der-differenz-mit-g3classsize" class="level3" data-number="2.2">
-<h3 data-number="2.2" class="anchored" data-anchor-id="prädiktion-der-differenz-mit-g3classsize"><span class="header-section-number">2.2</span> Prädiktion der Differenz mit <code>g3classsize</code></h3>
+<section id="prädiktion-der-differenz-mit-g3classsize" class="level3" data-number="2.3">
+<h3 data-number="2.3" class="anchored" data-anchor-id="prädiktion-der-differenz-mit-g3classsize"><span class="header-section-number">2.3</span> Prädiktion der Differenz mit <code>g3classsize</code></h3>
+<p>Nach einer ersten grafischen Inspektion wollen wir den Veränderungs</p>
 <div class="cell" data-envir="env chapter single-level" data-exercise="model diff prediction" data-autorun="false">
 <div>
 <div id="webr-3" class="exercise-cell">
 
 </div>
 <script type="webr-3-contents">
-eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJlbnZpciI6ImVudiBjaGFwdGVyIHNpbmdsZS1sZXZlbCIsImV2YWwiOnRydWUsImV4ZXJjaXNlIjoibW9kZWwgZGlmZiBwcmVkaWN0aW9uIiwid2FybmluZyI6ZmFsc2V9LCJjb2RlIjoiXG5tb2RfY2hhbmdlX2xpbnJlZzAxIDwtIGxtKFxuICBgTWF0aGUgS2xhc3Nlbm1pdHRlbHdlcnQgVmVyw6RuZGVydW5nYCB+ICsgZzNjbGFzc3NpemUsXG4gIGRhdGEgPSBkYXRhX3N0YXJfc3Vic2V0XG4pXG5cbnN1bW1hcnkobW9kX2NoYW5nZV9saW5yZWcwMSkifQ==
+eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJlbnZpciI6ImVudiBjaGFwdGVyIHNpbmdsZS1sZXZlbCIsImV2YWwiOnRydWUsImV4ZXJjaXNlIjoibW9kZWwgZGlmZiBwcmVkaWN0aW9uIiwid2FybmluZyI6ZmFsc2V9LCJjb2RlIjoiXG5tb2RfY2hhbmdlX2xpbnJlZzAxIDwtIGxtKFxuICBgTWF0aGUgS2xhc3Nlbm1pdHRlbHdlcnQgVmVyw6RuZGVydW5nYCB+IGczY2xhc3NzaXplLFxuICBkYXRhID0gZGF0YV9zdGFyX3N1YnNldFxuKVxuXG5zdW1tYXJ5KG1vZF9jaGFuZ2VfbGlucmVnMDEpIn0=
 </script>
 </div>
 </div>
