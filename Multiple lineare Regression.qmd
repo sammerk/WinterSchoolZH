@@ -227,7 +227,7 @@ summary(mlm_mod)
 
 Der so generierte Output kann wie folgt interpretiert werden:
 
-```         
+````
 Call:
 lm(formula = `Mathe Klassenmittelwert Kl. 3` ~ `Mathe Klassenmittelwert Kl. 2` + 
     `Anteil Free Lunch`, data = data_star_subset)
@@ -248,7 +248,8 @@ Residual standard error: 16.53 on 319 degrees of freedom
   (15 observations deleted due to missingness)
 Multiple R-squared:  0.4623,    Adjusted R-squared:  0.4589 
 F-statistic: 137.1 on 2 and 319 DF,  p-value: < 2.2e-16      
-```
+````
+
 
 1)  Der Achsenabschnitt `b_0` der Regressionsgeraden ist ungefähr 365. Der *p*-Wert zeigt bezieht sich auf die Nullhypothese $H_0:\;b_0 = 0$ mit der zweiseitigen Alternativhypothese $H_1:\;b_0 \neq 0$. Da der p-Wert kleiner als 0.05 ist, kann diese Nullhypothese verworfen werden.
 2)  Der Slope `b_1` der Regressionsgeraden ist ungefähr .45. Der *p*-Wert bezieht sich auf die Nullhypothese $H_0:\;b_1 = 0$ mit der zweiseitigen Alternativhypothese $H_1:\;b_1 \neq 0$. Da der p-Wert kleiner als 0.05 ist, kann die Nullhypothese verworfen werden. Man würde dies als *signifikanten Effekt* des `Mathe Klassenmittelwert Kl. 2` auf `Mathe Klassenmittelwert Kl. 3` nach Adjustierung um `Anteil Free Lunch` beschreiben.
@@ -258,7 +259,8 @@ F-statistic: 137.1 on 2 and 319 DF,  p-value: < 2.2e-16
 
 ## Stochastische Notation der multiplen Regression
 
-Auch die stochastische Notation der multiplen Regression kann leicht aus der stochastischen Notation für die einfach lineare Regression verallgemeinert werden. Dazu wird schlicht das Polynom, mit dem der Erwartungswert der normalverteilten abhängigen Variable beschrieben wird einen Summanden erweitert: $$
+Auch die stochastische Notation der multiplen Regression kann leicht aus der stochastischen Notation für die einfach lineare Regression verallgemeinert werden. Dazu wird schlicht das Polynom, mit dem der Erwartungswert der normalverteilten abhängigen Variable beschrieben wird einen Summanden erweitert: 
+$$
 y_i \sim \mathcal{N}\left(b_0 + b_1 \cdot x_{1i} + b_2 \cdot x_{2i}, \sigma^2\right)
 $$
 
@@ -416,3 +418,40 @@ Ergebnisse wie das des dritten Modells in @tbl-multregression werden oft mit *»
 Vorab postulierte, theoretisch fundierte Kausalzusammenhänge können jedoch im Einklang oder im Widerspruch zu den Ergebnissen (multipler Regressionsmodelle) stehen: So sind die ersten beiden in @fig-DAG-multiple-Reg in Form von Direct Acyclic Graphs [@rohrer2018] dargestellten Kausalannahmen mit den Regressionsergebnissen vereinbar, die dritte jedoch nicht. Sie impliziert keine Kovarianz zwischen SES (Anteil Free Lunch) und der Matheleistung in Kl. 2, der sich jedoch empirisch zeigt. 
 
 ![Hypothetische Kausalzusammenhänge in Form von Direct Acyclic Graphs.](img/DAG-multiple-Reg.svg){#fig-DAG-multiple-Reg fig-align="left" width="68%"}
+
+### Good and Bad Control/Adjustments Variables
+Ob die Aufnahme weiterer Variablen in ein Regressionsmodell zu einer besseren Abschätzung kausaler Effekte führt, hängt stark von der Rolle dieser Variablen im Kausalprozess ab. So können sogenannte *Bad Control Variables* (z.B. Collider) zu verzerrten Effektschätzungen führen, während *Good Control Variables* (z.B. Confounder) dabei helfen können, Verzerrungen zu reduzieren [siehe z.B. @cinelli2024; @mcelreath2020; @rohrer2018].
+
+![DAGs der Daten und zweier Analysemodelle](img/collider.svg){#fig-collider}
+
+In folgendem Code Chunk etwa werden Daten wie im linken DAG von @fig-collider simuliert.
+
+```{r}
+#| label: tbl-collider-effect
+set.seed(123)
+n <- 10000
+data_sim_collider <-
+  tibble(
+    TransmissiveÜberzeugungen = rnorm(n),
+    Schülerleistungen = 2*TransmissiveÜberzeugungen + rnorm(n),
+    KognitiveAktivierung = 1 *
+      TransmissiveÜberzeugungen +
+      3 * Schülerleistungen +
+      rnorm(n)
+  )
+```
+
+
+Analysiert man Hypothese 1, erhält man einen unverzerrten Effekt der Transmissiven Überzeugungen auf die `Schülerleistungen`, **solange man nicht um `KognitiveAktivierung` adjustiert**. Adjustiert man jedoch um `KognitiveAktivierung`, erhält man nicht nur eine Über- oder Unterschätzung des Effekts der Transmissiven Überzeugungen auf die `Schülerleistungen`, sondern sogar eine Umkehrung des Vorzeichens des Effekts, sodass man fälschlicherweise zu dem Schluss kommen könnte, dass Transmissive Überzeugungen einen negativen Effekt auf die Schülerleistungen haben - insbesondere daadurch, dass die Infernezstatistik konklusiv (»signifikant«) ist.
+
+
+```{r}
+#| label: tbl-collider-effect-1
+sjPlot::tab_model(
+  lm(Schülerleistungen ~ TransmissiveÜberzeugungen, data = data_sim_collider),
+  lm(
+    Schülerleistungen ~ TransmissiveÜberzeugungen + KognitiveAktivierung,
+    data = data_sim_collider
+  )
+)
+```
